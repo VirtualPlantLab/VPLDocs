@@ -1,0 +1,7 @@
+name = "VPLDocs"
+uuid = "19246b20-85cd-4f94-a989-28bb6828320f"
+authors = ["Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors"]
+version = "0.0.1"
+
+[compat]
+julia = "1.9"
