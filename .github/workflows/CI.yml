@@ -57,9 +57,3 @@ jobs:
       - uses: julia-actions/julia-docdeploy@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
-          julia --project=docs -e '
-            using Documenter: DocMeta, doctest
-            using VPLDocs
-            DocMeta.setdocmeta!(VPLDocs, :DocTestSetup, :(using VPLDocs); recursive=true)
-            doctest(VPLDocs)'
