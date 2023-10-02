@@ -3,5 +3,20 @@ uuid = "19246b20-85cd-4f94-a989-28bb6828320f"
 authors = ["Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors"]
 version = "0.0.1"
 
+[deps]
+Ecophys = "19467474-d12d-47c9-939f-3e50fbfd93ad"
+PlantGeomPrimitives = "7eef3cc5-4580-4ff0-8f6f-933507db6664"
+PlantGeomTurtle = "7d6e2781-1c99-4c66-97ec-106669f3e96e"
+PlantGraphs = "615ad455-9aac-4340-9247-71ef610f781a"
+PlantRayTracer = "78485975-e4aa-407d-b3bb-ded5a4265d05"
+PlantViz = "358bd95d-d12c-439f-94b7-04b17e500c7f"
+SkyDomes = "1838625c-7cf7-40c6-898b-904883e4b556"
+
 [compat]
+PlantGeomPrimitives = "0.0.2"
+PlantGeomTurtle = "0.0.2"
+PlantGraphs = "0.0.2"
+PlantRayTracer = "0.0.2"
+PlantViz = "0.0.2"
+SkyDomes = "0.1.1"
 julia = "1.9"

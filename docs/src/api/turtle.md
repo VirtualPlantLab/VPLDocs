@@ -32,7 +32,8 @@ feed!
 ```
 
 ```@docs
-Scene
+Scene(graph::Graph, ::Type{FT} = Float64; message = nothing) where {FT}
+Scene(graphs::Vector{<:Graph}, ::Type{FT} = Float64; parallel = false, message = nothing,) where {FT}
 ```
 
 ```@docs

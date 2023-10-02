@@ -1,29 +1,29 @@
 
-# [Sky](@id sky)
+# [SkyDomes](@id sky)
 
 Alejandro Morales
 
 Centre for Crop Systems Analysis - Wageningen University
 
-The package Sky provides a function to calculate the solar radiation on a
+The package SkyDomes provides a function to calculate the solar radiation on a
 horizontal surface (for clear skies) as a function of latitude, day of year and
 time of the day and for different wavebands. In addition, it can generate light
-sources as required by [VPL](https://github.com/VirtualPlantLab/VPL.jl) to
+sources as required by the [Virtual Plant Lab](https://github.com/VirtualPlantLab/VirtualPlantLab.jl) to
 simulate the light distribution in a 3D scene.
 
 ## Installation
 
-To install Sky.jl, you can use the following command:
+To install SkyDomes.jl, you can use the following command:
 
 ```julia
-] add Sky
+] add SkyDomes
 ```
 
 Or, if you prefer the development version:
 
 ```julia
 import Pkg
-Pkg.add(url = "https://github.com/VirtualPlantLab/Sky.jl.git", rev = "master")
+Pkg.add(url = "https://github.com/VirtualPlantLab/SkyDomes.jl.git", rev = "master")
 ```
 
 ## Usage

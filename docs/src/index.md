@@ -60,7 +60,7 @@ The packages currently planned for *VPLverse* are:
 * *Ecophys.jl* - Algorithms and data structures to simulate ecophysiological processes
 including photosynthesis, transpiration, leaf energy balance, phenology or respiration.
 
-* *Sky.jl* - Algorithms to simulate different sky conditions in terms of the intensity of
+* *.jl* - Algorithms to simulate different sky conditions in terms of the intensity of
 solar radiation and its spatial and angular distribution.
 
 ## Documentation

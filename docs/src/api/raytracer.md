@@ -6,7 +6,6 @@ CurrentModule = PlantRayTracer
 
 API documentation for [PlantRayTracer.jl](https://github.com/VirtualPlantLab/PlantRayTracer.jl).
 
-
 ```@autodocs
 Modules = [PlantRayTracer]
 ```

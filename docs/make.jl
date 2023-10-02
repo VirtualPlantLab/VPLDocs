@@ -1,10 +1,10 @@
 using VPLDocs
 using Documenter
-import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, Sky, Ecophys
+import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys
 
 makedocs(;
     doctest = false,
-    modules=[VPLDocs, PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, Sky, Ecophys],
+    modules=[VPLDocs, PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys],
     authors="Alejandro Morales <alejandro.moralessierra@wur.nl> and contributors",
     repo="https://github.com/VirtualPlantLab/VPLDocs/blob/{commit}{path}#{line}",
     sitename="Virtual Plant Laboratory",
@@ -44,9 +44,9 @@ makedocs(;
             "3D visualization" => "api/viz.md"
         ],
         "VPLVerse" => [
-            "Sky" => [
-                "Sky package" => "Sky/index.md",
-                "Sky API" => "Sky/API.md"
+            "SkyDomes" => [
+                "SkyDomes package" => "SkyDomes/index.md",
+                "SkyDomes API" => "SkyDomes/API.md"
             ],
             "Ecophys" => [
                 "Ecophys package" => "Ecophys/index.md",

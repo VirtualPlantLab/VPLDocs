@@ -20,8 +20,8 @@ combinations of vertices that form triangles). They are implemented in the objec
 `Mesh`. All vectors and points are represented by the type `Vec`. Any vector may
 be constructed by calling `Vec(x, y, z)` with the coordinates of the vector.
 
-Meshes can be imported from external formats using the [`PlantGeomPrimitives.loadmesh()`](@ref) function and
-exported using the [`PlantGeomPrimitives.savemesh()`](@ref)
+Meshes can be imported from external formats using the [`PlantGeomPrimitives.load_mesh()`](@ref) function and
+exported using the [`PlantGeomPrimitives.save_mesh()`](@ref)
 functions. The file formats supported include STL, OBJ and PLY (see documentation
 on functions for details).
 

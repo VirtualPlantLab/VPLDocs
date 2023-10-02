@@ -1,10 +1,10 @@
 
-# Module Sky
+# Module SkyDomes
 
-API documentation for [Sky.jl](https://github.com/VirtualPlantLab/Sky.jl).
+API documentation for [SkyDomes.jl](https://github.com/VirtualPlantLab/SkyDomes.jl).
 
 ```@meta
-CurrentModule = Sky
+CurrentModule = SkyDomes
 ```
 
 ```@docs

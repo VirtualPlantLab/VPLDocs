@@ -18,7 +18,7 @@ using Plots
 import Random
 using FastGaussQuadrature
 using Distributions
-using Sky
+using
 Random.seed!(123456789)
 ```
 
@@ -227,7 +227,7 @@ end
 
 Given the scene, we can create the light sources that can approximate the solar
 irradiance on a given day, location and time of the day using the functions from
-the Sky package (see package documentation for details). Given the latitude,
+the  package (see package documentation for details). Given the latitude,
 day of year and fraction of the day (`f = 0` being sunrise and `f = 1` being sunset),
 the function `clear_sky()` computes the direct and diffuse solar radiation assuming
 a clear sky. These values may be converted to different wavebands and units using
