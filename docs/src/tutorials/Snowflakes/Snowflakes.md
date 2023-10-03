@@ -13,7 +13,7 @@ length arrange in a specific manner. Graphically, the first four iterations of
 the Koch snowflake construction process result in the following figures (the
 green segments are shown as guides but they are not part of the snowflake):
 
-![First four iterations fo Koch snowflake fractal](./KochWikipedia.png)
+![First four iterations fo Koch snowflake fractal](KochWikipedia.png)
 
 In order to implement the construction process of a Koch snowflake in VPL we
 need to understand how a 3D structure can be generated from a graph of nodes.
@@ -39,7 +39,7 @@ represents a rotation of the turtle around the upward axis, with angle of
 rotation given in parenthesis in hexadecimal degrees. The rule can be visualized
 as follows:
 
-![Koch construction rule](./Koch_order_1.png)
+![Koch construction rule](Koch_order_1.png)
 
 Note that VPL already provides several classes for common turtle movements and
 rotations, so our implementation of the Koch snowflake only needs to define a
