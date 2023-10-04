@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Ray-traced forest · Virtual Plant Laboratory</title><meta name="title" content="Ray-traced forest · Virtual Plant Laboratory"/><meta property="og:title" content="Ray-traced forest · Virtual Plant Laboratory"/><meta property="twitter:title" content="Ray-traced forest · Virtual Plant Laboratory"/><meta name="description" content="Documentation for Virtual Plant Laboratory."/><meta property="og:description" content="Documentation for Virtual Plant Laboratory."/><meta property="twitter:description" content="Documentation for Virtual Plant Laboratory."/><script data-outdated-warner src="../../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../assets/documenter.js"></script><script src="../../../search_index.js"></script><script src="../../../siteinfo.js"></script><script src="../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../../">Virtual Plant Laboratory</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../../">Virtual Plant Laboratory</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox"/><label class="tocitem" for="menuitem-2"><span class="docs-label">Manual</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../manual/Julia/">Julia basic concepts</a></li><li><a class="tocitem" href="../../../manual/Graphs/">Dynamic graph creation and manipulation</a></li><li><a class="tocitem" href="../../../manual/Geometry/Primitives/">Geometry primitives</a></li><li><a class="tocitem" href="../../../manual/Geometry/Turtle/">Turtle geometry and scenes</a></li><li><a class="tocitem" href="../../../manual/Raytracer/">Ray tracing</a></li><li><a class="tocitem" href="../../../manual/Visualization/">3D visualization</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox" checked/><label class="tocitem" for="menuitem-3"><span class="docs-label">Tutorials</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../Algae/Algae/">Algae growth</a></li><li><a class="tocitem" href="../../Snowflakes/Snowflakes/">The Koch snowflake</a></li><li><a class="tocitem" href="../../Tree/Tree/">Tree</a></li><li><a class="tocitem" href="../../Forest/Forest/">Forest</a></li><li><a class="tocitem" href="../../GrowthForest/GrowthForest/">Growth forest</a></li><li class="is-active"><a class="tocitem" href>Ray-traced forest</a><ul class="internal"><li><a class="tocitem" href="#Model-definition"><span>Model definition</span></a></li><li><a class="tocitem" href="#Visualization"><span>Visualization</span></a></li><li><a class="tocitem" href="#Simulation"><span>Simulation</span></a></li></ul></li><li><a class="tocitem" href="../../Context/Context/">Context sensitive rules</a></li><li><a class="tocitem" href="../../RelationalQueries/RelationalQueries/">Relational queries</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-4" type="checkbox"/><label class="tocitem" for="menuitem-4"><span class="docs-label">API</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../api/graphs/">Graphs</a></li><li><a class="tocitem" href="../../../api/geometry/">Scenes and 3D meshes</a></li><li><a class="tocitem" href="../../../api/turtle/">Turtle geometry</a></li><li><a class="tocitem" href="../../../api/raytracer/">Ray tracing</a></li><li><a class="tocitem" href="../../../api/viz/">3D visualization</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-5" type="checkbox"/><label class="tocitem" for="menuitem-5"><span class="docs-label">VPLVerse</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><input class="collapse-toggle" id="menuitem-5-1" type="checkbox"/><label class="tocitem" for="menuitem-5-1"><span class="docs-label">SkyDomes</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../SkyDomes/">SkyDomes package</a></li><li><a class="tocitem" href="../../../SkyDomes/API/">SkyDomes API</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-5-2" type="checkbox"/><label class="tocitem" for="menuitem-5-2"><span class="docs-label">Ecophys</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../Ecophys/">Ecophys package</a></li><li><a class="tocitem" href="../../../Ecophys/photosynthesis/">Photosynthesis API</a></li></ul></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Tutorials</a></li><li class="is-active"><a href>Ray-traced forest</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Ray-traced forest</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/VirtualPlantLab/VPLDocs/blob/master/docs/src/tutorials/RaytracedForest/RaytracedForest.md#" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Ray-traced-forest"><a class="docs-heading-anchor" href="#Ray-traced-forest">Ray-traced forest</a><a id="Ray-traced-forest-1"></a><a class="docs-heading-anchor-permalink" href="#Ray-traced-forest" title="Permalink"></a></h1><p>Alejandro Morales</p><p>Centre for Crop Systems Analysis - Wageningen University</p><p>In this example we extend the forest growth model to include PAR interception a radiation use efficiency to compute the daily growth rate.</p><p>The following packages are needed:</p><pre><code class="language-julia hljs">using VirtualPlantLab, ColorTypes
+import GLMakie
+using Base.Threads: @threads
+using Plots
+import Random
+using FastGaussQuadrature
+using Distributions
+using
+Random.seed!(123456789)</code></pre><h2 id="Model-definition"><a class="docs-heading-anchor" href="#Model-definition">Model definition</a><a id="Model-definition-1"></a><a class="docs-heading-anchor-permalink" href="#Model-definition" title="Permalink"></a></h2><h3 id="Node-types"><a class="docs-heading-anchor" href="#Node-types">Node types</a><a id="Node-types-1"></a><a class="docs-heading-anchor-permalink" href="#Node-types" title="Permalink"></a></h3><p>The data types needed to simulate the trees are given in the following module. The difference with respec to the previous model is that Internodes and Leaves have optical properties needed for ray tracing (they are defined as Lambertian surfaces).</p><pre><code class="language-julia hljs"># Data types
+module TreeTypes
+    using VirtualPlantLab
+    using Distributions
+    # Meristem
+    Base.@kwdef mutable struct Meristem &lt;: VirtualPlantLab.Node
+        age::Int64 = 0   # Age of the meristem
+    end
+    # Bud
+    struct Bud &lt;: VirtualPlantLab.Node end
+    # Node
+    struct Node &lt;: VirtualPlantLab.Node end
+    # BudNode
+    struct BudNode &lt;: VirtualPlantLab.Node end
+    # Internode (needs to be mutable to allow for changes over time)
+    Base.@kwdef mutable struct Internode &lt;: VirtualPlantLab.Node
+        age::Int64 = 0         # Age of the internode
+        biomass::Float64 = 0.0 # Initial biomass
+        length::Float64 = 0.0  # Internodes
+        width::Float64  = 0.0  # Internodes
+        sink::Exponential{Float64} = Exponential(5)
+        material::Lambertian{1} = Lambertian(τ = 0.1, ρ = 0.05) # Leaf material
+    end
+    # Leaf
+    Base.@kwdef mutable struct Leaf &lt;: VirtualPlantLab.Node
+        age::Int64 = 0         # Age of the leaf
+        biomass::Float64 = 0.0 # Initial biomass
+        length::Float64 = 0.0  # Leaves
+        width::Float64 = 0.0   # Leaves
+        sink::Beta{Float64} = Beta(2,5)
+        material::Lambertian{1} = Lambertian(τ = 0.1, ρ = 0.05) # Leaf material
+    end
+    # Graph-level variables -&gt; mutable because we need to modify them during growth
+    Base.@kwdef mutable struct treeparams
+        # Variables
+        PAR::Float64 = 0.0   # Total PAR absorbed by the leaves on the tree (MJ)
+        biomass::Float64 = 2e-3 # Current total biomass (g)
+        # Parameters
+        RUE::Float64 = 5.0   # Radiation use efficiency (g/MJ) -&gt; unrealistic to speed up sim
+        IB0::Float64 = 1e-3  # Initial biomass of an internode (g)
+        SIW::Float64 = 0.1e6   # Specific internode weight (g/m3)
+        IS::Float64  = 15.0  # Internode shape parameter (length/width)
+        LB0::Float64 = 1e-3  # Initial biomass of a leaf
+        SLW::Float64 = 100.0 # Specific leaf weight (g/m2)
+        LS::Float64  = 3.0   # Leaf shape parameter (length/width)
+        budbreak::Float64 = 1/0.5 # Bud break probability coefficient (in 1/m)
+        plastochron::Int64 = 5 # Number of days between phytomer production
+        leaf_expansion::Float64 = 15.0 # Number of days that a leaf expands
+        phyllotaxis::Float64 = 140.0
+        leaf_angle::Float64 = 30.0
+        branch_angle::Float64 = 45.0
+    end
+end
+
+import .TreeTypes</code></pre><h3 id="Geometry"><a class="docs-heading-anchor" href="#Geometry">Geometry</a><a id="Geometry-1"></a><a class="docs-heading-anchor-permalink" href="#Geometry" title="Permalink"></a></h3><p>The methods for creating the geometry and color of the tree are the same as in the previous example but include the materials for the ray tracer.</p><pre><code class="language-julia hljs"># Create geometry + color for the internodes
+function VPL.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
+    # Rotate turtle around the head to implement elliptical phyllotaxis
+    rh!(turtle, data.phyllotaxis)
+    HollowCylinder!(turtle, length = i.length, height = i.width, width = i.width,
+                move = true, color = RGB(0.5,0.4,0.0), material = i.material)
+    return nothing
+end
+
+# Create geometry + color for the leaves
+function VPL.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
+    # Rotate turtle around the arm for insertion angle
+    ra!(turtle, -data.leaf_angle)
+    # Generate the leaf
+    Ellipse!(turtle, length = l.length, width = l.width, move = false,
+             color = RGB(0.2,0.6,0.2), material = l.material)
+    # Rotate turtle back to original direction
+    ra!(turtle, data.leaf_angle)
+    return nothing
+end
+
+# Insertion angle for the bud nodes
+function VPL.feed!(turtle::Turtle, b::TreeTypes.BudNode, data)
+    # Rotate turtle around the arm for insertion angle
+    ra!(turtle, -data.branch_angle)
+end</code></pre><h3 id="Development"><a class="docs-heading-anchor" href="#Development">Development</a><a id="Development-1"></a><a class="docs-heading-anchor-permalink" href="#Development" title="Permalink"></a></h3><p>The meristem rule is now parameterized by the initial states of the leaves and internodes and will only be triggered every X days where X is the plastochron.</p><pre><code class="language-julia hljs"># Create right side of the growth rule (parameterized by the initial states
+# of the leaves and internodes)
+function create_meristem_rule(vleaf, vint)
+    meristem_rule = Rule(TreeTypes.Meristem,
+                        lhs = mer -&gt; mod(data(mer).age, graph_data(mer).plastochron) == 0,
+                        rhs = mer -&gt; TreeTypes.Node() +
+                                     (TreeTypes.Bud(),
+                                     TreeTypes.Leaf(biomass = vleaf.biomass,
+                                                    length  = vleaf.length,
+                                                    width   = vleaf.width)) +
+                                     TreeTypes.Internode(biomass = vint.biomass,
+                                                         length  = vint.length,
+                                                         width   = vint.width) +
+                                     TreeTypes.Meristem())
+end</code></pre><p>The bud break probability is now a function of distance to the apical meristem rather than the number of internodes. An adhoc traversal is used to compute this length of the main branch a bud belongs to (ignoring the lateral branches).</p><pre><code class="language-julia hljs"># Compute the probability that a bud breaks as function of distance to the meristem
+function prob_break(bud)
+    # We move to parent node in the branch where the bud was created
+    node =  parent(bud)
+    # Extract the first internode
+    child = filter(x -&gt; data(x) isa TreeTypes.Internode, children(node))[1]
+    data_child = data(child)
+    # We measure the length of the branch until we find the meristem
+    distance = 0.0
+    while !isa(data_child, TreeTypes.Meristem)
+        # If we encounter an internode, store the length and move to the next node
+        if data_child isa TreeTypes.Internode
+            distance += data_child.length
+            child = children(child)[1]
+            data_child = data(child)
+        # If we encounter a node, extract the next internode
+        elseif data_child isa TreeTypes.Node
+                child = filter(x -&gt; data(x) isa TreeTypes.Internode, children(child))[1]
+                data_child = data(child)
+        else
+            error(&quot;Should be Internode, Node or Meristem&quot;)
+        end
+    end
+    # Compute the probability of bud break as function of distance and
+    # make stochastic decision
+    prob =  min(1.0, distance*graph_data(bud).budbreak)
+    return rand() &lt; prob
+end
+
+# Branch rule parameterized by initial states of internodes
+function create_branch_rule(vint)
+    branch_rule = Rule(TreeTypes.Bud,
+            lhs = prob_break,
+            rhs = bud -&gt; TreeTypes.BudNode() +
+                         TreeTypes.Internode(biomass = vint.biomass,
+                                             length  = vint.length,
+                                             width   = vint.width) +
+                         TreeTypes.Meristem())
+end</code></pre><h3 id="Light-interception"><a class="docs-heading-anchor" href="#Light-interception">Light interception</a><a id="Light-interception-1"></a><a class="docs-heading-anchor-permalink" href="#Light-interception" title="Permalink"></a></h3><p>As growth is now dependent on intercepted PAR via RUE, we now need to simulate light interception by the trees. We will use a ray-tracing approach to do so. The first step is to create a scene with the trees and the light sources. As for rendering, the scene can be created from the <code>forest</code> object by simply calling <code>Scene(forest)</code> that will generate the 3D meshes and connect them to their optical properties.</p><p>However, we also want to add the soil surface as this will affect the light distribution within the scene due to reflection from the soil surface. This is similar to the customized scene that we created before for rendering, but now for the light simulation.</p><pre><code class="language-julia hljs">function create_soil()
+    soil = Rectangle(length = 21.0, width = 21.0)
+    rotatey!(soil, π/2) # To put it in the XY plane
+    VPL.translate!(soil, Vec(0.0, 10.5, 0.0)) # Corner at (0,0,0)
+    return soil
+end
+function create_scene(forest)
+    # These are the trees
+    scene = Scene(vec(forest))
+    # Add a soil surface
+    soil = create_soil()
+    soil_material = Lambertian(τ = 0.0, ρ = 0.21)
+    add!(scene, mesh = soil, material = soil_material)
+    # Return the scene
+    return scene
+end</code></pre><p>Given the scene, we can create the light sources that can approximate the solar irradiance on a given day, location and time of the day using the functions from the  package (see package documentation for details). Given the latitude, day of year and fraction of the day (<code>f = 0</code> being sunrise and <code>f = 1</code> being sunset), the function <code>clear_sky()</code> computes the direct and diffuse solar radiation assuming a clear sky. These values may be converted to different wavebands and units using <code>waveband_conversion()</code>. Finally, the collection of light sources approximating the solar irradiance distribution over the sky hemisphere is constructed with the function <code>sky()</code> (this last step requires the 3D scene as input in order to place the light sources adequately).</p><pre><code class="language-julia hljs">function create_sky(;scene, lat = 52.0*π/180.0, DOY = 182)
+    # Fraction of the day and day length
+    fs = collect(0.1:0.1:0.9)
+    dec = declination(DOY)
+    DL = day_length(lat, dec)*3600
+    # Compute solar irradiance
+    temp = [clear_sky(lat = lat, DOY = DOY, f = f) for f in fs] # W/m2
+    Ig   = getindex.(temp, 1)
+    Idir = getindex.(temp, 2)
+    Idif = getindex.(temp, 3)
+    # Conversion factors to PAR for direct and diffuse irradiance
+    f_dir = waveband_conversion(Itype = :direct,  waveband = :PAR, mode = :power)
+    f_dif = waveband_conversion(Itype = :diffuse, waveband = :PAR, mode = :power)
+    # Actual irradiance per waveband
+    Idir_PAR = f_dir.*Idir
+    Idif_PAR = f_dif.*Idif
+    # Create the dome of diffuse light
+    dome = sky(scene,
+                  Idir = 0.0, # No direct solar radiation
+                  Idif = sum(Idir_PAR)/10*DL, # Daily Diffuse solar radiation
+                  nrays_dif = 1_000_000, # Total number of rays for diffuse solar radiation
+                  sky_model = StandardSky, # Angular distribution of solar radiation
+                  dome_method = equal_solid_angles, # Discretization of the sky dome
+                  ntheta = 9, # Number of discretization steps in the zenith angle
+                  nphi = 12) # Number of discretization steps in the azimuth angle
+    # Add direct sources for different times of the day
+    for I in Idir_PAR
+        push!(dome, sky(scene, Idir = I/10*DL, nrays_dir = 100_000, Idif = 0.0)[1])
+    end
+    return dome
+end</code></pre><p>The 3D scene and the light sources are then combined into a <code>RayTracer</code> object, together with general settings for the ray tracing simulation chosen via <code>RTSettings()</code>. The most important settings refer to the Russian roulette system and the grid cloner (see section on Ray Tracing for details). The settings for the Russian roulette system include the number of times a ray will be traced deterministically (<code>maxiter</code>) and the probability that a ray that exceeds <code>maxiter</code> is terminated (<code>pkill</code>). The grid cloner is used to approximate an infinite canopy by replicating the scene in the different directions (<code>nx</code> and <code>ny</code> being the number of replicates in each direction along the x and y axes, respectively). It is also possible to turn on parallelization of the ray tracing simulation by setting <code>parallel = true</code> (currently this uses Julia&#39;s builtin multithreading capabilities).</p><p>In addition <code>RTSettings()</code>, an acceleration structure and a splitting rule can be defined when creating the <code>RayTracer</code> object (see ray tracing documentation for details). The acceleration structure allows speeding up the ray tracing by avoiding testing all rays against all objects in the scene.</p><pre><code class="language-julia hljs">function create_raytracer(scene, sources)
+    settings = RTSettings(pkill = 0.9, maxiter = 4, nx = 5, ny = 5, parallel = true)
+    RayTracer(scene, sources, settings = settings, acceleration = BVH,
+                     rule = SAH{3}(5, 10));
+end</code></pre><p>The actual ray tracing simulation is performed by calling the <code>trace!()</code> method on the ray tracing object. This will trace all rays from all light sources and update the radiant power absorbed by the different surfaces in the scene inside the <code>Material</code> objects (see <code>feed!()</code> above):</p><pre><code class="language-julia hljs">function run_raytracer!(forest; DOY = 182)
+    scene   = create_scene(forest)
+    sources = create_sky(scene = scene, DOY = DOY)
+    rtobj   = create_raytracer(scene, sources)
+    trace!(rtobj)
+    return nothing
+end</code></pre><p>The total PAR absorbed for each tree is calculated from the material objects of the different internodes (using <code>power()</code> on the <code>Material</code> object). Note that the <code>power()</code> function returns three different values, one for each waveband, but they are added together as RUE is defined for total PAR.</p><pre><code class="language-julia hljs"># Run the ray tracer, calculate PAR absorbed per tree and add it to the daily
+# total using general weighted quadrature formula
+function calculate_PAR!(forest;  DOY = 182)
+    # Reset PAR absorbed by the tree (at the start of a new day)
+    reset_PAR!(forest)
+    # Run the ray tracer to compute daily PAR absorption
+    run_raytracer!(forest, DOY = DOY)
+    # Add up PAR absorbed by each leaf within each tree
+    @threads for tree in forest
+        for l in get_leaves(tree)
+            data(tree).PAR += power(l.material)[1]
+        end
+    end
+    return nothing
+end
+
+# Reset PAR absorbed by the tree (at the start of a new day)
+function reset_PAR!(forest)
+    for tree in forest
+        data(tree).PAR = 0.0
+    end
+    return nothing
+end</code></pre><h3 id="Growth"><a class="docs-heading-anchor" href="#Growth">Growth</a><a id="Growth-1"></a><a class="docs-heading-anchor-permalink" href="#Growth" title="Permalink"></a></h3><p>We need some functions to compute the length and width of a leaf or internode from its biomass</p><pre><code class="language-julia hljs">function leaf_dims(biomass, vars)
+    leaf_biomass = biomass
+    leaf_area    = biomass/vars.SLW
+    leaf_length  = sqrt(leaf_area*4*vars.LS/pi)
+    leaf_width   = leaf_length/vars.LS
+    return leaf_length, leaf_width
+end
+
+function int_dims(biomass, vars)
+    int_biomass = biomass
+    int_volume  = biomass/vars.SIW
+    int_length  = cbrt(int_volume*4*vars.IS^2/pi)
+    int_width   = int_length/vars.IS
+    return int_length, int_width
+end</code></pre><p>Each day, the total biomass of the tree is updated using a simple RUE formula and the increment of biomass is distributed across the organs proportionally to their relative sink strength (of leaves or internodes).</p><p>The sink strength of leaves is modelled with a beta distribution scaled to the <code>leaf_expansion</code> argument that determines the duration of leaf growth, whereas for the internodes it follows a negative exponential distribution. The <code>pdf</code> function computes the probability density of each distribution which is taken as proportional to the sink strength (the model is actually source-limited since we imposed a particular growth rate).</p><pre><code class="language-julia hljs">sink_strength(leaf, vars) = leaf.age &gt; vars.leaf_expansion ? 0.0 :
+                            pdf(leaf.sink, leaf.age/vars.leaf_expansion)/100.0
+plot(0:1:50, x -&gt; sink_strength(TreeTypes.Leaf(age = x), TreeTypes.treeparams()),
+     xlabel = &quot;Age&quot;, ylabel = &quot;Sink strength&quot;, label = &quot;Leaf&quot;)</code></pre><pre><code class="language-julia hljs">sink_strength(int) = pdf(int.sink, int.age)
+plot!(0:1:50, x -&gt; sink_strength(TreeTypes.Internode(age = x)), label = &quot;Internode&quot;)</code></pre><p>Now we need a function that updates the biomass of the tree, allocates it to the different organs and updates the dimensions of said organs. For simplicity, we create the functions <code>leaves()</code> and <code>internodes()</code> that will apply the queries to the tree required to extract said nodes:</p><pre><code class="language-julia hljs">get_leaves(tree) = apply(tree, Query(TreeTypes.Leaf))
+get_internodes(tree) = apply(tree, Query(TreeTypes.Internode))</code></pre><p>The age of the different organs is updated every time step:</p><pre><code class="language-julia hljs">function age!(all_leaves, all_internodes, all_meristems)
+    for leaf in all_leaves
+        leaf.age += 1
+    end
+    for int in all_internodes
+        int.age += 1
+    end
+    for mer in all_meristems
+        mer.age += 1
+    end
+    return nothing
+end</code></pre><p>The daily growth is allocated to different organs proportional to their sink strength.</p><pre><code class="language-julia hljs">function grow!(tree, all_leaves, all_internodes)
+    # Compute total biomass increment
+    tdata = data(tree)
+    ΔB    = max(0.5, tdata.RUE*tdata.PAR/1e6) # Trick to emulate reserves in seedling
+    tdata.biomass += ΔB
+    # Total sink strength
+    total_sink = 0.0
+    for leaf in all_leaves
+        total_sink += sink_strength(leaf, tdata)
+    end
+    for int in all_internodes
+        total_sink += sink_strength(int)
+    end
+    # Allocate biomass to leaves and internodes
+    for leaf in all_leaves
+        leaf.biomass += ΔB*sink_strength(leaf, tdata)/total_sink
+    end
+    for int in all_internodes
+        int.biomass += ΔB*sink_strength(int)/total_sink
+    end
+    return nothing
+end</code></pre><p>Finally, we need to update the dimensions of the organs. The leaf dimensions are</p><pre><code class="language-julia hljs">function size_leaves!(all_leaves, tvars)
+    for leaf in all_leaves
+        leaf.length, leaf.width = leaf_dims(leaf.biomass, tvars)
+    end
+    return nothing
+end
+function size_internodes!(all_internodes, tvars)
+    for int in all_internodes
+        int.length, int.width = int_dims(int.biomass, tvars)
+    end
+    return nothing
+end</code></pre><h3 id="Daily-step"><a class="docs-heading-anchor" href="#Daily-step">Daily step</a><a id="Daily-step-1"></a><a class="docs-heading-anchor-permalink" href="#Daily-step" title="Permalink"></a></h3><p>All the growth and developmental functions are combined together into a daily step function that updates the forest by iterating over the different trees in parallel.</p><pre><code class="language-julia hljs">get_meristems(tree) = apply(tree, Query(TreeTypes.Meristem))
+function daily_step!(forest, DOY)
+    # Compute PAR absorbed by each tree
+    calculate_PAR!(forest, DOY = DOY)
+    # Grow the trees
+    @threads for tree in forest
+        # Retrieve all the relevant organs
+        all_leaves = get_leaves(tree)
+        all_internodes = get_internodes(tree)
+        all_meristems = get_meristems(tree)
+        # Update the age of the organs
+        age!(all_leaves, all_internodes, all_meristems)
+        # Grow the tree
+        grow!(tree, all_leaves, all_internodes)
+        tdata = data(tree)
+        size_leaves!(all_leaves, tdata)
+        size_internodes!(all_internodes, tdata)
+        # Developmental rules
+        rewrite!(tree)
+    end
+end</code></pre><h3 id="Initialization"><a class="docs-heading-anchor" href="#Initialization">Initialization</a><a id="Initialization-1"></a><a class="docs-heading-anchor-permalink" href="#Initialization" title="Permalink"></a></h3><p>The trees are initialized on a regular grid with random values for the initial orientation and RUE:</p><pre><code class="language-julia hljs">RUEs = rand(Normal(1.5,0.2), 10, 10)
+histogram(vec(RUEs))</code></pre><pre><code class="language-julia hljs">orientations = [rand()*360.0 for i = 1:2.0:20.0, j = 1:2.0:20.0]
+histogram(vec(orientations))</code></pre><pre><code class="language-julia hljs">origins = [Vec(i,j,0) for i = 1:2.0:20.0, j = 1:2.0:20.0];</code></pre><p>The following initalizes a tree based on the origin, orientation and RUE:</p><pre><code class="language-julia hljs">function create_tree(origin, orientation, RUE)
+    # Initial state and parameters of the tree
+    data = TreeTypes.treeparams(RUE = RUE)
+    # Initial states of the leaves
+    leaf_length, leaf_width = leaf_dims(data.LB0, data)
+    vleaf = (biomass = data.LB0, length = leaf_length, width = leaf_width)
+    # Initial states of the internodes
+    int_length, int_width = int_dims(data.LB0, data)
+    vint = (biomass = data.IB0, length = int_length, width = int_width)
+    # Growth rules
+    meristem_rule = create_meristem_rule(vleaf, vint)
+    branch_rule   = create_branch_rule(vint)
+    axiom = T(origin) + RH(orientation) +
+            TreeTypes.Internode(biomass = vint.biomass,
+                                length  = vint.length,
+                                width   = vint.width) +
+            TreeTypes.Meristem()
+    tree = Graph(axiom = axiom, rules = (meristem_rule, branch_rule),
+                 data = data)
+    return tree
+end</code></pre><h2 id="Visualization"><a class="docs-heading-anchor" href="#Visualization">Visualization</a><a id="Visualization-1"></a><a class="docs-heading-anchor-permalink" href="#Visualization" title="Permalink"></a></h2><p>As in the previous example, it makes sense to visualize the forest with a soil tile beneath it. Unlike in the previous example, we will construct the soil tile using a dedicated graph and generate a <code>Scene</code> object which can later be merged with the rest of scene generated in daily step:</p><pre><code class="language-julia hljs">Base.@kwdef struct Soil &lt;: VirtualPlantLab.Node
+    length::Float64
+    width::Float64
+end
+function VPL.feed!(turtle::Turtle, s::Soil, data)
+    Rectangle!(turtle, length = s.length, width = s.width, color = RGB(255/255, 236/255, 179/255))
+end
+soil_graph = RA(-90.0) + T(Vec(0.0, 10.0, 0.0)) + # Moves into position
+             Soil(length = 20.0, width = 20.0) # Draws the soil tile
+soil = Scene(Graph(axiom = soil_graph));
+render(soil, axes = false)</code></pre><p>And the following function renders the entire scene (notice that we need to use <code>display()</code> to force the rendering of the scene when called within a loop or a function):</p><pre><code class="language-julia hljs">function render_forest(forest, soil)
+    scene = Scene(vec(forest)) # create scene from forest
+    scene = Scene([scene, soil]) # merges the two scenes
+    display(render(scene))
+end</code></pre><h2 id="Simulation"><a class="docs-heading-anchor" href="#Simulation">Simulation</a><a id="Simulation-1"></a><a class="docs-heading-anchor-permalink" href="#Simulation" title="Permalink"></a></h2><p>We can now create a forest of trees on a regular grid:</p><pre><code class="language-julia hljs">forest = create_tree.(origins, orientations, RUEs);
+render_forest(forest, soil)
+start = 180
+for i in 1:20
+    println(&quot;Day $i&quot;)
+    daily_step!(forest, i + start)
+    if mod(i, 5) == 0
+        render_forest(forest, soil)
+    end
+end</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../GrowthForest/GrowthForest/">« Growth forest</a><a class="docs-footer-nextpage" href="../../Context/Context/">Context sensitive rules »</a><div class="flexbox-break"></div></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.1.0 on <span class="colophon-date" title="Wednesday 4 October 2023 07:12">Wednesday 4 October 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
