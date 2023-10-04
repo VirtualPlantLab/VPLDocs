@@ -56,6 +56,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/VirtualPlantLab/VPLDocs.jl",
+    repo="github.com/VirtualPlantLab/VPLDocs",
     devbranch="master",
 )
