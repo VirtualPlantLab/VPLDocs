@@ -10,7 +10,6 @@ makedocs(;
     sitename="Virtual Plant Laboratory",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="http://virtualplantlab.com",
         edit_link="master",
         assets=String[],
         collapselevel = 1,
