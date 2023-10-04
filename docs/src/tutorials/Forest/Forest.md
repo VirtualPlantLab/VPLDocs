@@ -19,26 +19,26 @@ The data types, rendering methods and growth rules are the same as in the binary
 tree example:
 
 ```julia
-using VPL
+using VirtualPlantLab
 using Distributions, Plots, ColorTypes
 import GLMakie
 # Data types
 module TreeTypes
-    import VPL
+    import VirtualPlantLab
     # Meristem
-    struct Meristem <: VPL.Node end
+    struct Meristem <: VirtualPlantLab.Node end
     # Bud
-    struct Bud <: VPL.Node end
+    struct Bud <: VirtualPlantLab.Node end
     # Node
-    struct Node <: VPL.Node end
+    struct Node <: VirtualPlantLab.Node end
     # BudNode
-    struct BudNode <: VPL.Node end
+    struct BudNode <: VirtualPlantLab.Node end
     # Internode (needs to be mutable to allow for changes over time)
-    Base.@kwdef mutable struct Internode <: VPL.Node
+    Base.@kwdef mutable struct Internode <: VirtualPlantLab.Node
         length::Float64 = 0.10 # Internodes start at 10 cm
     end
     # Leaf
-    Base.@kwdef struct Leaf <: VPL.Node
+    Base.@kwdef struct Leaf <: VirtualPlantLab.Node
         length::Float64 = 0.20 # Leaves are 20 cm long
         width::Float64  = 0.1 # Leaves are 10 cm wide
     end

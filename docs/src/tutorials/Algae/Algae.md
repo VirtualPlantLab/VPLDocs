@@ -15,7 +15,7 @@ First, we need to load the VPL metapackage, which will automatically load all
 the packages in the VPL ecosystem.
 
 ```julia
-using VPL
+using VirtualPlantLab
 ```
 
 The rewriting rules of the L-system are as follows:
@@ -34,7 +34,7 @@ namespace, we need to import `Node` from the VPL package inside the module:
 
 ```julia
 module algae
-    import VPL: Node
+    import VirtualPlantLab: Node
     struct A <: Node end
     struct B <: Node end
 end

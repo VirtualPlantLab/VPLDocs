@@ -41,11 +41,13 @@ VPL requires using Julia version 1.9 or higher. The installation of VPL is as
 easy as running the following code:
 
 ```julia
-] add VPL
+] add VirtualPlantLab
 ```
 
 This requires an Internet connection such that Julia will download the source code of the VPL package
-and install it in the local machine.
+and install it in the local machine. Note that throughout this documentation, we will refer
+to VPL for short, but the actual name of the Julia package is `VirtualPlantLab` (the Julia
+community is not fond of short acronyms as package names).
 
 ## The *VPLverse*
 
@@ -60,7 +62,7 @@ The packages currently planned for *VPLverse* are:
 * *Ecophys.jl* - Algorithms and data structures to simulate ecophysiological processes
 including photosynthesis, transpiration, leaf energy balance, phenology or respiration.
 
-* *.jl* - Algorithms to simulate different sky conditions in terms of the intensity of
+* *SkyDomes.jl* - Algorithms to simulate different sky conditions in terms of the intensity of
 solar radiation and its spatial and angular distribution.
 
 ## Documentation

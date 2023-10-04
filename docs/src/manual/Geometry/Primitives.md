@@ -6,7 +6,7 @@ Centre for Crop Systems Analysis - Wageningen University
 
 
 ```julia
-using VPL
+using VIrtualPlantLab
 import ColorTypes: RGBA # for the color of each mesh
 import GLMakie # For 3D rendering (native OpenGL backend)
 ```

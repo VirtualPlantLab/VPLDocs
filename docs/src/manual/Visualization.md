@@ -8,15 +8,13 @@ Centre for Crop Systems Analysis - Wageningen University
 
 # Introduction
 
-VPL has two forms of visualization that are specific to a model: (i) a network representation of the graph via `draw()` and (ii) a 3D rendering of a graph or scene via `render()`. Both forms of visualization rely on the [Makie](https://makie.juliaplots.org/stable/) visualization ecosystem built into Julia. Makie allows for different backends that are relevant in different context of code execution. The backends are specified with the argument `backend` to either of the visualization methods:
+VPL has two forms of visualization that are specific to a model: (i) a network representation of the graph via `draw()` and (ii) a 3D rendering of a graph or scene via `render()`. Both forms of visualization rely on the [Makie](https://makie.juliaplots.org/stable/) visualization ecosystem built into Julia. Makie allows for different backends that are relevant in different context of code execution. The backends are automatically chosen based on which Makie backend the user exports. For example if the user runs the following:
 
-1. `backend = "native"`: A native, desktop-based backend that requires an OpenGL enabled graphics card (based on [GLMakie](https://makie.juliaplots.org/stable/documentation/backends/glmakie/)). This is the default backend used by VPL. It provides interactive 2D (for `draw()`) or 3D (for `render()`) visualization.
+```julia
+import GLMakie
+```
 
-2. `backend = "web"`: A web-based backend that requires a WebGL enabled web browser (based on [WGLMakie](https://makie.juliaplots.org/stable/documentation/backends/wglmakie/)). It provides interactive 2D (for `draw()`) or 3D (for `render()`) visualization.
-
-3.  `backend = "vector"`: A vector graphics version of the visualization (based on [CairoMakie](https://makie.juliaplots.org/stable/documentation/backends/cairomakie/). Different vector engines can be specified via the `file` argument including `file = "pdf"` (default) and `file = "svg"`. It does not provide interactive visualization and it is meant for static documents (or for exporting pdf or svg versions of the visualization). This backend only works with `draw()`, not `render()`
-
-Depending on the context where the code is being executed and the backend being used, different forms of visualization will be obtained with different scenarios listed below (see section on [Visualization](#exporting-visualization)). It is also possible to export static versions of any visualization in a wide range of formats (see section on [Export visualization](#exporting-visualization)).
+then the native OpenGL backend will be used. Another possible backend is `WGLMakie` which will use WebGL that will render the results in an interactive web environment (this is meant to the used in interactive notebooks or special code editors such as VS Code). Finally, the `CairoMakie` backend will generate vector graphics that can be exported to pdf or svg files (not interactive). It is also possible to export static versions of any visualization in a wide range of formats (see section on [Export visualization](#exporting-visualization)).
 
 # Drawing graphs
 
@@ -31,12 +29,12 @@ For example, a simple graph would be as follows:
 
 ```julia
 module L
-    using VPL
+    using VirtualPlantLab
 
     struct N <: Node end
 end
 import .L
-using VPL
+using VirtualPlantLab
 import GLMakie
 axiom = L.N() + (L.N(), L.N()) + L.N() + (L.N(), L.N())
 draw(axiom)

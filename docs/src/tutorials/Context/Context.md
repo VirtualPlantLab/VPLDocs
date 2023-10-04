@@ -32,9 +32,9 @@ argument, which corresponds to the context of the father node captured in the
 lhs.
 
 ```julia
-using VPL
+using VirtualPlantLab
 module types
-    using VPL
+    using VirtualPlantLab
     struct Cell <: Node
         state::Int64
     end

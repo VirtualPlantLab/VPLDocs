@@ -26,26 +26,26 @@ In this first simple model, only internodes grow over time according to a relati
 In order to simulate growth of the 3D binary tree, we need to define a parameter describing the relative rate at which each internode elongates in each iteration of the simulation, a coefficient to compute the probability of bud break as well as the insertion and orientation angles of the leaves. We could stored these values as global constants, but VPL offers to opportunity to store them per plant. This makes it easier to manage multiple plants in the same simulation that may belong to different species, cultivars, ecotypes or simply to simulate plant-to-plant variation. Graphs in VPL can store an object of any user-defined type that will me made accessible to graph rewriting rules and queries. For this example, we define a data type `treeparams` that holds the relevant parameters. We use `Base.@kwdef` to assign default values to all parameters and allow to assign them by name.
 
 ```julia
-using VPL
+using VirtualPlantLab
 using ColorTypes
 import GLMakie
 
 module TreeTypes
-    import VPL
+    import VirtualPlantLab
     # Meristem
-    struct Meristem <: VPL.Node end
+    struct Meristem <: VirtualPlantLab.Node end
     # Bud
-    struct Bud <: VPL.Node end
+    struct Bud <: VirtualPlantLab.Node end
     # Node
-    struct Node <: VPL.Node end
+    struct Node <: VirtualPlantLab.Node end
     # BudNode
-    struct BudNode <: VPL.Node end
+    struct BudNode <: VirtualPlantLab.Node end
     # Internode (needs to be mutable to allow for changes over time)
-    Base.@kwdef mutable struct Internode <: VPL.Node
+    Base.@kwdef mutable struct Internode <: VirtualPlantLab.Node
         length::Float64 = 0.10 # Internodes start at 10 cm
     end
     # Leaf
-    Base.@kwdef struct Leaf <: VPL.Node
+    Base.@kwdef struct Leaf <: VirtualPlantLab.Node
         length::Float64 = 0.20 # Leaves are 20 cm long
         width::Float64  = 0.1 # Leaves are 10 cm wide
     end

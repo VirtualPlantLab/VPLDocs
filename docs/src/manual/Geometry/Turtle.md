@@ -5,6 +5,8 @@ Alejandro Morales
 Centre for Crop Systems Analysis - Wageningen University
 
 
+<!-- Explain the PlantGeomTurtle package -->
+
 ## Meshes
 
 The geometry in VPL consist of 3D triangular meshes. These meshes are used for
@@ -149,12 +151,12 @@ level variables (of the graph the node belongs to). The latter does not have to
 be used, but it may be useful if information at the plant level is required to
 generate geometry, colors or material objects (most often the information is
 stored inside the node itself). It is important that the second
-argument (the node) is annotated by its type and that the `VPL` prefix is used
+argument (the node) is annotated by its type and that the `PlantGeomTurtle` prefix is used
 to ensure that a method is created. For example, for a node of type `Internode`
 the function should be defined as:
 
 ```julia
-function VPL.feed!(t::Turtle, n::Internode, vars)
+function PlantGeomTurtle.feed!(t::Turtle, n::Internode, vars)
     <code here>
 end
 ```

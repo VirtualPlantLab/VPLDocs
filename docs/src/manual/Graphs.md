@@ -261,14 +261,14 @@ the graph construction algebra.
 
 ```julia
 module L
-    using VPL
+    using VirtualPlantLab
 
     struct N <: Node
         val::Int
     end
 end
 import .L
-using VPL
+using VirtualPlantLab
 PlantGraphs.reset_id!()
 axiom = L.N(1) + (L.N(3), L.N(4)) + L.N(2) + (L.N(5), L.N(6))
 data(axiom[2])

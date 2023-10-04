@@ -28,11 +28,11 @@ As usual, we start with defining the types of nodes in the graph
 
 ```julia
 #| code-fold: false
-using VPL
+using VirtualPlantLab
 import GLMakie
 
 module Queries
-    using VPL
+    using VirtualPlantLab
     struct A <: Node end
 
     struct C <: Node

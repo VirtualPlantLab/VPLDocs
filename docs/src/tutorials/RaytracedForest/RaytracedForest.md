@@ -11,7 +11,7 @@ radiation use efficiency to compute the daily growth rate.
 The following packages are needed:
 
 ```julia
-using VPL, ColorTypes
+using VirtualPlantLab, ColorTypes
 import GLMakie
 using Base.Threads: @threads
 using Plots
@@ -34,20 +34,20 @@ Lambertian surfaces).
 ```julia
 # Data types
 module TreeTypes
-    using VPL
+    using VirtualPlantLab
     using Distributions
     # Meristem
-    Base.@kwdef mutable struct Meristem <: VPL.Node
+    Base.@kwdef mutable struct Meristem <: VirtualPlantLab.Node
         age::Int64 = 0   # Age of the meristem
     end
     # Bud
-    struct Bud <: VPL.Node end
+    struct Bud <: VirtualPlantLab.Node end
     # Node
-    struct Node <: VPL.Node end
+    struct Node <: VirtualPlantLab.Node end
     # BudNode
-    struct BudNode <: VPL.Node end
+    struct BudNode <: VirtualPlantLab.Node end
     # Internode (needs to be mutable to allow for changes over time)
-    Base.@kwdef mutable struct Internode <: VPL.Node
+    Base.@kwdef mutable struct Internode <: VirtualPlantLab.Node
         age::Int64 = 0         # Age of the internode
         biomass::Float64 = 0.0 # Initial biomass
         length::Float64 = 0.0  # Internodes
@@ -56,7 +56,7 @@ module TreeTypes
         material::Lambertian{1} = Lambertian(τ = 0.1, ρ = 0.05) # Leaf material
     end
     # Leaf
-    Base.@kwdef mutable struct Leaf <: VPL.Node
+    Base.@kwdef mutable struct Leaf <: VirtualPlantLab.Node
         age::Int64 = 0         # Age of the leaf
         biomass::Float64 = 0.0 # Initial biomass
         length::Float64 = 0.0  # Leaves
@@ -545,7 +545,7 @@ using a dedicated graph and generate a `Scene` object which can later be
 merged with the rest of scene generated in daily step:
 
 ```julia
-Base.@kwdef struct Soil <: VPL.Node
+Base.@kwdef struct Soil <: VirtualPlantLab.Node
     length::Float64
     width::Float64
 end
