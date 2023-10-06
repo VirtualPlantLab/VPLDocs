@@ -51,6 +51,9 @@ makedocs(;
                 "Ecophys package" => "Ecophys/index.md",
                 "Photosynthesis API" => "Ecophys/photosynthesis.md"
             ],
+        ],
+        "Developers" => [
+            "Internal organization" => "developers/organization.md"
         ]
     ],
 )

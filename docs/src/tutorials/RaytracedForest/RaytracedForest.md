@@ -18,7 +18,7 @@ using Plots
 import Random
 using FastGaussQuadrature
 using Distributions
-using
+using SkyDomes
 Random.seed!(123456789)
 ```
 
@@ -96,7 +96,7 @@ the previous example but include the materials for the ray tracer.
 
 ```julia
 # Create geometry + color for the internodes
-function VPL.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
+function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
     # Rotate turtle around the head to implement elliptical phyllotaxis
     rh!(turtle, data.phyllotaxis)
     HollowCylinder!(turtle, length = i.length, height = i.width, width = i.width,
@@ -105,7 +105,7 @@ function VPL.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
 end
 
 # Create geometry + color for the leaves
-function VPL.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
+function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -data.leaf_angle)
     # Generate the leaf
@@ -117,7 +117,7 @@ function VPL.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
 end
 
 # Insertion angle for the bud nodes
-function VPL.feed!(turtle::Turtle, b::TreeTypes.BudNode, data)
+function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, data)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -data.branch_angle)
 end
@@ -210,7 +210,7 @@ for the light simulation.
 function create_soil()
     soil = Rectangle(length = 21.0, width = 21.0)
     rotatey!(soil, π/2) # To put it in the XY plane
-    VPL.translate!(soil, Vec(0.0, 10.5, 0.0)) # Corner at (0,0,0)
+    VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0)) # Corner at (0,0,0)
     return soil
 end
 function create_scene(forest)
@@ -549,7 +549,7 @@ Base.@kwdef struct Soil <: VirtualPlantLab.Node
     length::Float64
     width::Float64
 end
-function VPL.feed!(turtle::Turtle, s::Soil, data)
+function VirtualPlantLab.feed!(turtle::Turtle, s::Soil, data)
     Rectangle!(turtle, length = s.length, width = s.width, color = RGB(255/255, 236/255, 179/255))
 end
 soil_graph = RA(-90.0) + T(Vec(0.0, 10.0, 0.0)) + # Moves into position

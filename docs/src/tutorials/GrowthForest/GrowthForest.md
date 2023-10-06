@@ -99,7 +99,7 @@ the previous example.
 
 ```julia
 # Create geometry + color for the internodes
-function VPL.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
+function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
     # Rotate turtle around the head to implement elliptical phyllotaxis
     rh!(turtle, vars.phyllotaxis)
     HollowCylinder!(turtle, length = i.length, height = i.width, width = i.width,
@@ -108,7 +108,7 @@ function VPL.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
 end
 
 # Create geometry + color for the leaves
-function VPL.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
+function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -vars.leaf_angle)
     # Generate the leaf
@@ -120,7 +120,7 @@ function VPL.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
 end
 
 # Insertion angle for the bud nodes
-function VPL.feed!(turtle::Turtle, b::TreeTypes.BudNode, vars)
+function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, vars)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -vars.branch_angle)
 end
@@ -399,7 +399,7 @@ Base.@kwdef struct Soil <: VirtualPlantLab.Node
     length::Float64
     width::Float64
 end
-function VPL.feed!(turtle::Turtle, s::Soil, vars)
+function VirtualPlantLab.feed!(turtle::Turtle, s::Soil, vars)
     Rectangle!(turtle, length = s.length, width = s.width, color = RGB(255/255, 236/255, 179/255))
 end
 soil_graph = RA(-90.0) + T(Vec(0.0, 10.0, 0.0)) + # Moves into position

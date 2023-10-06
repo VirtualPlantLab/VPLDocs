@@ -64,7 +64,7 @@ As always, the 3D structure and the color of each type of node are implemented w
 
 ```julia
 # Create geometry + color for the internodes
-function VPL.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
+function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
     # Rotate turtle around the head to implement elliptical phyllotaxis
     rh!(turtle, vars.phyllotaxis)
     HollowCylinder!(turtle, length = i.length, height = i.length/15, width = i.length/15,
@@ -73,7 +73,7 @@ function VPL.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
 end
 
 # Create geometry + color for the leaves
-function VPL.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
+function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -vars.leaf_angle)
     # Generate the leaf
@@ -85,7 +85,7 @@ function VPL.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
 end
 
 # Insertion angle for the bud nodes
-function VPL.feed!(turtle::Turtle, b::TreeTypes.BudNode, vars)
+function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, vars)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -vars.branch_angle)
 end
@@ -107,7 +107,7 @@ function prob_break(bud)
     node =  parent(bud)
     # We count the number of internodes between node and the first Meristem
     # moving down the graph
-    check, steps = hasdescendant(node, condition = n -> data(n) isa TreeTypes.Meristem)
+    check, steps = has_descendant(node, condition = n -> data(n) isa TreeTypes.Meristem)
     steps = Int(ceil(steps/2)) # Because it will count both the nodes and the internodes
     # Compute probability of bud break and determine whether it happens
     if check

@@ -55,7 +55,7 @@ end
 import .TreeTypes
 
 # Create geometry + color for the internodes
-function VPL.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
+function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
     # Rotate turtle around the head to implement elliptical phyllotaxis
     rh!(turtle, data.phyllotaxis)
     HollowCylinder!(turtle, length = i.length, height = i.length/15, width = i.length/15,
@@ -64,7 +64,7 @@ function VPL.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
 end
 
 # Create geometry + color for the leaves
-function VPL.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
+function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -data.leaf_angle)
     # Generate the leaf
@@ -76,7 +76,7 @@ function VPL.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
 end
 
 # Insertion angle for the bud nodes
-function VPL.feed!(turtle::Turtle, b::TreeTypes.BudNode, data)
+function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, data)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -data.branch_angle)
 end
@@ -92,7 +92,7 @@ function prob_break(bud)
     node =  parent(bud)
     # We count the number of internodes between node and the first Meristem
     # moving down the graph
-    check, steps = hasdescendant(node, condition = n -> data(n) isa TreeTypes.Meristem)
+    check, steps = has_descendant(node, condition = n -> data(n) isa TreeTypes.Meristem)
     steps = Int(ceil(steps/2)) # Because it will count both the nodes and the internodes
     # Compute probability of bud break and determine whether it happens
     if check
@@ -277,13 +277,13 @@ corner and each side being 11 units long:
 ```julia
 soil = Rectangle(length = 21.0, width = 21.0)
 rotatey!(soil, pi/2)
-VPL.translate!(soil, Vec(0.0, 10.5, 0.0))
+VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0))
 ```
 
 We can now add the `soil` to the `scene` object with the `add!` function.
 
 ```julia
-VPL.add!(scene, mesh = soil, color = RGB(1,1,0))
+VirtualPlantLab.add!(scene, mesh = soil, color = RGB(1,1,0))
 ```
 
 We can now render the scene that combines the random forest of binary trees and a yellow soil. Notice that

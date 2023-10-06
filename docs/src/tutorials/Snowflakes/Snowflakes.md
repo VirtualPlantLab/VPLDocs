@@ -63,7 +63,7 @@ above. The axiom is straightforward:
 
 ```julia
 const L = 1.0
-axiom = sn.E(L) + VPL.RU(120.0) + sn.E(L) + VPL.RU(120.0) + sn.E(L)
+axiom = sn.E(L) + VirtualPlantLab.RU(120.0) + sn.E(L) + VirtualPlantLab.RU(120.0) + sn.E(L)
 ```
 
 The rule is also straightforward to implement as all the nodes of type E will be
@@ -89,7 +89,7 @@ Koch = Graph(axiom = axiom, rules = Tuple(rule))
 ```
 
 In order to be able to generate a 3D structure we need to define a method for
-the function `VPL.feed!` (notice the need to prefix it with `VPL.` as we are
+the function `VirtualPlantLab.feed!` (notice the need to prefix it with `VirtualPlantLab.` as we are
 going to define a method for this function). The method needs to two take two
 arguments, the first one is always an object of type Turtle and the second is an
 object of the type for which the method is defined (in this case, E).
@@ -98,7 +98,7 @@ The body of the method should generate the 3D structures using the geometry
 primitives provided by VPL and feed them to the turtle that is being passed to
 the method as first argument. In this case, we are going to represent the edges
 of the Koch snowflakes with cylinders, which can be generated with the
-`HollowCylinder!` function from VPL. Note that the `feed!` should return
+`HollowCylinder!` function from VirtualPlantLab. Note that the `feed!` should return
 `nothing`, the turtle will be modified in place (hence the use of `!` at the end
 of the function as customary in the VPL community).
 
@@ -109,7 +109,7 @@ figures more appealing, we can assign random values to each channel of the color
 to generate random colors.
 
 ```julia
-function VPL.feed!(turtle::Turtle, e::sn.E, vars)
+function VirtualPlantLab.feed!(turtle::Turtle, e::sn.E, vars)
     HollowCylinder!(turtle, length = e.length, width = e.length/10,
                     height = e.length/10, move = true,
                     color = RGB(rand(), rand(), rand()))

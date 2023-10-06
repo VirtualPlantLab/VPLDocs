@@ -27,7 +27,6 @@ whereas `A` nodes contain no data.
 As usual, we start with defining the types of nodes in the graph
 
 ```julia
-#| code-fold: false
 using VirtualPlantLab
 import GLMakie
 
@@ -52,7 +51,6 @@ the graph in a piecewise manner. Note how we can use the function `sum` to add
 nodes to the graph (i.e. `sum(A() for i in 1:3)` is equivalent to `A() + A() + A()`)
 
 ```julia
-#| code-fold: false
 motif(n, i = 0) = Q.A() + (Q.C(45.0) + Q.A() + (Q.C(45.0) +  Q.A() + Q.B(i + 1),
                                            Q.C(-45.0) + Q.A() + Q.B(i + 2),
                                                        Q.A() + Q.B(i + 3)),
@@ -68,9 +66,9 @@ to specify exactly how to label the nodes of a particular type. In this case, we
 for nodes of type `B` we want to use the `ID` field that was stored inside the node during the graph generation.
 
 ```julia
-VPL.node_label(n::Q.B, id) = "B-$(n.ID)"
-VPL.node_label(n::Q.A, id) = "A"
-VPL.node_label(n::Q.C, id) = "C"
+VirtualPlantLab.node_label(n::Q.B, id) = "B-$(n.ID)"
+VirtualPlantLab.node_label(n::Q.A, id) = "A"
+VirtualPlantLab.node_label(n::Q.C, id) = "C"
 draw(graph)
 ```
 
@@ -86,14 +84,12 @@ First, we create the query object. In this case, there is no special condition a
 we want to retrieve all the nodes of type `B`
 
 ```julia
-#| code-fold: false
 Q1 = Query(Q.B)
 ```
 
 Applying the query to the graph returns an array with all the `B` nodes
 
 ```julia
-#| code-fold: false
 A1 = apply(graph, Q1)
 ```
 
@@ -146,7 +142,7 @@ described in the above) and then check the distance of that node from the root:
 ```julia
 function branch_motif(p)
     data(p) isa Q.A &&
-    hasdescendant(p, condition = x -> data(x) isa Q.C && data(x).val < 0.0)[1] &&
+    has_descendant(p, condition = x -> data(x) isa Q.C && data(x).val < 0.0)[1] &&
     has_ancestor(p, condition = x -> data(x) isa Q.C && data(x).val > 0.0)[1]
 end
 
@@ -156,7 +152,7 @@ function Q3_fun(n, nsteps)
     !check && return false
     # Condition 2
     p = parent(n, nsteps = steps)
-    check, steps = has_ancestor(p, condition = isroot)
+    check, steps = has_ancestor(p, condition = is_root)
     steps != nsteps && return false
     return true
 end
@@ -180,7 +176,7 @@ to be selected from the returned tuple:
 
 ```julia
 function Q4_fun(n)
-    !has_ancestor(n, condition = x -> isroot(x) && length(children(x)) > 1)[1]
+    !has_ancestor(n, condition = x -> is_root(x) && length(children(x)) > 1)[1]
 end
 ```
 
@@ -198,7 +194,7 @@ retrieve from the second argument returned by `hasAncestor()`:
 
 ```julia
 function Q5_fun(n)
-    check, steps = has_ancestor(n, condition = isroot)
+    check, steps = has_ancestor(n, condition = is_root)
     steps == 4
 end
 
@@ -288,8 +284,8 @@ As always, we can reusing previous conditions since they are just regular Julia 
 ```julia
 function Q10_fun(n)
     Q6_fun(n, 3) && return true # Check node 7
-    Q9_fun(n) && has_ancestor(n, condition = isroot)[2] == 6 && return true # Check node 6
-    has_ancestor(n, condition = isroot)[2] == 5 && data(parent(n, nsteps = 3)) isa Q.C && return true # Check node 8 (and not 4!)
+    Q9_fun(n) && has_ancestor(n, condition = is_root)[2] == 6 && return true # Check node 6
+    has_ancestor(n, condition = is_root)[2] == 5 && data(parent(n, nsteps = 3)) isa Q.C && return true # Check node 8 (and not 4!)
 end
 
 Q10 = Query(Q.B, condition = Q10_fun)
@@ -306,7 +302,7 @@ function Q11_fun(n)
     Q5_fun(n) && return true # 3
     Q6_fun(n, 3) && return true # 7
     Q6_fun(n, 4) && return true # 11
-    has_ancestor(n, condition = isroot)[2] == 5 && data(parent(n, nsteps = 2)) isa Q.C &&
+    has_ancestor(n, condition = is_root)[2] == 5 && data(parent(n, nsteps = 2)) isa Q.C &&
         data(parent(n, nsteps = 4)) isa Q.A && return true # 12
 end
 
@@ -321,7 +317,7 @@ We just need to combine the conditions for the nodes 7 and 12
 ```julia
 function Q12_fun(n)
     Q6_fun(n, 3) && return true # 7
-    has_ancestor(n, condition = isroot)[2] == 5 && data(parent(n, nsteps = 2)) isa Q.C &&
+    has_ancestor(n, condition = is_root)[2] == 5 && data(parent(n, nsteps = 2)) isa Q.C &&
         data(parent(n, nsteps = 4)) isa Q.A && return true # 12
 end
 
