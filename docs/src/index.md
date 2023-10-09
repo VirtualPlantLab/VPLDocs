@@ -7,10 +7,14 @@ Centre for Crop Systems Analysis - Wageningen University
 
 ## Introduction
 
-The Virtual Plant Laboratory (VPL) is a Julia package that aids in the construction,
-simulation and visualization of functional-structural plant models (FSPM). VPL
-is not a standalone solution to all the computational problems relevant to FSPM,
-but rather it focuses on those algorithms that are specific to
+The Virtual Plant Laboratory (VPL) is a collection of Julia packages that aid in the
+construction, simulation and visualization of functional-structural plant models (FSPM).
+Users are meant to make use of the interface package (VirtualPlantLab.jl) which provides the
+API to the different packages in VPL. Additional packages complement the functionality of VPL
+forming the *VPLverse* (see below for details).
+
+VPL is not a standalone solution to all the computational problems relevant to FSPM,
+but rather it focuses on those algorithms and data structures that are specific to
 FSPM and for which there are no good solutions in the Julia package ecosystem.
 Furthermore, VPL is 100% written in Julia and therefore VPL will work in any
 platform and with any code editor where Julia works. Finally, VPL does not offer
@@ -37,33 +41,18 @@ software, though may also make them more transparent and easier to follow.
 
 ## Installation
 
-VPL requires using Julia version 1.9 or higher. The installation of VPL is as
+VPL requires using Julia version 1.9 or higher. The installation of core of VPL is as
 easy as running the following code:
 
 ```julia
 ] add VirtualPlantLab
 ```
 
-This requires an Internet connection such that Julia will download the source code of the VPL package
-and install it in the local machine. Note that throughout this documentation, we will refer
-to VPL for short, but the actual name of the Julia package is `VirtualPlantLab` (the Julia
-community is not fond of short acronyms as package names).
-
-## The *VPLverse*
-
-VPL contains all the basic functionality to build FSP models but, as
-indicated earlier, the emphasis is on minimal, simple and transparent interfaces.
-In order to facilitate the construction of non-trivial FSP models, an ecosystem of
-packages built around VPL provide additional support to the modeller by offering
-reusable modules that can be reused in new models.
-
-The packages currently planned for *VPLverse* are:
-
-* *Ecophys.jl* - Algorithms and data structures to simulate ecophysiological processes
-including photosynthesis, transpiration, leaf energy balance, phenology or respiration.
-
-* *SkyDomes.jl* - Algorithms to simulate different sky conditions in terms of the intensity of
-solar radiation and its spatial and angular distribution.
+This will install all the packages that form the core of VPL (see section on
+[Organization](@ref organization)). Additional packages that are meant to work with VPL (or
+as standalone packages) are available as part of the *VPLverse* (see section on
+[Organization](@ref organization)). These are not necessary to build an FSP models but in
+many cases they will be useful to complement the functionality of VPL.
 
 ## Documentation
 
@@ -72,7 +61,8 @@ Documentation for VPL is provided in this website in four formats:
 1. User manual
 2. Tutorials
 3. API
-4. Technical notes (in development)
+4. VPLverse
+5. Technical notes (in development)
 
 The documentation for packages from the *VPLverse* are included in their respective sections.
 
