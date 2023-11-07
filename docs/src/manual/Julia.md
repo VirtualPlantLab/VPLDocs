@@ -9,16 +9,16 @@ Centre for Crop Systems Analysis - Wageningen University
 
 This is not a tutorial or introduction to Julia, but a collection of basic
 concepts about Julia that are particularly useful to understand VPL.  It is
-assumed that the reader has some  experience with programming in other languages,
+assumed that the reader has some experience with programming in other languages,
 such as Matlab, R or Python. These concepts should be complemented with general
 introductory material about Julia, which can be found at the official
 [Julia website](https://julialang.org/).
 
 Julia is a dynamic, interactive programming language, like Matlab, R or Python.
 Thus, it is very easy to use and learn incrementally. The language is young and
-well designed, with an emphasis on numerical/scientific computation although it
+well-designed, with an emphasis on numerical/scientific computation, although it
 is starting to occupy some space in areas such as data science and machine
-learning. It has a clear syntax and better consistency than older programming
+learning. It has a clear syntax and better consistency than some older programming
 languages.
 
 Unlike Matlab, R or Python, Julia was designed from the beginning to be fast (as
@@ -44,11 +44,11 @@ and Jupyter notebook):
 * Code cells inside a Jupyter notebook
 * Code cells inside Pluto notebook (a Julia implementation of a reactive notebook)
 
-The first time in a Julia session that a method is called it will take extra
+The first time in a Julia session that a method is called, it will take extra
 time as the method will have to be compiled (i.e. Julia uses a Just-in-Time
 compiler as opposed to an interpreter). Also, the first time you load a package
 after installation/update it will take extra time to load due to precompilation
-(this reduces JIT compilation times somewhat). Also, code editors and notebooks
+(this reduces JIT compilation times somewhat). Moreover, code editors and notebooks
 may need to run additional code to achieve their full functionality, which may
 add some delays in executing the code.
 
@@ -57,6 +57,7 @@ add some delays in executing the code.
 ## Functions
 
 A function is defined with the following syntax.
+
 ```julia
 function foo(x)
     x^2
@@ -98,7 +99,7 @@ foo4(2.0)
 
 Once created, there is no difference among `foo`, `foo2`, `foo3` and `foo4`.
 
-Anonymous functions are useful when passing a function to another function as argument. For example, the function `bar` below allows applying any function `f` to an argument `x`. In this case we could pass any of the variables defined above, or just create an anonymous funcion in-place.
+Anonymous functions are useful when passing a function to another function as argument. For example, the function `bar` below allows applying any function `f` to an argument `x`. In this case we could pass any of the variables defined above, or just create an anonymous function in-place.
 
 ```julia
 function bar(x, f)
@@ -109,7 +110,7 @@ bar(2.0, x -> x^2)
 
 ## Types
 
-A Type in Julia is a data structure that can contain one or more fields. Types are used to keep related data together, and to select the right method implementation of a function (see below). It shares some of the properties of Classes in Object-Oriented Programming but there are also important differences.
+A Type in Julia is a data structure that can contain one or more fields. Types are used to keep related data together, and to select the right method implementation of a function (see below). It shares some properties of Classes in Object-Oriented Programming, but there are also important differences.
 
 Julia types can be immutable or mutable.
 
@@ -150,19 +151,20 @@ mp.x = 1.0
 mp
 ```
 
-We can always check the type of an object with the function `typeof`
+We can always check the type of object with the function `typeof`
 
 ```julia
 typeof(p)
 ```
 
-If you forget the fields of a type, try to using `fieldnames` in the type (not the object). It will return the name of all the fields it contains (the ":" in front of each name can be ignored)
+If you forget the fields of a type, try to use `fieldnames` in the type (not the object). It will return the name of all the fields it contains (the ":" in front of each name can be ignored)
 
 ```julia
 fieldnames(Point)
 ```
 
 Note that, for performance reasons, the type of each field should be annotated in the type definition as in:
+
 ```julia
 struct pPoint
   x::Float64
@@ -209,9 +211,9 @@ So we need to define `dist` for `mPoint` as arguments, or use inheritance (see b
 
 Types cannot inherit from other types.
 
-However, when multiple types share analogus functionality, it is possible to group them by "abstract types" from which they can inherit. Note that abstract types do not contain any fields, so inheritance only works for methods. "abstract types are defined by how they act" (C. Rackauckas)
+However, when multiple types share analogous functionality, it is possible to group them by "abstract types" from which they can inherit. Note that abstract types do not contain any fields, so inheritance only works for methods. "abstract types are defined by how they act" (C. Rackauckas)
 
-For example, we may define an abstract type `Vec3` defined as any type for which a distance (`dist`) can be calculated. The default implementation assumes that the type contains fields `x`, `y` and `z`, though inherited methods can always be overriden.
+For example, we may define an abstract type `Vec3` as any type for which a distance (`dist`) can be calculated. The default implementation assumes that the type contains fields `x`, `y` and `z`, though inherited methods can always be overridden.
 
 Inheritance is indicated by the "<:" syntax after the name of the type in its declaration.
 
@@ -242,6 +244,7 @@ end
 ```
 
 The method now works with `Point2` and `mPoint2`
+
 ```julia
 p1 = Point2(1.0, 0.0, 0.0)
 p2 = Point2(0.0, 1.0, 0.0)

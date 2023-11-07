@@ -25,7 +25,7 @@ and [methods](https://docs.julialang.org/en/v1/manual/methods/).
 There is no standard definition of what an FSPM is (though these models will
 always involve some combination of plant structure and function) so VPL may
 not be useful with every possible FSPM. Instead, VPL focuses on
-models that represent indivudual plants as graphs of elements (usually organs)
+models that represent individual plants as graphs of elements (usually organs)
 that interact with each other and with the environment. In a typical VPL model,
 each plant is represented by its own graph which can change dynamically through
 the iterative application of graph rewriting rules. Based on this goal, what VPL
@@ -37,7 +37,7 @@ and simulating capture of different resources (e.g. light).
 In terms of design, VPL gives priority to performance and simple interfaces as
 opposed to complex layers of abstraction. This implies that models in VPL may
 be more verbose and procedural (as opposed to descriptive) than in other FSPM
-software, though may also make them more transparent and easier to follow.
+software, but that may also make them more transparent and easier to follow.
 
 ## Installation
 
@@ -48,8 +48,7 @@ easy as running the following code:
 ] add VirtualPlantLab
 ```
 
-This will install all the packages that form the core of VPL (see section on
-[Organization](@ref organization)). Additional packages that are meant to work with VPL (or
+This will install all the packages that form the core of VPL. Additional packages that are meant to work with VPL (or
 as standalone packages) are available as part of the *VPLverse* (see section on
 [Organization](@ref organization)). These are not necessary to build an FSP models but in
 many cases they will be useful to complement the functionality of VPL.
@@ -62,9 +61,7 @@ Documentation for VPL is provided in this website in four formats:
 2. Tutorials
 3. API
 4. VPLverse
-5. Technical notes (in development)
-
-The documentation for packages from the *VPLverse* are included in their respective sections.
+5. Technical notes for developers
 
 New users are expected to start with the tutorials and consult the user manual
 to understand better the different concepts used in VPL and get an overview of
@@ -76,6 +73,4 @@ in the Julia manual).
 
 The technical notes are useful for people who want to understand the internal details of VPL
 and how different algorithms are implemented (i.e. the technical notes should be seen as a
-supplementary to the source code of VPL). The technical notes are not intended to be read
-by casual users but rather by those who seek a deeper understanding of internal structure
-and code behind VPL.
+supplement to the source code of VPL).
