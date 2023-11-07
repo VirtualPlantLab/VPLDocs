@@ -35,6 +35,9 @@ makedocs(;
             "Context sensitive rules" => "tutorials/Context/Context.md",
             "Relational queries" => "tutorials/RelationalQueries/RelationalQueries.md"
         ],
+        "How-to guides" => [
+            "Setting up a grid cloner" => "howto/GridCloner.md"
+        ],
         "API" => [
             "Graphs" => "api/graphs.md",
             "Scenes and 3D meshes" => "api/geometry.md",
@@ -53,6 +56,9 @@ makedocs(;
             ],
             "PlantSimEngine" => [
                 "PlantSimEngine package" => "PlantSimEngine/index.md"
+            ],
+            "PlantBioPhysics" => [
+                "PlantBioPhysics package" => "PlantBioPhysics/index.md"
             ]
         ],
         "Developers" => [
