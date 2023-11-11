@@ -1,7 +1,3 @@
-```@meta
-EditURL = "../../../../VirtualPlantLab/test/forest.jl"
-```
-
 # Forest
 
 Alejandro Morales
@@ -198,7 +194,6 @@ with the correct inputs per tree:
 
 ````julia
 forest = vec(create_tree.(origins, growths, budbreaks, orientations));
-nothing #hide
 ````
 
 By vectorizing `create_tree()` over the different arrays, we end up with an array
@@ -216,7 +211,6 @@ tree, creating a new version of the forest (the code below is an array comprehen
 
 ````julia
 newforest = [simulate(tree, getInternode, 2) for tree in forest];
-nothing #hide
 ````
 
 And we can render the forest with the function `render` as in the binary tree
@@ -273,7 +267,6 @@ with the `newforest` generated in the above:
 
 ````julia
 scene = Scene(newforest);
-nothing #hide
 ````
 
 We can create the soil tile directly, without having to create a graph. The simplest approach is two use

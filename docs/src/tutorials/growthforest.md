@@ -1,7 +1,3 @@
-```@meta
-EditURL = "../../../../VirtualPlantLab/test/growthforest.jl"
-```
-
 # Growth forest
 
 Alejandro Morales
@@ -355,7 +351,6 @@ orientations = [rand()*360.0 for i = 1:2.0:20.0, j = 1:2.0:20.0]
 histogram(vec(orientations))
 
 origins = [Vec(i,j,0) for i = 1:2.0:20.0, j = 1:2.0:20.0];
-nothing #hide
 ````
 
 The following initalizes a tree based on the origin, orientation and RGR:

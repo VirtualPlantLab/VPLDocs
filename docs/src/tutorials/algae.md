@@ -1,7 +1,3 @@
-```@meta
-EditURL = "../../../../VirtualPlantLab/test/algae.jl"
-```
-
 # Algae growth
 
 Alejandro Morales

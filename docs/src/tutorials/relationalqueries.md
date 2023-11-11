@@ -1,7 +1,3 @@
-```@meta
-EditURL = "../../../../VirtualPlantLab/test/relationalqueries.jl"
-```
-
 # Relational queries
 
 Alejandro Morales

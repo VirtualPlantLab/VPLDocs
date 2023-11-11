@@ -1,7 +1,3 @@
-```@meta
-EditURL = "../../../../VirtualPlantLab/test/tree.jl"
-```
-
 # Tree
 
 Alejandro Morales

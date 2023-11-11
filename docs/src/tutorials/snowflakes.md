@@ -1,7 +1,3 @@
-```@meta
-EditURL = "../../../../VirtualPlantLab/test/snowflakes.jl"
-```
-
 # The Koch snowflake
 
 Alejandro Morales

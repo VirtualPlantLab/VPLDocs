@@ -1,7 +1,3 @@
-```@meta
-EditURL = "../../../../VirtualPlantLab/test/context.jl"
-```
-
 # Context sensitive rules
 
 Alejandro Morales
