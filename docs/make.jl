@@ -1,10 +1,10 @@
 using VPLDocs
 using Documenter
-import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys
+import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys, PlantSimEngine
 
 makedocs(;
     doctest = false,
-    modules=[VPLDocs, PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys],
+    modules = [VPLDocs, PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys, PlantSimEngine],
     authors="Alejandro Morales <alejandro.moralessierra@wur.nl> and contributors",
     repo="https://github.com/VirtualPlantLab/VPLDocs/blob/{commit}{path}#{line}",
     sitename="Virtual Plant Laboratory",
@@ -26,14 +26,14 @@ makedocs(;
             "3D visualization" => "manual/Visualization.md"
         ],
         "Tutorials" => [
-            "Algae growth" => "tutorials/Algae/Algae.md",
-            "The Koch snowflake" => "tutorials/Snowflakes/Snowflakes.md",
-            "Tree" => "tutorials/Tree/Tree.md",
-            "Forest" => "tutorials/Forest/Forest.md",
-            "Growth forest" => "tutorials/GrowthForest/GrowthForest.md",
-            "Ray-traced forest" => "tutorials/RaytracedForest/RaytracedForest.md",
-            "Context sensitive rules" => "tutorials/Context/Context.md",
-            "Relational queries" => "tutorials/RelationalQueries/RelationalQueries.md"
+            "Algae growth" => "tutorials/algae.md",
+            "The Koch snowflake" => "tutorials/snowflakes.md",
+            "Tree" => "tutorials/tree.md",
+            "Forest" => "tutorials/forest.md",
+            "Growth forest" => "tutorials/growthforest.md",
+            "Ray-traced forest" => "tutorials/raytracedforest.md",
+            "Context sensitive rules" => "tutorials/context.md",
+            "Relational queries" => "tutorials/relationalqueries.md"
         ],
         "How-to guides" => [
             "Setting up a grid cloner" => "howto/GridCloner.md"
@@ -47,18 +47,18 @@ makedocs(;
         ],
         "VPLVerse" => [
             "SkyDomes" => [
-                "SkyDomes package" => "SkyDomes/index.md",
-                "SkyDomes API" => "SkyDomes/API.md"
+                "SkyDomes package" => "VPLVerse/SkyDomes/index.md",
+                "SkyDomes API" => "VPLVerse/SkyDomes/API.md"
             ],
             "Ecophys" => [
-                "Ecophys package" => "Ecophys/index.md",
-                "Photosynthesis API" => "Ecophys/photosynthesis.md"
+                "Ecophys package" => "VPLVerse/Ecophys/index.md",
+                "Photosynthesis API" => "VPLVerse/Ecophys/photosynthesis.md"
             ],
             "PlantSimEngine" => [
-                "PlantSimEngine package" => "PlantSimEngine/index.md"
+                "PlantSimEngine package" => "VPLVerse/PlantSimEngine/index.md"
             ],
             "PlantBioPhysics" => [
-                "PlantBioPhysics package" => "PlantBioPhysics/index.md"
+                "PlantBioPhysics package" => "VPLVerse/PlantBioPhysics/index.md"
             ]
         ],
         "Developers" => [

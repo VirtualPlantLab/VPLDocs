@@ -1,3 +1,7 @@
+```@meta
+EditURL = "../../../../VirtualPlantLab/test/forest.jl"
+```
+
 # Forest
 
 Alejandro Morales
@@ -7,18 +11,10 @@ Centre for Crop Systems Analysis - Wageningen University
 In this example we extend the tree example into a forest, where
 each tree is described by a separate graph object and parameters driving the
 growth of these trees vary across individuals following a predefined distribution.
-This tutorial requires using the Distributions.jl package:
-
-```julia
-import Pkg
-Pkg.add("Distributions")
-Pkg.add("Plots")
-```
-
 The data types, rendering methods and growth rules are the same as in the binary
 tree example:
 
-```julia
+````@example forest
 using VirtualPlantLab
 using Distributions, Plots, ColorTypes
 import GLMakie
@@ -53,8 +49,11 @@ module TreeTypes
 end
 
 import .TreeTypes
+````
 
-# Create geometry + color for the internodes
+Create geometry + color for the internodes
+
+````@example forest
 function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
     # Rotate turtle around the head to implement elliptical phyllotaxis
     rh!(turtle, data.phyllotaxis)
@@ -62,8 +61,11 @@ function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
                 move = true, color = RGB(0.5,0.4,0.0))
     return nothing
 end
+````
 
-# Create geometry + color for the leaves
+Create geometry + color for the leaves
+
+````@example forest
 function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -data.leaf_angle)
@@ -74,15 +76,20 @@ function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
     ra!(turtle, data.leaf_angle)
     return nothing
 end
+````
 
-# Insertion angle for the bud nodes
+Insertion angle for the bud nodes
+
+````@example forest
 function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, data)
     # Rotate turtle around the arm for insertion angle
     ra!(turtle, -data.branch_angle)
 end
+````
 
+Rules
 
-# Rules
+````@example forest
 meristem_rule = Rule(TreeTypes.Meristem, rhs = mer -> TreeTypes.Node() +
                                               (TreeTypes.Bud(), TreeTypes.Leaf()) +
                                          TreeTypes.Internode() + TreeTypes.Meristem())
@@ -107,7 +114,7 @@ end
 branch_rule = Rule(TreeTypes.Bud,
             lhs = prob_break,
             rhs = bud -> TreeTypes.BudNode() + TreeTypes.Internode() + TreeTypes.Meristem())
-```
+````
 
 The main difference with respect to the tree is that several of the parameters
 will vary per TreeTypes. Also, the location of the tree and initial orientation of
@@ -119,19 +126,19 @@ of each tree and rotates it.
 (ii) Wrap the axiom, rules and the creation of the graph into a function that
 takes the required parameters as inputs.
 
-```julia
+````@example forest
 function create_tree(origin, growth, budbreak, orientation)
     axiom = T(origin) + RH(orientation) + TreeTypes.Internode() + TreeTypes.Meristem()
     tree =  Graph(axiom = axiom, rules = (meristem_rule, branch_rule),
                   data = TreeTypes.treeparams(growth = growth, budbreak = budbreak))
     return tree
 end
-```
+````
 
 The code for elongating the internodes to simulate growth remains the same as for
 the binary tree example
 
-```julia
+````@example forest
 getInternode = Query(TreeTypes.Internode)
 
 function elongate!(tree, query)
@@ -152,46 +159,47 @@ function simulate(tree, query, nsteps)
     end
     return new_tree
 end
-```
+````
 
 Let's simulate a forest of 10 x 10 trees with a distance between (and within) rows
 of 2 meters. First we generate the original positions of the trees. For the
 position we just need to pass a `Vec` object with the x, y, and z coordinates of
 the location of each TreeTypes. The code below will generate a matrix with the coordinates:
 
-```julia
+````@example forest
 origins = [Vec(i,j,0) for i = 1:2.0:20.0, j = 1:2.0:20.0]
-```
+````
 
 We may assume that the initial orientation is uniformly distributed between 0 and 360 degrees:
 
-```julia
+````@example forest
 orientations = [rand()*360.0 for i = 1:2.0:20.0, j = 1:2.0:20.0]
-```
+````
 
 For the `growth` and `budbreak` parameters we will assumed that they follow a
 LogNormal and Beta distribution, respectively. We can generate random
 values from these distributions using the `Distributions` package. For the
 relative growth rate:
 
-```julia
+````@example forest
 growths = rand(LogNormal(-2, 0.3), 10, 10)
 histogram(vec(growths))
-```
+````
 
 And for the budbreak parameter:
 
-```julia
+````@example forest
 budbreaks = rand(Beta(2.0, 10), 10, 10)
 histogram(vec(budbreaks))
-```
+````
 
 Now we can create our forest by calling the `create_tree` function we defined earlier
 with the correct inputs per tree:
 
-```julia
+````@example forest
 forest = vec(create_tree.(origins, growths, budbreaks, orientations));
-```
+nothing #hide
+````
 
 By vectorizing `create_tree()` over the different arrays, we end up with an array
 of trees. Each tree is a different Graph, with its own nodes, rewriting rules
@@ -206,24 +214,25 @@ as you may need to change some settings in your computer).
 We can simulate the growth of each tree by applying the method `simulate` to each
 tree, creating a new version of the forest (the code below is an array comprehension)
 
-```julia
+````@example forest
 newforest = [simulate(tree, getInternode, 2) for tree in forest];
-```
+nothing #hide
+````
 
 And we can render the forest with the function `render` as in the binary tree
 example but passing the whole forest at once
 
-```julia
+````@example forest
 render(Scene(newforest))
-```
+````
 
 If we iterate 4 more iterations we will start seeing the different individuals
 diverging in size due to the differences in growth rates
 
-```julia
+````@example forest
 newforest = [simulate(tree, getInternode, 15) for tree in newforest];
 render(Scene(newforest))
-```
+````
 
 ## Multithreaded simulation
 
@@ -234,26 +243,26 @@ and execute the iterations of the loop in multiple threads using the macro `@thr
 Note that the rendering function can also be ran in parallel (i.e. the geometry will be
 generated separately for each plant and the merge together):
 
-```julia
+````@example forest
 using Base.Threads
 newforest = deepcopy(forest)
-@threads for i in 1:length(forest)
+@threads for i in eachindex(forest)
     newforest[i] = simulate(forest[i], getInternode, 6)
 end
 render(Scene(newforest), parallel = true)
-```
+````
 
 An alternative way to perform the simulation is to have an outer loop for each timestep and an internal loop over the different trees. Although this approach is not required for this simple model, most FSP models will probably need such a scheme as growth of each individual plant will depend on competition for resources with neighbouring plants. In this case, this approach would look as follows:
 
-```julia
+````@example forest
 newforest = deepcopy(forest)
 for step in 1:15
-    @threads for i in 1:length(newforest)
+    @threads for i in eachindex(newforest)
         newforest[i] = simulate(newforest[i], getInternode, 1)
     end
 end
 render(Scene(newforest), parallel = true)
-```
+````
 
 # Customizing the scene
 
@@ -262,9 +271,10 @@ tweaking the 3D representation. When we want to combine plants generated from gr
 geometric element it is best to combine all these geometries in a `GLScene` object. We can start the scene
 with the `newforest` generated in the above:
 
-```julia
+````@example forest
 scene = Scene(newforest);
-```
+nothing #hide
+````
 
 We can create the soil tile directly, without having to create a graph. The simplest approach is two use
 a special constructor `Rectangle` where one species a corner of the rectangle and two vectors defining the
@@ -274,17 +284,17 @@ above when we determined the origin of each plant. VPL offers some shortcuts: `O
 passing the desired length as input. Below, a rectangle is created on the XY plane with the origin as a
 corner and each side being 11 units long:
 
-```julia
+````@example forest
 soil = Rectangle(length = 21.0, width = 21.0)
 rotatey!(soil, pi/2)
 VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0))
-```
+````
 
 We can now add the `soil` to the `scene` object with the `add!` function.
 
-```julia
+````@example forest
 VirtualPlantLab.add!(scene, mesh = soil, color = RGB(1,1,0))
-```
+````
 
 We can now render the scene that combines the random forest of binary trees and a yellow soil. Notice that
 in all previous figures, a coordinate system with grids was being depicted. This is helpful for debugging
@@ -292,9 +302,9 @@ your code but also to help setup the scene (e.g. if you are not sure how big the
 Howver, it may be distracting for the visualization. It turns out that we can turn that off with
 `show_axes = false`:
 
-```julia
+````@example forest
 render(scene, axes = false)
-```
+````
 
 We may also want to save a screenshot of the scene. For this, we need to store the output of the `render` function.
 We can then resize the window rendering the scene, move around, zoom, etc. When we have a perspective that we like,
@@ -302,8 +312,13 @@ we can run the `save_scene` function on the object returned from `render`. The a
 `render` to increase the number of pixels in the final image. A helper function `calculate_resolution` is provided to
 compute the resolution from a physical width and height in cm and a dpi (e.g., useful for publications and posters):
 
-```julia
+````@example forest
 res = calculate_resolution(width = 16.0, height = 16.0, dpi = 1_000)
 output = render(scene, axes = false, resolution = res)
 export_scene(scene = output, filename = "nice_trees.png")
-```
+````
+
+---
+
+*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
+
