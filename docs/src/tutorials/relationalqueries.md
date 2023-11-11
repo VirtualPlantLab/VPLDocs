@@ -30,7 +30,7 @@ whereas `A` nodes contain no data.
 
 As usual, we start with defining the types of nodes in the graph
 
-````@example relationalqueries
+````julia
 using VirtualPlantLab
 import GLMakie
 
@@ -54,7 +54,7 @@ a motif that is repeated three times (with a small variation), so we can create
 the graph in a piecewise manner. Note how we can use the function `sum` to add
 nodes to the graph (i.e. `sum(A() for i in 1:3)` is equivalent to `A() + A() + A()`)
 
-````@example relationalqueries
+````julia
 motif(n, i = 0) = Q.A() + (Q.C(45.0) + Q.A() + (Q.C(45.0) +  Q.A() + Q.B(i + 1),
                                            Q.C(-45.0) + Q.A() + Q.B(i + 2),
                                                        Q.A() + Q.B(i + 3)),
@@ -69,7 +69,7 @@ extract a particular node from the graph, but it is not controlled by the user. 
 to specify exactly how to label the nodes of a particular type. In this case, we want to just print `A` or `C` for nodes of type `A` and `C`, whereas
 for nodes of type `B` we want to use the `ID` field that was stored inside the node during the graph generation.
 
-````@example relationalqueries
+````julia
 VirtualPlantLab.node_label(n::Q.B, id) = "B-$(n.ID)"
 VirtualPlantLab.node_label(n::Q.A, id) = "A"
 VirtualPlantLab.node_label(n::Q.C, id) = "C"
@@ -87,13 +87,13 @@ to identify nodes based on their relationships to other nodes.
 First, we create the query object. In this case, there is no special condition as
 we want to retrieve all the nodes of type `B`
 
-````@example relationalqueries
+````julia
 Q1 = Query(Q.B)
 ````
 
 Applying the query to the graph returns an array with all the `B` nodes
 
-````@example relationalqueries
+````julia
 A1 = apply(graph, Q1)
 ````
 
@@ -116,7 +116,7 @@ order to access the object stored inside the node, we need to use the `data()`
 function, and then we can test if that object is of type `C`. The `B` node 13
 is the only node for which `hasAncestor()` should return `false`:
 
-````@example relationalqueries
+````julia
 function Q2_fun(n)
     check, steps = has_ancestor(n, condition = x -> data(x) isa Q.C)
     !check
@@ -125,7 +125,7 @@ end
 
 As before, we just need to apply the `Query` object to the graph:
 
-````@example relationalqueries
+````julia
 Q2 = Query(Q.B, condition = Q2_fun)
 A2 = apply(graph, Q2)
 ````
@@ -142,7 +142,7 @@ Therefore, we need to test for two conditions, first find those nodes inside a
 branch motif, then retrieve the root of the branch motif (i.e., the `A` node
 described in the above) and then check the distance of that node from the root:
 
-````@example relationalqueries
+````julia
 function branch_motif(p)
     data(p) isa Q.A &&
     has_descendant(p, condition = x -> data(x) isa Q.C && data(x).val < 0.0)[1] &&
@@ -163,7 +163,7 @@ end
 
 And applying the query to the object results in the required nodes:
 
-````@example relationalqueries
+````julia
 Q3 = Query(Q.B, condition = n -> Q3_fun(n, 2))
 A3 = apply(graph, Q3)
 ````
@@ -177,7 +177,7 @@ returns two values, but we are only interested in the first value. You do not ne
 assign the returned object from a Julia function, you can just index directly the element
 to be selected from the returned tuple:
 
-````@example relationalqueries
+````julia
 function Q4_fun(n)
     !has_ancestor(n, condition = x -> is_root(x) && length(children(x)) > 1)[1]
 end
@@ -185,7 +185,7 @@ end
 
 And applying the query to the object results in the required node:
 
-````@example relationalqueries
+````julia
 Q4 = Query(Q.B, condition = Q4_fun)
 A4 = apply(graph, Q4)
 ````
@@ -195,7 +195,7 @@ A4 = apply(graph, Q4)
 This node is the only `B` node that is four steps from the root node, which we can
 retrieve from the second argument returned by `hasAncestor()`:
 
-````@example relationalqueries
+````julia
 function Q5_fun(n)
     check, steps = has_ancestor(n, condition = is_root)
     steps == 4
@@ -211,7 +211,7 @@ Node `B` 7 belongs to the second lateral branch motif and the second parent
 node is of type `A`. Note that we can reuse the `Q3_fun` from before in the
 condition required for this node:
 
-````@example relationalqueries
+````julia
 function Q6_fun(n, nA)
     check = Q3_fun(n, nA)
     !check && return false
@@ -231,7 +231,7 @@ The condition for the `B` node 11 is similar to the `B` node 7, whereas the cond
 for node 13 was already constructed before, so we just need to combined them with an
 OR operator:
 
-````@example relationalqueries
+````julia
 Q7 = Query(Q.B, condition = n -> Q6_fun(n, 4) || Q2_fun(n))
 A7 = apply(graph, Q7)
 ````
@@ -242,7 +242,7 @@ These nodes play the same role in the three lateral branch motifs. They are the
 only `B` nodes preceded by the sequence A C+ A. We just need to check the
 sequence og types of objects for the the first three parents of each `B` node:
 
-````@example relationalqueries
+````julia
 function Q8_fun(n)
     p1 = parent(n)
     p2 = parent(n, nsteps = 2)
@@ -261,7 +261,7 @@ This exercise is similar to the previous one, but the C node has a negative
 can differentiate between this node and the rest by checking for a fourth
 ancestor node of class `C`:
 
-````@example relationalqueries
+````julia
 function Q9_fun(n)
     p1 = parent(n)
     p2 = parent(n, nsteps = 2)
@@ -283,7 +283,7 @@ parent node being of type `C` and being 5 nodes from the root of the graph.
 
 As always, we can reusing previous conditions since they are just regular Julia functions:
 
-````@example relationalqueries
+````julia
 function Q10_fun(n)
     Q6_fun(n, 3) && return true ## Check node 7
     Q9_fun(n) && has_ancestor(n, condition = is_root)[2] == 6 && return true ## Check node 6
@@ -299,7 +299,7 @@ A10 = apply(graph, Q10)
 We already have conditions to select nodes 3, 7 and 11 so we just need a new condition
 for node 12 (similar to the condition for 8).
 
-````@example relationalqueries
+````julia
 function Q11_fun(n)
     Q5_fun(n) && return true ## 3
     Q6_fun(n, 3) && return true ## 7
@@ -316,7 +316,7 @@ A11 = apply(graph, Q11)
 
 We just need to combine the conditions for the nodes 7 and 12
 
-````@example relationalqueries
+````julia
 function Q12_fun(n)
     Q6_fun(n, 3) && return true # 7
     has_ancestor(n, condition = is_root)[2] == 5 && data(parent(n, nsteps = 2)) isa Q.C &&

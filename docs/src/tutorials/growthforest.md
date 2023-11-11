@@ -19,7 +19,7 @@ dimensions of the organs are updated accordingly (assuming a particular shape).
 
 The following packages are needed:
 
-````@example growthforest
+````julia
 using VirtualPlantLab, ColorTypes
 using Base.Threads: @threads
 using Plots
@@ -41,7 +41,7 @@ module. The differences with respect to the previous example are:
     - The geometry of the organs is updated based on the new biomass
     - Bud break probability is a function of distance to apical meristem
 
-````@example growthforest
+````julia
 # Data types
 module TreeTypes
     using VirtualPlantLab
@@ -101,7 +101,7 @@ import .TreeTypes
 The methods for creating the geometry and color of the tree are the same as in
 the previous example.
 
-````@example growthforest
+````julia
 # Create geometry + color for the internodes
 function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
     # Rotate turtle around the head to implement elliptical phyllotaxis
@@ -135,7 +135,7 @@ end
 The meristem rule is now parameterized by the initial states of the leaves and
 internodes and will only be triggered every X days where X is the plastochron.
 
-````@example growthforest
+````julia
 # Create right side of the growth rule (parameterized by the initial states
 # of the leaves and internodes)
 function create_meristem_rule(vleaf, vint)
@@ -157,7 +157,7 @@ The bud break probability is now a function of distance to the apical meristem
 rather than the number of internodes. An adhoc traversal is used to compute this
 length of the main branch a bud belongs to (ignoring the lateral branches).
 
-````@example growthforest
+````julia
 # Compute the probability that a bud breaks as function of distance to the meristem
 function prob_break(bud)
     # We move to parent node in the branch where the bud was created
@@ -204,7 +204,7 @@ end
 We need some functions to compute the length and width of a leaf or internode
 from its biomass
 
-````@example growthforest
+````julia
 function leaf_dims(biomass, vars)
     leaf_biomass = biomass
     leaf_area    = biomass/vars.SLW
@@ -233,7 +233,7 @@ function computes the probability density of each distribution which is taken as
 proportional to the sink strength (the model is actually source-limited since we
 imposed a particular growth rate).
 
-````@example growthforest
+````julia
 sink_strength(leaf, vars) = leaf.age > vars.leaf_expansion ? 0.0 :
                             pdf(leaf.sink, leaf.age/vars.leaf_expansion)/100.0
 plot(0:1:50, x -> sink_strength(TreeTypes.Leaf(age = x), TreeTypes.treeparams()),
@@ -248,14 +248,14 @@ different organs and updates the dimensions of said organs. For simplicity,
 we create the functions `leaves()` and `internodes()` that will apply the queries
 to the tree required to extract said nodes:
 
-````@example growthforest
+````julia
 get_leaves(tree) = apply(tree, Query(TreeTypes.Leaf))
 get_internodes(tree) = apply(tree, Query(TreeTypes.Internode))
 ````
 
 The age of the different organs is updated every time step:
 
-````@example growthforest
+````julia
 function age!(all_leaves, all_internodes, all_meristems)
     for leaf in all_leaves
         leaf.age += 1
@@ -273,7 +273,7 @@ end
 The daily growth is allocated to different organs proportional to their sink
 strength.
 
-````@example growthforest
+````julia
 function grow!(tree, all_leaves, all_internodes)
     # Compute total biomass increment
     tvars = data(tree)
@@ -300,7 +300,7 @@ end
 
 Finally, we need to update the dimensions of the organs. The leaf dimensions are
 
-````@example growthforest
+````julia
 function size_leaves!(all_leaves, tvars)
     for leaf in all_leaves
         leaf.length, leaf.width = leaf_dims(leaf.biomass, tvars)
@@ -321,7 +321,7 @@ All the growth and developmental functions are combined together into a daily
 step function that updates the forest by iterating over the different trees in
 parallel.
 
-````@example growthforest
+````julia
 get_meristems(tree) = apply(tree, Query(TreeTypes.Meristem))
 function daily_step!(forest)
     @threads for tree in forest
@@ -347,7 +347,7 @@ end
 The trees are initialized in a regular grid with random values for the initial
 orientation and RGR:
 
-````@example growthforest
+````julia
 RGRs = rand(Normal(0.3,0.01), 10, 10)
 histogram(vec(RGRs))
 
@@ -360,7 +360,7 @@ nothing #hide
 
 The following initalizes a tree based on the origin, orientation and RGR:
 
-````@example growthforest
+````julia
 function create_tree(origin, orientation, RGR)
     # Initial state and parameters of the tree
     vars = TreeTypes.treeparams(RGR = RGR)
@@ -391,7 +391,7 @@ tile beneath it. Unlike in the previous example, we will construct the soil tile
 using a dedicated graph and generate a `Scene` object which can later be
 merged with the rest of scene generated in daily step:
 
-````@example growthforest
+````julia
 Base.@kwdef struct Soil <: VirtualPlantLab.Node
     length::Float64
     width::Float64
@@ -409,7 +409,7 @@ And the following function renders the entire scene (notice that we need to
 use `display()` to force the rendering of the scene when called within a loop
 or a function):
 
-````@example growthforest
+````julia
 function render_forest(forest, soil)
     scene = Scene(vec(forest)) # create scene from forest
     scene = Scene([scene, soil]) # merges the two scenes
@@ -422,7 +422,7 @@ end
 We may want to extract some information at the canopy level such as LAI. This is
 best achieved with a query:
 
-````@example growthforest
+````julia
 function get_LAI(forest)
     LAI = 0.0
     @threads for tree in forest
@@ -438,7 +438,7 @@ end
 
 We can now create a forest of trees on a regular grid:
 
-````@example growthforest
+````julia
 forest = create_tree.(origins, orientations, RGRs);
 render_forest(forest, soil)
 for i in 1:50
@@ -449,7 +449,7 @@ render_forest(forest, soil)
 
 And compute the leaf area index:
 
-````@example growthforest
+````julia
 get_LAI(forest)
 ````
 

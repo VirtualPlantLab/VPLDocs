@@ -34,7 +34,7 @@ parent node that was captured. Note that that now, the rhs component gets a new
 argument, which corresponds to the context of the father node captured in the
 lhs.
 
-````@example context
+````julia
 using VirtualPlantLab
 module types
     using VirtualPlantLab
@@ -63,21 +63,21 @@ all the `Cell` nodes. A `Query` object is created by passing the type of the
 node to be queried as an argument to the `Query` function. Then, to actually
 execute the query we need to use the `apply` function on the graph.
 
-````@example context
+````julia
 getCell = Query(Cell)
 apply(pop, getCell)
 ````
 
 If we rewrite the graph one we will see that a second cell now has a state of 1.
 
-````@example context
+````julia
 rewrite!(pop)
 apply(pop, getCell)
 ````
 
 And a second iteration results in all cells have a state of 1
 
-````@example context
+````julia
 rewrite!(pop)
 apply(pop, getCell)
 ````
@@ -93,7 +93,7 @@ the `state` of each node in a vector (unlike Rules and Queries, this function
 takes the actual node as argument rather than a `Context` object, see the
 documentation for more details):
 
-````@example context
+````julia
 pop  = Graph(axiom = axiom, rules = rule)
 states = Int64[]
 traverse_dfs(pop, fun = node -> push!(states, node.state))
@@ -102,7 +102,7 @@ states
 
 Now the states of the nodes are in the same order as they were created:
 
-````@example context
+````julia
 rewrite!(pop)
 states = Int64[]
 traverse_dfs(pop, fun = node -> push!(states, node.state))
