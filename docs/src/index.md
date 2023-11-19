@@ -55,22 +55,13 @@ many cases they will be useful to complement the functionality of VPL.
 
 ## Documentation
 
-Documentation for VPL is provided in this website in four formats:
+In this website, documentation for VPL is provided in different formats, with different purposes or functions:
 
-1. User manual
-2. Tutorials
-3. API
-4. VPLverse
-5. Technical notes for developers
-
-New users are expected to start with the tutorials and consult the user manual
-to understand better the different concepts used in VPL and get an overview of
-the different options available. The API documentation describes each individual
-function and data type, with an emphasis on inputs and outputs and (in addition
-to this website) it can be accessed from within Julia with `?` (see the section
-[Accessing Documentation](https://docs.julialang.org/en/v1/manual/documentation/#Accessing-Documentation-1)
-in the Julia manual).
-
-The technical notes are useful for people who want to understand the internal details of VPL
-and how different algorithms are implemented (i.e. the technical notes should be seen as a
-supplement to the source code of VPL).
+| Documentation type | User type | Function |
+|:---|:---|:---|
+| Tutorials | New users | The tutorials were developed to gradually introduce new users to relevant functionalities and packages of VPL to construct, simulate, and visualize FSP models. The end product is not really important, or sometimes related to FSP models, but the users learn important practical knowledge that may be useful to build your first FSP model in VPL. |
+| Manual | All users | This manual describes the different concepts used in VPL and gives an overview of the options available. These include Julia concepts used in VPL, creating and manipulating dynamic graphs, ray tracing, visualization, and simulation of scenes. This manual is meant to be used the new users who are going through tutorials, as well as any other user. |
+| API | All users | The API documentation describes each function and data type of the VPL core, with an emphasis on the inputs and outputs of the basic packages that provide the functionality to build FSP models. In addition to this website, it can be accessed from within Julia with `?` (see [Documentation](https://docs.julialang.org/en/v1/manual/documentation/) in the Julia manual). |
+| VPLverse | All users | The API and package documentation for each component of VPLverse, the ecosystem of packages built around VPL that provide additional support to plant modelers to implement ecophysiology and biophysical processes, simulate and model plants, soil, and atmosphere, as well as simulate different sky conditions and light distribution. In addition to this website, it can be accessed from within Julia with `?`. |
+| How-to guides | All users | These guides target specific issues or objectives in the context of working with FSP models on VPL. In contrast to tutorials, how-to guides focus on individual problems and their intricacies. The objective is to acquaint users with specific functionalities, eliminating the need for users to repeatedly go back to tutorials to find problem-solving information. |
+| Developers | Advanced users | This documentation is useful for people who want to understand the internal details of VPL and how algorithms are implemented. Additionally, it guides users on the development of packages and styling protocol adopted for VPL and VPLverse. |
