@@ -63,6 +63,8 @@ makedocs(;
         ],
         "Developers" => [
             "Internal organization" => "developers/organization.md"
+            "Package and Environment Management for VPL" => "developers/use&dev_packages.md"
+            "Styling protocol" => "developers/style.md"
         ]
     ],
 )
