@@ -3,7 +3,7 @@
 In terms of implementation, VPL consists of a GitHub organization ([VirtualPlantLab](https://github.com/VirtualPlantLab/VirtualPlantLab.jl))
 that contains 9 registered Julia packages. The packages are organized in two groups:
 
-- The VPL core: These are the basic packages that provide the functionality to build FSP models. The user is normally not intended to use these packages directly but rather through the interface offered by [VirtualPlantLab.jl](https://github.com/VirtualPlantLab/VirtualPlantLab.jl). Developers who want to access the source code (and potentially modify it) should first identify the package that contains the functionality they are interested in.
+- The *VPL core*: These are the basic packages that provide the functionality to build FSP models. The user is normally not intended to use these packages directly but rather through the interface offered by [VirtualPlantLab.jl](https://github.com/VirtualPlantLab/VirtualPlantLab.jl). Developers who want to access the source code (and potentially modify it) should first identify the package that contains the functionality they are interested in.
 
 - The *VPLverse*: These are packages that are built on top of the VPL core or standalone packages that provide additional functionality to build FSP models. The user needs to install these packages separately and import them if they wish to use them.
 
