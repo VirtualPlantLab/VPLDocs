@@ -252,7 +252,7 @@ Use [`ArgCheck.jl`](https://github.com/jw3126/ArgCheck.jl) to perform checks on 
 ---
 
 * Every single function/type exported requires a [`docstring`](https://docs.julialang.org/en/v1/manual/documentation/).
-* For most docstrings, examples should be provided in the form of [jldoctests](what this is? where?)
+* For most docstrings, examples should be provided in the form of [jldoctests](https://documenter.juliadocs.org/stable/man/doctests/)
 * Double check `docstring`s of functions that have been modified.
 * `docsting`s maybe be provided if a function is not exported.
 
