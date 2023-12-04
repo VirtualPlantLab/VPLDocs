@@ -1,7 +1,7 @@
 # Styling protocol
 
-        Ana Ernst & Alejandro Morales
-        Centre for Crop Systems Analysis - Wageningen University
+Ana Ernst & Alejandro Morales  
+Centre for Crop Systems Analysis - Wageningen University
 
 A styling protocol is essential for code readability, consistency, and maintainability. It ensures that code follows predefined formatting rules, prevents errors, and suggests best practices for overall quality of the code. This type of protocol not only plays a crucial role in code quality but also when it comes to collaboration and long-term software project success.
 
@@ -25,18 +25,19 @@ This section outlines programming guidelines and best practices to ensure the qu
 * Define accessor for all fields and document these rather than the fields themselves
         Accessors provides controlled access to data is important as it allows for future changes to the internal structure without affecting users that rely on accessors.
         *For example, in the [tutorial](https://virtualplantlab.com/stable/tutorials/Tree/Tree/) to build the representation of a 3D binary tree, we can set accessor functions as it follows*
-        ````julia
-        module TreeTypes
-            import VirtualPlantLab
-            # ... (previously defined types)
-            # Accessor functions for treeparams parameters
-            # Accessor for growth parameter
-            function get_growth(params::treeparams)
-                return params.growth
-            end
-            # ... (other previously defined functions)
-        end
-        ````
+  
+````julia
+module TreeTypes
+    import VirtualPlantLab
+    # ... (previously defined types)
+    # Accessor functions for treeparams parameters
+    # Accessor for growth parameter
+    function get_growth(params::treeparams)
+        return params.growth
+    end
+    # ... (other previously defined functions)
+end
+````
 
 ## General style
 
