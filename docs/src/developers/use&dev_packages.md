@@ -1,11 +1,11 @@
 # Package and Environment Management for VPL
 
-Ana Ernst & Alejandro Morales  
+Ana Ernst & Alejandro Morales
 Centre for Crop Systems Analysis - Wageningen University
 
 This guide helps VPL users interested in (1) managing packages within the VPL-verse, (2) managing reproducible environments, and, (3) developing models into VPL-modules, customization, and extending VPL's functionality under their authorship. It equips them with essential Julia tools and functionalities to take control of these aspects, enhancing the VPL experience.
 
-The guide introduces the user to the Julia programming language's package management system, [Pkg.jl](https://pkgdocs.julialang.org/v1/), explains its key features, and offers instructions on getting started  with Pkg, managing environments, adding, updating, and removing packages. It also delves into the concept of working with different environments and creating your own project environments. Furthermore, the document covers the process of generating files for new packages using [PkgTemplates.jl](https://github.com/JuliaCI/PkgTemplates.jl/) and demonstrates how to add dependencies and tests to a package. Information about package naming guidelines and VPL styling protocol, you can find it in [VPL styling protocol](). Finally, this guide provides general good practices to develop VPL packages.
+The guide introduces the user to the Julia programming language's package management system, [Pkg.jl](https://pkgdocs.julialang.org/v1/), explains its key features, and offers instructions on getting started  with Pkg, managing environments, adding, updating, and removing packages. It also delves into the concept of working with different environments and creating your own project environments. Furthermore, the document covers the process of generating files for new packages using [PkgTemplates.jl](https://github.com/JuliaCI/PkgTemplates.jl/) and demonstrates how to add dependencies and tests to a package. Information about package naming guidelines and VPL styling protocol, you can find it in [VPL styling protocol](style.md). Finally, this guide provides general good practices to develop VPL packages.
 
 # Introduction to Julia's packages and environments
 
@@ -16,11 +16,11 @@ In each of these environments, there is a neat list of the packages associated w
 So, if you ever want to work on a project from a different computer or share with with someone else, you can just bring back the environment using its manifest file. That way, you're all set with the right packages without any fuss.
 
 Julia environments are *stackable* - you can overlay one environment with another and have access to additional packages outside of the original environment.
-        
-This makes it easy to work on a project, which provides the primary environment, while still having access from the REPL to all your usual dev tools like profilers, debuggers, and so on, just by having an environment including these dev tools later in the load path. 
-        
-So, it's like having your main work area and then, when needed, you can simply add more tools on top of it without disturbing your primary setup. This keeps things organized and makes it easy to switch between different tasks in Julia.             
- 
+
+This makes it easy to work on a project, which provides the primary environment, while still having access from the REPL to all your usual dev tools like profilers, debuggers, and so on, just by having an environment including these dev tools later in the load path.
+
+So, it's like having your main work area and then, when needed, you can simply add more tools on top of it without disturbing your primary setup. This keeps things organized and makes it easy to switch between different tasks in Julia.
+
 ## Getting started with Pkg.jl and environments
 
 You can use Pkg.jl from the Julia REPL. You can start interfacing with `Pkg` by pressing `]` from the julia REPL. To get back to the julia REPL, press `Ctrl+C` or backspace.
@@ -43,8 +43,8 @@ These types of environments provide reproducibility. By storing a project enviro
 
 * **Package Directory**
 
-It is directory that contains a tree of subdirectories, and forms an implicit environment. Each subdirectory contains a specific package - if the `X` is is a subdirectory of a package directory and `X/src/X.jl` exists, we can access to the package `X` from the package directory. 
-        
+It is directory that contains a tree of subdirectories, and forms an implicit environment. Each subdirectory contains a specific package - if the `X` is is a subdirectory of a package directory and `X/src/X.jl` exists, we can access to the package `X` from the package directory.
+
 Package directories are useful when you want to put a set of tools (in the format of packages) somewhere and be able to directly use them, without needing to create a project environment for them.
 
 You can overlay these types of environments and obtained a **stacked environment** - an ordered set of project environments and package directories that make a single composite environment. The precedent and visibility rules combined determine which packages are available and where they get loaded from.
@@ -112,7 +112,7 @@ t("MyPkg")
 Keyword arguments for `PkgTemplates.Template` object type:
 
 * *User options:*
-        * Github username: `user::AbstractString="username"` 
+        * Github username: `user::AbstractString="username"`
         * Package authors: `authors::Union{AbstractString, Vector{<:AbstractString}} = “name <email> and contributors”`
 * *Package options:*
         * Directory where packages will be placed: `dir::AbstractString=”~/.julia/dev”`
@@ -150,7 +150,7 @@ Hello world!
 
 ## Styling guidelines
 
-Package and function names should be sensible to most Julia users, even to those who are not domain experts. You can find the specifics in the [styling protocol]().
+Package and function names should be sensible to most Julia users, even to those who are not domain experts. You can find the specifics in the [styling protocol](style.md).
 
 ## Adding package dependencies
 
@@ -179,7 +179,7 @@ import JSON
 #Add functions to the module
 greet() = print("Hello World!")
 greet_alien() = print("Hello ", Random.randstring(8))
-end 
+end
 ````
 
 To reload a package in Julia without restarting the Julia session, you can use the [`Revise.jl`](https://timholy.github.io/Revise.jl/stable/) package whenever you want to work interactively and see immediate updates to your code.
@@ -193,7 +193,7 @@ julia> MyPkg.greet_alien()
 Hello aT157rHV
 ````
 
-## Adding tests 
+## Adding tests
 
 To add tests to a package, we have to (1) create a directory for tests, (2) create and write the script file, (3) execute tests.
 
@@ -201,7 +201,7 @@ To add tests to a package, we have to (1) create a directory for tests, (2) crea
 #Create path to test directory
 mkpath("MyPkg/test")
 #Create simple test script file in MyPkg/test/runtests.jl
-write("MyPkg/test/runtests.jl", 
+write("MyPkg/test/runtests.jl",
         """
         #You can add specific tests here or edit seperatly the file itself
         println("Testing...")
@@ -229,7 +229,7 @@ Before formally registering your package, there are some more advanced nuanced i
 ## General good practices
 
 Use [`ArgCheck.jl`](https://github.com/jw3126/ArgCheck.jl) to perform checks on function arguments for public API (one may also use dedicated types to encapsulate these checks). VPL should have a strong preference for defensive programming even if this comes at the expense of runtime performance (but do try to avoid performance hits and repeating assertions).
-        
+
 ````julia
 #After installing ArgCheck - Pkg.add("ArgCheck")
 using ArgCheck
@@ -260,7 +260,7 @@ y => 0
 **Testing a package**
 ---
 
-* Make sure that the tests include [`Aqua`](https://docs.juliahub.com/General/Aqua/0.5.1/). 
+* Make sure that the tests include [`Aqua`](https://docs.juliahub.com/General/Aqua/0.5.1/).
         Type piracy is allowed as long as the type is owned by a package in the VirtualPlantLab organization.
 * All documentation should be written as `jldoctests` and the tests should include a call to `doctests`
 * All functions in the source code should be tested individually (in many cases through their `jldoctests`)
@@ -300,13 +300,12 @@ All changes to a package should occur in a branch and a pull request should be u
 * The changes fix a significant bug
 * Significant features have been added
 
-Check that all the tests are successful in a dedicated module. This requires running `Pkg.test(<package>)` rather than running the `runtest.jl` file in Julia. This will tell you if there are any dependencies missing in the Project.toml of the tests. 
+Check that all the tests are successful in a dedicated module. This requires running `Pkg.test(<package>)` rather than running the `runtest.jl` file in Julia. This will tell you if there are any dependencies missing in the Project.toml of the tests.
 You may use the development version of a dependency while testing locally, but CI will fail until the changes in the dependency are registered.
 
 *Increasing version number:*
 
 * Increase the version number in the `Project.toml` file (not in git!)
-* Go to the commit on Github with the changes in `Project.toml` file and add comment with `@JuliaRegistrator register`. This will trigger the registration bot which later will trigger the tagbot on Github. 
+* Go to the commit on Github with the changes in `Project.toml` file and add comment with `@JuliaRegistrator register`. This will trigger the registration bot which later will trigger the tagbot on Github.
 * Once the version on Github gets a new tag, synchronize the master branch of the local repository to get the same tag.
 * You will need to update the dependencies of all other packages as otherwise the release versions of VPL will not work.
-

@@ -21,3 +21,11 @@ Modules = [PlantSimEngine]
 Public = false
 Private = true
 ```
+
+## Examples
+
+```@autodocs
+Modules = [PlantSimEngine.Examples]
+Public = true
+Private = false
+```

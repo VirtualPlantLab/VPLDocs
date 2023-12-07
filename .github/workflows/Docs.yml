@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-    tags: ['*']
+    tags: [v*]
   pull_request:
 concurrency:
   # Skip intermediate builds: always.
@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: julia-actions/setup-julia@v1
         with:
-          version: '1'
+          version: '1.9'
       - name: Configure doc environment
         run: |
           julia --project=docs/ -e '
@@ -32,3 +32,4 @@ jobs:
       - uses: julia-actions/julia-docdeploy@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
