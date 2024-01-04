@@ -4,6 +4,11 @@ Alejandro Morales
 
 Centre for Crop Systems Analysis - Wageningen University
 
+> ### TL;DR
+> - Define different types of nodes (introduction to name spaces)
+> - Store data in graph (plant-base) vs. in graph node (node-base)
+> - Define parameters at the graph-level and node-level
+>
 
 In this example we build a 3D representation of a binary TreeTypes. Although this will not look like a real plant, this example will help introduce additional features of VPL.
 
@@ -15,15 +20,15 @@ The model requires five types of nodes:
 
 *Node*: What is left after a meristem produces a new organ (it separates internodes). They contain no data or geometry (so also a point) but are required to keep the branching structure of the tree as well as connecting leaves.
 
-*Bud*: These are dormant meristems associated to tree nodes. When they are activated, they become an active meristem that produces a branch. They contain no data or geometry but they change the orientation of the turtle.
+*Bud*: These are dormant meristems associated to tree nodes. When they are activated, they become an active meristem that produces a branch. They contain no data or geometry, but they change the orientation of the turtle.
 
-*BudNode*: The node left by a bud after it has been activated. They contain no data or geometry but they change the orientation of the turtle.
+*BudNode*: The node left by a bud after it has been activated. They contain no data or geometry, but they change the orientation of the turtle.
 
 *Leaf*: These are the nodes associated to leaves in the TreeTypes. They are represented by ellipses with a particular orientation and insertion angle. The insertion angle is assumed constant, but the orientation angle varies according to an elliptical phyllotaxis rule.
 
-In this first simple model, only internodes grow over time according to a relative growth rate, whereas leaves are assumed to be of fixed sized determined at their creation. For simplicity, all active meristems will produce an phytomer (combination of node, internode, leaves and buds) per time step. Bud break is assumed stochastic, with a probability that increases proportional to the number of phytomers from the apical meristem (up to 1). In the following tutorials, these assumptions are replaced by more realistic models of light interception, photosynthesis, etc.
+In this first simple model, only internodes grow over time according to a relative growth rate, whereas leaves are assumed to be of fixed sized determined at their creation. For simplicity, all active meristems will produce a phytomer (combination of node, internode, leaves and buds) per time step. Bud break is assumed stochastic, with a probability that increases proportional to the number of phytomers from the apical meristem (up to 1). In the following tutorials, these assumptions are replaced by more realistic models of light interception, photosynthesis, etc.
 
-In order to simulate growth of the 3D binary tree, we need to define a parameter describing the relative rate at which each internode elongates in each iteration of the simulation, a coefficient to compute the probability of bud break as well as the insertion and orientation angles of the leaves. We could stored these values as global constants, but VPL offers to opportunity to store them per plant. This makes it easier to manage multiple plants in the same simulation that may belong to different species, cultivars, ecotypes or simply to simulate plant-to-plant variation. Graphs in VPL can store an object of any user-defined type that will me made accessible to graph rewriting rules and queries. For this example, we define a data type `treeparams` that holds the relevant parameters. We use `Base.@kwdef` to assign default values to all parameters and allow to assign them by name.
+In order to simulate growth of the 3D binary tree, we need to define a parameter describing the relative rate at which each internode elongates in each iteration of the simulation, a coefficient to compute the probability of bud break as well as the insertion and orientation angles of the leaves. We could store these values as global constants, but VPL offers to opportunity to store them per plant. This makes it easier to manage multiple plants in the same simulation that may belong to different species, cultivars, ecotypes or simply to simulate plant-to-plant variation. Graphs in VPL can store an object of any user-defined type that will be made accessible to graph rewriting rules and queries. For this example, we define a data type `treeparams` that holds the relevant parameters. We use `Base.@kwdef` to assign default values to all parameters and allow to assign them by name.
 
 ````julia
 using VirtualPlantLab
@@ -91,7 +96,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, vars)
 end
 ````
 
-The growth rule for a branch within a tree is simple: a phytomer (or basic unit of morphology) is composed of a node, a leaf, a bud node, an internode and an active meristem at the end. Each time step, the meristem is replaced by a new phytomer, allowing for developmemnt within a branch.
+The growth rule for a branch within a tree is simple: a phytomer (or basic unit of morphology) is composed of a node, a leaf, a bud node, an internode and an active meristem at the end. Each time step, the meristem is replaced by a new phytomer, allowing for the development within a branch.
 
 ````julia
 meristem_rule = Rule(TreeTypes.Meristem, rhs = mer -> TreeTypes.Node() +
@@ -152,7 +157,7 @@ function elongate!(tree, query)
 end
 ````
 
-Note that we use `vars` on the `Graph` object to extract the object that was stored inside of it. Also, as this function will modify the graph which is passed as input, we append an `!` to the name (this not a special syntax of the language, its just a convention in the Julia community). Also, in this case, the query object is kept separate from the graph. We could have also stored it inside the graph like we did for the parameter `growth`. We could also have packaged the graph and the query into another type representing an individual TreeTypes. This is entirely up to the user and indicates that a model can be implemented in many differences ways with VPL.
+Note that we use `vars` on the `Graph` object to extract the object that was stored inside of it. Also, as this function will modify the graph which is passed as input, we append an `!` to the name (this not a special syntax of the language, it's just a convention in the Julia community). Also, in this case, the query object is kept separate from the graph. We could have also stored it inside the graph like we did for the parameter `growth`. We could also have packaged the graph and the query into another type representing an individual TreeTypes. This is entirely up to the user and indicates that a model can be implemented in many differences ways with VPL.
 
 Simulating the growth a tree is a matter of elongating the internodes and applying the rules to create new internodes:
 

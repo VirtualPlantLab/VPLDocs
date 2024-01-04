@@ -4,6 +4,13 @@ Alejandro Morales
 
 Centre for Crop Systems Analysis - Wageningen University
 
+> ## TL;DR
+> Similar in functionality to [Tree]() tutorial with separate graphs for each tree 
+> - Modify tree parameters for each tree
+> - Multithreaded simulation (grow trees in parallel)
+> - Scene customization (e.g., add soil)
+> - Export Scenes
+
 In this example we extend the tree example into a forest, where
 each tree is described by a separate graph object and parameters driving the
 growth of these trees vary across individuals following a predefined distribution.
@@ -47,7 +54,7 @@ end
 import .TreeTypes
 ````
 
-Create geometry + color for the internodes
+Create geometry and color for the *internodes*:
 
 ````julia
 function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
@@ -59,7 +66,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
 end
 ````
 
-Create geometry + color for the leaves
+Create geometry and color for the *leaves*:
 
 ````julia
 function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
@@ -74,7 +81,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
 end
 ````
 
-Insertion angle for the bud nodes
+Insertion angle for the bud nodes:
 
 ````julia
 function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, data)
@@ -83,7 +90,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, data)
 end
 ````
 
-Rules
+Rules for meristem and branches:
 
 ````julia
 meristem_rule = Rule(TreeTypes.Meristem, rhs = mer -> TreeTypes.Node() +
@@ -198,7 +205,7 @@ forest = vec(create_tree.(origins, growths, budbreaks, orientations));
 
 By vectorizing `create_tree()` over the different arrays, we end up with an array
 of trees. Each tree is a different Graph, with its own nodes, rewriting rules
-and variables. This avoids having to create a large graphs to include all the
+and variables. This avoids having to create large graphs to include all the
 plants in a simulation. Below we will run a simulation, first using a sequential
 approach (i.e. using one core) and then using multiple cores in our computers (please check
 https://docs.julialang.org/en/v1/manual/multi-threading/ if the different cores are not being used
@@ -234,7 +241,7 @@ In the previous section, the simulation of growth was done sequentially, one tre
 after another (since the growth of a tree only depends on its own parameters). However,
 this can also be executed in multiple threads. In this case we use an explicit loop
 and execute the iterations of the loop in multiple threads using the macro `@threads`.
-Note that the rendering function can also be ran in parallel (i.e. the geometry will be
+Note that the rendering function can also be run in parallel (i.e. the geometry will be
 generated separately for each plant and the merge together):
 
 ````julia
@@ -260,7 +267,7 @@ render(Scene(newforest), parallel = true)
 
 # Customizing the scene
 
-Here we are going to customize the scene of our simulation by adding a horizontal tile represting soil and
+Here we are going to customize the scene of our simulation by adding a horizontal tile representing soil and
 tweaking the 3D representation. When we want to combine plants generated from graphs with any other
 geometric element it is best to combine all these geometries in a `GLScene` object. We can start the scene
 with the `newforest` generated in the above:
@@ -273,7 +280,7 @@ We can create the soil tile directly, without having to create a graph. The simp
 a special constructor `Rectangle` where one species a corner of the rectangle and two vectors defining the
 two sides of the vectors. Both the sides and the corner need to be specified with `Vec` just like in the
 above when we determined the origin of each plant. VPL offers some shortcuts: `O()` returns the origin
-(`Vec(0.0, 0.0, 0.0)`), whereas `X`, `Y` and `Z` returns the corresponding axes and you can scale them by
+(`Vec(0.0, 0.0, 0.0)`), whereas `X`, `Y` and `Z` returns the corresponding axes, and you can scale them by
 passing the desired length as input. Below, a rectangle is created on the XY plane with the origin as a
 corner and each side being 11 units long:
 
@@ -291,8 +298,8 @@ VirtualPlantLab.add!(scene, mesh = soil, color = RGB(1,1,0))
 
 We can now render the scene that combines the random forest of binary trees and a yellow soil. Notice that
 in all previous figures, a coordinate system with grids was being depicted. This is helpful for debugging
-your code but also to help setup the scene (e.g. if you are not sure how big the soil tile should be).
-Howver, it may be distracting for the visualization. It turns out that we can turn that off with
+your code but also to help set up the scene (e.g. if you are not sure how big the soil tile should be).
+However, it may be distracting for the visualization. It turns out that we can turn that off with
 `show_axes = false`:
 
 ````julia
