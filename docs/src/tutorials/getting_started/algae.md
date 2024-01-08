@@ -4,6 +4,12 @@ Alejandro Morales
 
 Centre for Crop Systems Analysis - Wageningen University
 
+> ### TL;DR
+> - Create ['Graph'](https://virtualplantlab.com/dev/manual/Graphs/#Graph)
+> - Update 'Graph' with rewriting [rules](https://virtualplantlab.com/dev/manual/Graphs/#Rules)
+> - [Visualization](https://virtualplantlab.com/dev/manual/Visualization/) of 'Graph' with draw()
+>
+
 In this first example, we learn how to create a `Graph` and update it
 dynamically with rewriting rules.
 
@@ -80,7 +86,7 @@ rule2 = Rule(algae.B, rhs = x -> algae.A())
 
 Note that in each case, the argument `rhs` is being assigned an anonymous (aka
 *lambda*) function. This is a function without a name that is defined directly
-in the assigment to the argument. That is, the Julia expression `x -> A() + B()`
+in the assignment to the argument. That is, the Julia expression `x -> A() + B()`
 is equivalent to the following function definition:
 
 ````julia
@@ -89,8 +95,8 @@ function rule_1(x)
 end
 ````
 
-For simple rules (especially if the right hand side is just a line of code) it
-is easier to just define the right hand side of the rule with an anonymous
+For simple rules (especially if the right-hand side is just a line of code) it
+is easier to just define the right-hand side of the rule with an anonymous
 function rather than creating a standalone function with a meaningful name.
 However, standalone functions are easier to debug as you can call them directly
 from the REPL.
@@ -119,7 +125,7 @@ graph, but different options are available depending on the context where the
 code is executed. By default, `draw()` will create a new window where an
 interactive version of the graph will be drawn and one can zoom and pan with the
 mouse (in this online document a static version is shown, see
-[Backends](../manual/Visualization.md) for details):
+[Backends](../../manual/Visualization.md) for details):
 
 ````julia
 import GLMakie
@@ -127,8 +133,8 @@ draw(organism)
 ````
 
 Notice that each node in the network representation is labelled with the type of
-node (`A` or `B` in this case) and a number in parenthesis. This number is a
-unique identifier associated to each node and it is useful for debugging
+node (`A` or `B` in this case) and a number in parentheses. This number is a
+unique identifier associated to each node, and it is useful for debugging
 purposes (this will be explained in more advanced examples).
 
 Applying multiple iterations of rewriting can be achieved with a simple loop:
@@ -153,4 +159,3 @@ handy when graphs become large.
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

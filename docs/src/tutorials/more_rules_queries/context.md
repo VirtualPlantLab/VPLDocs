@@ -4,18 +4,24 @@ Alejandro Morales
 
 Centre for Crop Systems Analysis - Wageningen University
 
-This examples goes back to a very simple situation: a linear sequence of 3
+> ## TL;DR
+> - Relational rules based on properties of neighbouring nodes
+> - Capturing the context 
+> - Queries can be used to retrieve nodes matching any relational rule or context
+> 
+
+This example goes back to a very simple situation: a linear sequence of 3
 cells. The point of this example is to introduce relational growth rules and
 context capturing.
 
-A relational rules matches nodes based on properties of neighbouring nodes in
+A relational rule matches nodes based on properties of neighbouring nodes in
 the graph. This requires traversing the graph, which can be done with the
 methods `parent` and `children` on the `Context` object of the current node,
 which return a list of `Context` objects for the parent or children nodes.
 
 In some cases, it is not only sufficient to query the neighbours of a node but
-also to use properties of those neighbours in the right hand side component of
-the rule. This is know as "capturing the context" of the node being updated.
+also to use properties of those neighbours in the right-hand side component of
+the rule. This is known as "capturing the context" of the node being updated.
 This can be done by returning the additional nodes from the `lhs` component (in
 addition to `true` or `false`) and by accepting these additional nodes in the
 `rhs` component. In addition, we tell VPL that this rule is capturing the
@@ -25,7 +31,7 @@ In the example below, each `Cell` keeps track of a `state` variable (which is
 either 0 or 1). Only the first cell has a state of 1 at the beginning. In the
 growth rule, we check the father of each `Cell`. When a `Cell` does not have a
 parent, the rule does not match, otherwise, we pass capture the parent node. In
-the right hand side, we replace the cell with a new cell with the state of the
+the right-hand side, we replace the cell with a new cell with the state of the
 parent node that was captured. Note that that now, the rhs component gets a new
 argument, which corresponds to the context of the father node captured in the
 lhs.
@@ -79,7 +85,7 @@ apply(pop, getCell)
 ````
 
 Note that queries may not return nodes in the same order as they were created
-because of how they are internally stored (and because queries are meant to
+because of how they are internally stored (also queries are meant to
 return collection of nodes rather than reconstruct the topology of a graph). If
 we need to process nodes in a particular order, then it is best to use a
 traversal algorithm on the graph that follows a particular order (for example

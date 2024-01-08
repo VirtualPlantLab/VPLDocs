@@ -4,6 +4,12 @@ Alejandro Morales
 
 Centre for Crop Systems Analysis - Wageningen University
 
+> ### TL;DR
+> - Define parameter for graph nodes
+> - Define methods for VirtualPlantLab.feed! functions
+> - Create [Scenes](https://virtualplantlab.com/dev/manual/Geometry/Turtle/#Scenes) 
+> - [Visualization](https://virtualplantlab.com/dev/manual/Visualization/) of 'Graph' with render()
+>
 
 In this example, we create a Koch snowflake, which is one of the earliest
 fractals to be described. The Koch snowflake is a closed curve composed on
@@ -11,9 +17,9 @@ multiple of segments of different lengths. Starting with an equilateral
 triangle, each segment in the snowflake is replaced by four segments of smaller
 length arrange in a specific manner. Graphically, the first four iterations of
 the Koch snowflake construction process result in the following figures (the
-green segments are shown as guides but they are not part of the snowflake):
+green segments are shown as guides, but they are not part of the snowflake):
 
-![First four iterations fo Koch snowflake fractal](https://upload.wikimedia.org/wikipedia/commons/8/8e/KochFlake.png)
+![First four iterations of Koch snowflake fractal](https://upload.wikimedia.org/wikipedia/commons/8/8e/KochFlake.png)
 
 In order to implement the construction process of a Koch snowflake in VPL we
 need to understand how a 3D structure can be generated from a graph of nodes.
@@ -34,9 +40,9 @@ by the following axiom and rewriting rule:
 axiom: E(L) + RU(120) + E(L) + RU(120) + E(L)
 rule:  E(L) → E(L/3) + RU(-60) + E(L/3) + RU(120) + E(L/3) + RU(-60) + E(L/3)
 
-Where E represent and edge of a given length (given in parenthesis) and RU
+Where E represent and edge of a given length (given in parentheses) and RU
 represents a rotation of the turtle around the upward axis, with angle of
-rotation given in parenthesis in hexadecimal degrees. The rule can be visualized
+rotation given in parentheses in hexadecimal degrees. The rule can be visualized
 as follows:
 
 ![Koch construction rule](https://python-with-science.readthedocs.io/en/latest/_images/koch_order_1.png)
@@ -90,7 +96,7 @@ Koch = Graph(axiom = axiom, rules = Tuple(rule))
 
 In order to be able to generate a 3D structure we need to define a method for
 the function `VirtualPlantLab.feed!` (notice the need to prefix it with `VirtualPlantLab.` as we are
-going to define a method for this function). The method needs to two take two
+going to define a method for this function). The method needs to take two
 arguments, the first one is always an object of type Turtle and the second is an
 object of the type for which the method is defined (in this case, E).
 
@@ -102,8 +108,8 @@ of the Koch snowflakes with cylinders, which can be generated with the
 `nothing`, the turtle will be modified in place (hence the use of `!` at the end
 of the function as customary in the VPL community).
 
-In order to render the geometry, we need assign a `color` (i.e., any type of
-color support by the package ColorTypes.jl). In this case, we just feed a basic
+In order to render the geometry, we need to assign a `color` (i.e., any type of
+color support by the package [ColorTypes.jl](https://docs.juliahub.com/General/ColorTypes/0.10.8/autodocs/)). In this case, we just feed a basic
 `RGB` color defined by the proportion of red, green and blue. To make the
 figures more appealing, we can assign random values to each channel of the color
 to generate random colors.
@@ -120,7 +126,7 @@ end
 Note that the argument `move = true` indicates that the turtle should move
 forward as the cylinder is generated a distance equal to the length of the
 cylinder. Also, the `feed!` method has a third argument called `vars`. This
-gives acess to the shared variables stored within the graph (such that they can
+gives access to the shared variables stored within the graph (such that they can
 be accessed by any node). In this case, we are not using this argument.
 
 After defining the method, we can now call the function render on the graph to
@@ -180,7 +186,7 @@ rewrite!(Koch2)
 render(Scene(Koch2), axes = false)
 ````
 
-This is know as [Koch
+This is known as [Koch
 antisnowflake](https://mathworld.wolfram.com/KochAntisnowflake.html). We could
 also easily generate a [Cesàro
 fractal](https://mathworld.wolfram.com/CesaroFractal.html) by also changing the

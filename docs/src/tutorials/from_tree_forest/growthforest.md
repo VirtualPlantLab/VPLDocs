@@ -4,6 +4,14 @@ Alejandro Morales
 
 Centre for Crop Systems Analysis - Wageningen University
 
+> ## TL;DR
+> Now we want to implement a more extended functionality of our [Forest]()!
+> - Growth rules, based on information stored in organs (dimensions, carbon assimilation)
+> - Update dimensions in function of assimilation
+> - Compute sink strength 
+> - Merge Scenes
+> - Generate forest on grid and retrieve canopy-level data (e.g., LAI)
+> 
 
 In this example we extend the binary forest example to have more complex, time-
 dependent development and growth based on carbon allocation. For simplicity, the
@@ -129,7 +137,7 @@ end
 ### Development
 
 The meristem rule is now parameterized by the initial states of the leaves and
-internodes and will only be triggered every X days where X is the plastochron.
+internodes and will only be triggered every X days, where X is the plastochron.
 
 ````julia
 # Create right side of the growth rule (parameterized by the initial states

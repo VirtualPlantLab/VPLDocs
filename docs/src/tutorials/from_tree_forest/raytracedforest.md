@@ -4,8 +4,16 @@ Alejandro Morales
 
 Centre for Crop Systems Analysis - Wageningen University
 
+> ## TL;DR
+> Now we want to forest growth model that PAR interception and introduces user to the ray-tracer.
+> - Include material as a property for each object
+> - Create sky for specific conditions and locations
+> - Layer different types of radiation in sky domes (e.g., direct and diffuse)
+> - Combine graph and sky with a ray-tracer
+> - Compute growth and biomass production according to PAR interception and RUE
+> 
 
-In this example we extend the forest growth model to include PAR interception a
+In this example we extend the forest growth model to include PAR interception and
 radiation use efficiency to compute the daily growth rate.
 
 The following packages are needed:
@@ -27,9 +35,9 @@ Random.seed!(123456789)
 ### Node types
 
 The data types needed to simulate the trees are given in the following
-module. The difference with respec to the previous model is that Internodes and
+module. The difference with respect to the previous model is that Internodes and
 Leaves have optical properties needed for ray tracing (they are defined as
-Lambertian surfaces).
+[Lambertian surfaces](https://doi.org/10.1016/j.ecolmodel.2006.04.010)).
 
 ````julia
 # Data types
@@ -126,7 +134,7 @@ end
 ### Development
 
 The meristem rule is now parameterized by the initial states of the leaves and
-internodes and will only be triggered every X days where X is the plastochron.
+internodes and will only be triggered every X days, where X is the plastochron.
 
 ````julia
 # Create right side of the growth rule (parameterized by the initial states
@@ -227,7 +235,7 @@ end
 
 Given the scene, we can create the light sources that can approximate the solar
 irradiance on a given day, location and time of the day using the functions from
-the  package (see package documentation for details). Given the latitude,
+the package (see package documentation for details). Given the latitude,
 day of year and fraction of the day (`f = 0` being sunrise and `f = 1` being sunset),
 the function `clear_sky()` computes the direct and diffuse solar radiation assuming
 a clear sky. These values may be converted to different wavebands and units using
@@ -273,19 +281,18 @@ end
 The 3D scene and the light sources are then combined into a `RayTracer` object,
 together with general settings for the ray tracing simulation chosen via `RTSettings()`.
 The most important settings refer to the Russian roulette system and the grid
-cloner (see section on Ray Tracing for details). The settings for the Russian
+cloner (see section on [Ray tracing](https://virtualplantlab.com/dev/manual/Raytracer/)). The settings for the Russian
 roulette system include the number of times a ray will be traced
 deterministically (`maxiter`) and the probability that a ray that exceeds `maxiter`
 is terminated (`pkill`). The grid cloner is used to approximate an infinite canopy
 by replicating the scene in the different directions (`nx` and `ny` being the
 number of replicates in each direction along the x and y axes, respectively). It
 is also possible to turn on parallelization of the ray tracing simulation by
-setting `parallel = true` (currently this uses Julia's builtin multithreading
+setting `parallel = true` (currently this uses Julia's built-in multithreading
 capabilities).
 
-In addition `RTSettings()`, an acceleration structure and a splitting rule can
-be defined when creating the `RayTracer` object (see ray tracing documentation
-for details). The acceleration structure allows speeding up the ray tracing
+In addition, `RTSettings()`, an acceleration structure and a splitting rule can
+be defined when creating the `RayTracer` object. The acceleration structure allows speeding up the ray tracing
 by avoiding testing all rays against all objects in the scene.
 
 ````julia
@@ -317,7 +324,7 @@ the `power()` function returns three different values, one for each waveband,
 but they are added together as RUE is defined for total PAR.
 
 Run the ray tracer, calculate PAR absorbed per tree and add it to the daily
-total using general weighted quadrature formula
+total using general weighted quadrature formula:
 
 ````julia
 function calculate_PAR!(forest;  DOY = 182)
@@ -335,7 +342,7 @@ function calculate_PAR!(forest;  DOY = 182)
 end
 ````
 
-Reset PAR absorbed by the tree (at the start of a new day)
+Reset PAR absorbed by the tree (at the start of a new day):
 
 ````julia
 function reset_PAR!(forest)
@@ -349,7 +356,7 @@ end
 ### Growth
 
 We need some functions to compute the length and width of a leaf or internode
-from its biomass
+from its biomass.
 
 ````julia
 function leaf_dims(biomass, vars)
@@ -445,7 +452,7 @@ function grow!(tree, all_leaves, all_internodes)
 end
 ````
 
-Finally, we need to update the dimensions of the organs. The leaf dimensions are
+Finally, we need to update the dimensions of the organs. The leaf dimensions are:
 
 ````julia
 function size_leaves!(all_leaves, tvars)

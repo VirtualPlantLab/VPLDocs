@@ -13,7 +13,8 @@ makedocs(;
         edit_link="master",
         assets=String[],
         collapselevel = 1,
-        footer = nothing
+        footer = nothing,
+        size_threshold = nothing
     ),
     pages=[
         "Virtual Plant Laboratory" => "index.md",
@@ -25,15 +26,18 @@ makedocs(;
             "Ray tracing" => "manual/Raytracer.md",
             "3D visualization" => "manual/Visualization.md"
         ],
-        "Tutorials" => [
-            "Algae growth" => "tutorials/algae.md",
-            "The Koch snowflake" => "tutorials/snowflakes.md",
-            "Tree" => "tutorials/tree.md",
-            "Forest" => "tutorials/forest.md",
-            "Growth forest" => "tutorials/growthforest.md",
-            "Ray-traced forest" => "tutorials/raytracedforest.md",
-            "Context sensitive rules" => "tutorials/context.md",
-            "Relational queries" => "tutorials/relationalqueries.md"
+        "Tutorials" => ["Intro" => "tutorials/intro_tut.md",
+            "Getting started with VPL" =>
+            ["Algae growth" => "tutorials/getting_started/algae.md",
+            "The Koch snowflake" => "tutorials/getting_started/snowflakes.md"],
+            "From tree to forest" =>
+            ["Tree" => "tutorials/from_tree_forest/tree.md",
+            "Forest" => "tutorials/from_tree_forest/forest.md",
+            "Growth forest" => "tutorials/from_tree_forest/growthforest.md",
+            "Ray-traced forest" => "tutorials/from_tree_forest/raytracedforest.md"],
+            "More on rules and queries" =>
+            ["Context sensitive rules" => "tutorials/more_rules_queries/context.md",
+            "Relational queries" => "tutorials/more_rules_queries/relationalqueries.md"]
         ],
         "How-to guides" => [
             "Setting up a grid cloner" => "howto/GridCloner.md"
