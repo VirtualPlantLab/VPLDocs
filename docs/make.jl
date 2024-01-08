@@ -13,7 +13,8 @@ makedocs(;
         edit_link="master",
         assets=String[],
         collapselevel = 1,
-        footer = nothing
+        footer = nothing,
+        size_threshold = nothing
     ),
     pages=[
         "Virtual Plant Laboratory" => "index.md",
@@ -25,7 +26,7 @@ makedocs(;
             "Ray tracing" => "manual/Raytracer.md",
             "3D visualization" => "manual/Visualization.md"
         ],
-        "Tutorials" => "tutorials/intro_tut.md",[
+        "Tutorials" => ["Intro" => "tutorials/intro_tut.md",
             "Getting started with VPL" =>
             ["Algae growth" => "tutorials/getting_started/algae.md",
             "The Koch snowflake" => "tutorials/getting_started/snowflakes.md"],

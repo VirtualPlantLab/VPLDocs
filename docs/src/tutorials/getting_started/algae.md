@@ -125,7 +125,7 @@ graph, but different options are available depending on the context where the
 code is executed. By default, `draw()` will create a new window where an
 interactive version of the graph will be drawn and one can zoom and pan with the
 mouse (in this online document a static version is shown, see
-[Backends](../manual/Visualization.md) for details):
+[Backends](../../manual/Visualization.md) for details):
 
 ````julia
 import GLMakie
@@ -159,4 +159,3 @@ handy when graphs become large.
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-
