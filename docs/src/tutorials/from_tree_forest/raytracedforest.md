@@ -1,20 +1,19 @@
 # Ray-traced forest
 
-Alejandro Morales
+Alejandro Morales and Ana Ernst
 
 Centre for Crop Systems Analysis - Wageningen University
 
 > ## TL;DR
 > Now we want to forest growth model that PAR interception and introduces user to the ray-tracer.
-> - Include material as a property for each object
-> - Create sky for specific conditions and locations
+> - Include [material](https://virtualplantlab.com/dev/manual/Raytracer/#Materials) as a property for each object
+> - Create sky for specific conditions and locations using [SkyDomes](https://virtualplantlab.com/dev/VPLVerse/SkyDomes/)
 > - Layer different types of radiation in sky domes (e.g., direct and diffuse)
 > - Combine graph and sky with a ray-tracer
-> - Compute growth and biomass production according to PAR interception and RUE
+> - Compute growth and biomass production according to PAR interception and RUE 
 > 
 
-In this example we extend the forest growth model to include PAR interception and
-radiation use efficiency to compute the daily growth rate.
+In this example we extend the [Growth Forest](https://virtualplantlab.com/dev/tutorials/from_tree_forest/growthforest/) model to include PAR interception and radiation use efficiency to compute the daily growth rate.
 
 The following packages are needed:
 
@@ -50,8 +49,8 @@ module TreeTypes
     end
     # Bud
     struct Bud <: VirtualPlantLab.Node end
-    # Node
-    struct Node <: VirtualPlantLab.Node end
+    # TreeNode
+    struct TreeNode <: VirtualPlantLab.Node end
     # BudNode
     struct BudNode <: VirtualPlantLab.Node end
     # Internode (needs to be mutable to allow for changes over time)
@@ -89,8 +88,8 @@ module TreeTypes
         plastochron::Int64 = 5 ## Number of days between phytomer production
         leaf_expansion::Float64 = 15.0 ## Number of days that a leaf expands
         phyllotaxis::Float64 = 140.0
-        leaf_angle::Float64 = 30.0
-        branch_angle::Float64 = 45.0
+        leaf_angle::Float64 = 45.0
+        branch_angle::Float64 = 30.0
     end
 end
 
@@ -142,7 +141,7 @@ internodes and will only be triggered every X days, where X is the plastochron.
 function create_meristem_rule(vleaf, vint)
     meristem_rule = Rule(TreeTypes.Meristem,
                         lhs = mer -> mod(data(mer).age, graph_data(mer).plastochron) == 0,
-                        rhs = mer -> TreeTypes.Node() +
+                        rhs = mer -> TreeTypes.TreeNode() +
                                      (TreeTypes.Bud(),
                                      TreeTypes.Leaf(biomass = vleaf.biomass,
                                                     length  = vleaf.length,
@@ -175,11 +174,11 @@ function prob_break(bud)
             child = children(child)[1]
             data_child = data(child)
         # If we encounter a node, extract the next internode
-        elseif data_child isa TreeTypes.Node
+        elseif data_child isa TreeTypes.TreeNode
                 child = filter(x -> data(x) isa TreeTypes.Internode, children(child))[1]
                 data_child = data(child)
         else
-            error("Should be Internode, Node or Meristem")
+            error("Should be Internode, TreeNode or Meristem")
         end
     end
     # Compute the probability of bud break as function of distance and
@@ -221,6 +220,7 @@ function create_soil()
     VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0)) ## Corner at (0,0,0)
     return soil
 end
+
 function create_scene(forest)
     # These are the trees
     scene = Scene(vec(forest))
@@ -251,10 +251,12 @@ function create_sky(;scene, lat = 52.0*π/180.0, DOY = 182)
     dec = declination(DOY)
     DL = day_length(lat, dec)*3600
     # Compute solar irradiance
-    temp = [clear_sky(lat = lat, DOY = DOY, f = f) for f in fs] # W/m2
+    temp = [clear_sky(lat = lat, DOY = DOY, f = f) for f in fs] # W m2
     Ig   = getindex.(temp, 1)
     Idir = getindex.(temp, 2)
     Idif = getindex.(temp, 3)
+    theta = getindex.(temp, 4)
+    phi = getindex.(temp, 5)
     # Conversion factors to PAR for direct and diffuse irradiance
     f_dir = waveband_conversion(Itype = :direct,  waveband = :PAR, mode = :power)
     f_dif = waveband_conversion(Itype = :diffuse, waveband = :PAR, mode = :power)
@@ -268,8 +270,11 @@ function create_sky(;scene, lat = 52.0*π/180.0, DOY = 182)
                   nrays_dif = 1_000_000, ## Total number of rays for diffuse solar radiation
                   sky_model = StandardSky, ## Angular distribution of solar radiation
                   dome_method = equal_solid_angles, ## Discretization of the sky dome
+                  # Angles
                   ntheta = 9, ## Number of discretization steps in the zenith angle
-                  nphi = 12) ## Number of discretization steps in the azimuth angle
+                  theta_dir = theta, ## Direction of the zenith angle
+                  nphi = 12, ## Number of discretization steps in the azimuth angle
+                  phi_dir = phi) ## Direction of the azimuth angle
     # Add direct sources for different times of the day
     for I in Idir_PAR
         push!(dome, sky(scene, Idir = I/10*DL, nrays_dir = 100_000, Idif = 0.0)[1])
@@ -514,7 +519,7 @@ histogram(vec(orientations))
 origins = [Vec(i,j,0) for i = 1:2.0:20.0, j = 1:2.0:20.0];
 ````
 
-The following initalizes a tree based on the origin, orientation and RUE:
+The following initializes a tree based on the origin, orientation and RUE:
 
 ````julia
 function create_tree(origin, orientation, RUE)
