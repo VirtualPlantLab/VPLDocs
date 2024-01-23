@@ -1,6 +1,6 @@
 # Tree
 
-Alejandro Morales
+Alejandro Morales and Ana Ernst
 
 Centre for Crop Systems Analysis - Wageningen University
 
@@ -14,17 +14,17 @@ In this example we build a 3D representation of a binary TreeTypes. Although thi
 
 The model requires five types of nodes:
 
-*Meristem*: These are the nodes responsible for growth of new organs in our binary TreeTypes. They contain no data or geometry (i.e. they are a point in the 3D structure).
+- *Meristem*: These are the nodes responsible for growth of new organs in our binary TreeTypes. They contain no data or geometry (i.e. they are a point in the 3D structure).
 
-*Internode*: The result of growth of a branch, between two nodes. Internodes are represented by cylinders with a fixed width but variable length.
+- *Internode*: The result of growth of a branch, between two nodes. Internodes are represented by cylinders with a fixed width but variable length.
 
-*Node*: What is left after a meristem produces a new organ (it separates internodes). They contain no data or geometry (so also a point) but are required to keep the branching structure of the tree as well as connecting leaves.
+- *TreeNode*: What is left after a meristem produces a new organ (it separates internodes). They contain no data or geometry (so also a point) but are required to keep the branching structure of the tree as well as connecting leaves.
 
-*Bud*: These are dormant meristems associated to tree nodes. When they are activated, they become an active meristem that produces a branch. They contain no data or geometry, but they change the orientation of the turtle.
+- *Bud*: These are dormant meristems associated to tree nodes. When they are activated, they become an active meristem that produces a branch. They contain no data or geometry, but they change the orientation of the turtle.
 
-*BudNode*: The node left by a bud after it has been activated. They contain no data or geometry, but they change the orientation of the turtle.
+- *BudNode*: The node left by a bud after it has been activated. They contain no data or geometry, but they change the orientation of the turtle.
 
-*Leaf*: These are the nodes associated to leaves in the TreeTypes. They are represented by ellipses with a particular orientation and insertion angle. The insertion angle is assumed constant, but the orientation angle varies according to an elliptical phyllotaxis rule.
+- *Leaf*: These are the nodes associated to leaves in the TreeTypes. They are represented by ellipses with a particular orientation and insertion angle. The insertion angle is assumed constant, but the orientation angle varies according to an elliptical phyllotaxis rule.
 
 In this first simple model, only internodes grow over time according to a relative growth rate, whereas leaves are assumed to be of fixed sized determined at their creation. For simplicity, all active meristems will produce a phytomer (combination of node, internode, leaves and buds) per time step. Bud break is assumed stochastic, with a probability that increases proportional to the number of phytomers from the apical meristem (up to 1). In the following tutorials, these assumptions are replaced by more realistic models of light interception, photosynthesis, etc.
 
@@ -41,8 +41,8 @@ module TreeTypes
     struct Meristem <: VirtualPlantLab.Node end
     # Bud
     struct Bud <: VirtualPlantLab.Node end
-    # Node
-    struct Node <: VirtualPlantLab.Node end
+    # TreeNode
+    struct TreeNode <: VirtualPlantLab.Node end
     # BudNode
     struct BudNode <: VirtualPlantLab.Node end
     # Internode (needs to be mutable to allow for changes over time)
@@ -59,8 +59,8 @@ module TreeTypes
         growth::Float64 = 0.1
         budbreak::Float64 = 0.25
         phyllotaxis::Float64 = 140.0
-        leaf_angle::Float64 = 30.0
-        branch_angle::Float64 = 45.0
+        leaf_angle::Float64 = 45.0
+        branch_angle::Float64 = 30.0
     end
 end
 ````
@@ -99,9 +99,9 @@ end
 The growth rule for a branch within a tree is simple: a phytomer (or basic unit of morphology) is composed of a node, a leaf, a bud node, an internode and an active meristem at the end. Each time step, the meristem is replaced by a new phytomer, allowing for the development within a branch.
 
 ````julia
-meristem_rule = Rule(TreeTypes.Meristem, rhs = mer -> TreeTypes.Node() +
+meristem_rule = Rule(TreeTypes.Meristem, rhs = mer -> TreeTypes.TreeNode() +
                                               (TreeTypes.Bud(), TreeTypes.Leaf()) +
-                                         TreeTypes.Internode() + TreeTypes.Meristem())
+                                               TreeTypes.Internode() + TreeTypes.Meristem())
 ````
 
 In addition, every step of the simulation, each bud may break, creating a new branch. The probability of bud break is proportional to the number of phytomers from the apical meristem (up to 1), which requires a relational rule to count the number of internodes in the graph up to reaching a meristem. When a bud breaks, it is replaced by a bud node, an internode and a new meristem. This new meristem becomes the apical meristem of the new branch, such that `meristem_rule` would apply. Note how we create an external function to compute whether a bud breaks or not. This is useful to keep the `branch_rule` rule simple and readable, while allow for a relatively complex bud break model. It also makes it easier to debug the bud break model, since it can be tested independently of the graph rewriting.

@@ -1,11 +1,11 @@
 # Forest
 
-Alejandro Morales
+Alejandro Morales and Ana Ernst
 
 Centre for Crop Systems Analysis - Wageningen University
 
 > ## TL;DR
-> Similar in functionality to [Tree]() tutorial with separate graphs for each tree 
+> Similar in functionality to [Tree](https://virtualplantlab.com/dev/tutorials/from_tree_forest/tree/) tutorial with separate graphs for each tree 
 > - Modify tree parameters for each tree
 > - Multithreaded simulation (grow trees in parallel)
 > - Scene customization (e.g., add soil)
@@ -28,8 +28,8 @@ module TreeTypes
     struct Meristem <: VirtualPlantLab.Node end
     # Bud
     struct Bud <: VirtualPlantLab.Node end
-    # Node
-    struct Node <: VirtualPlantLab.Node end
+    # TreeNode
+    struct TreeNode <: VirtualPlantLab.Node end
     # BudNode
     struct BudNode <: VirtualPlantLab.Node end
     # Internode (needs to be mutable to allow for changes over time)
@@ -46,8 +46,8 @@ module TreeTypes
         growth::Float64 = 0.1
         budbreak::Float64 = 0.25
         phyllotaxis::Float64 = 140.0
-        leaf_angle::Float64 = 30.0
-        branch_angle::Float64 = 45.0
+        leaf_angle::Float64 = 45.0
+        branch_angle::Float64 = 30.0
     end
 end
 
@@ -93,7 +93,7 @@ end
 Rules for meristem and branches:
 
 ````julia
-meristem_rule = Rule(TreeTypes.Meristem, rhs = mer -> TreeTypes.Node() +
+meristem_rule = Rule(TreeTypes.Meristem, rhs = mer -> TreeTypes.TreeNode() +
                                               (TreeTypes.Bud(), TreeTypes.Leaf()) +
                                          TreeTypes.Internode() + TreeTypes.Meristem())
 
@@ -179,13 +179,13 @@ We may assume that the initial orientation is uniformly distributed between 0 an
 orientations = [rand()*360.0 for i = 1:2.0:20.0, j = 1:2.0:20.0]
 ````
 
-For the `growth` and `budbreak` parameters we will assumed that they follow a
+For the `growth` and `budbreak` parameters we will be assumed to follow a
 LogNormal and Beta distribution, respectively. We can generate random
 values from these distributions using the `Distributions` package. For the
 relative growth rate:
 
 ````julia
-growths = rand(LogNormal(-2, 0.3), 10, 10)
+growths = rand(LogNormal(-2, 0.2), 10, 10)
 histogram(vec(growths))
 ````
 
@@ -200,7 +200,7 @@ Now we can create our forest by calling the `create_tree` function we defined ea
 with the correct inputs per tree:
 
 ````julia
-forest = vec(create_tree.(origins, growths, budbreaks, orientations));
+forest = vec(create_tree.(origins, growths, budbreaks, orientations))
 ````
 
 By vectorizing `create_tree()` over the different arrays, we end up with an array
@@ -217,7 +217,7 @@ We can simulate the growth of each tree by applying the method `simulate` to eac
 tree, creating a new version of the forest (the code below is an array comprehension)
 
 ````julia
-newforest = [simulate(tree, getInternode, 2) for tree in forest];
+newforest = [simulate(tree, getInternode, 2) for tree in forest]
 ````
 
 And we can render the forest with the function `render` as in the binary tree
@@ -273,7 +273,7 @@ geometric element it is best to combine all these geometries in a `GLScene` obje
 with the `newforest` generated in the above:
 
 ````julia
-scene = Scene(newforest);
+scene = Scene(newforest)
 ````
 
 We can create the soil tile directly, without having to create a graph. The simplest approach is two use

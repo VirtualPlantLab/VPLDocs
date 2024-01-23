@@ -57,7 +57,7 @@ module TreeTypes
     # Bud
     struct Bud <: VirtualPlantLab.Node end
     # Node
-    struct Node <: VirtualPlantLab.Node end
+    struct TreeNode <: VirtualPlantLab.Node end
     # BudNode
     struct BudNode <: VirtualPlantLab.Node end
     # Internode (needs to be mutable to allow for changes over time)
@@ -92,8 +92,8 @@ module TreeTypes
         plastochron::Int64 = 5 ## Number of days between phytomer production
         leaf_expansion::Float64 = 15.0 ## Number of days that a leaf expands
         phyllotaxis::Float64 = 140.0
-        leaf_angle::Float64 = 30.0
-        branch_angle::Float64 = 45.0
+        leaf_angle::Float64 = 45.0
+        branch_angle::Float64 = 30.0
     end
 end
 
@@ -145,7 +145,7 @@ internodes and will only be triggered every X days, where X is the plastochron.
 function create_meristem_rule(vleaf, vint)
     meristem_rule = Rule(TreeTypes.Meristem,
                         lhs = mer -> mod(data(mer).age, graph_data(mer).plastochron) == 0,
-                        rhs = mer -> TreeTypes.Node() +
+                        rhs = mer -> TreeTypes.TreeNode() +
                                      (TreeTypes.Bud(),
                                      TreeTypes.Leaf(biomass = vleaf.biomass,
                                                     length  = vleaf.length,
@@ -178,7 +178,7 @@ function prob_break(bud)
             child = children(child)[1]
             data_child = data(child)
         # If we encounter a node, extract the next internode
-        elseif data_child isa TreeTypes.Node
+        elseif data_child isa TreeTypes.TreeNode
                 child = filter(x -> data(x) isa TreeTypes.Internode, children(child))[1]
                 data_child = data(child)
         else
