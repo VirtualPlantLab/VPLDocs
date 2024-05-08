@@ -40,7 +40,8 @@ makedocs(;
             "Relational queries" => "tutorials/more_rules_queries/relationalqueries.md"]
         ],
         "How-to guides" => [
-            "Setting up a grid cloner" => "howto/GridCloner.md"
+            "Setting up a grid cloner" => "howto/GridCloner.md",
+            "Messages in scenes" => "howto/Message.md"
         ],
         "API" => [
             "Graphs" => "api/graphs.md",
