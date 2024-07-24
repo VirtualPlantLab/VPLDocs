@@ -1,10 +1,12 @@
 using VPLDocs
 using Documenter
 import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys, PlantSimEngine
+import Ecophys.Photosynthesis, Ecophys.Growth
 
 makedocs(;
     doctest = false,
-    modules = [VPLDocs, PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys, PlantSimEngine],
+    modules = [VPLDocs, PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer,
+               PlantViz, SkyDomes, Ecophys.Photosynthesis, Ecophys.Growth, PlantSimEngine],
     authors="Alejandro Morales <alejandro.moralessierra@wur.nl> and contributors",
     repo="https://github.com/VirtualPlantLab/VPLDocs/blob/{commit}{path}#{line}",
     sitename="Virtual Plant Laboratory",
@@ -57,7 +59,8 @@ makedocs(;
             ],
             "Ecophys" => [
                 "Ecophys package" => "VPLVerse/Ecophys/index.md",
-                "Photosynthesis API" => "VPLVerse/Ecophys/photosynthesis.md"
+                "Photosynthesis API" => "VPLVerse/Ecophys/photosynthesis.md",
+                "Growth API" => "VPLVerse/Ecophys/growth.md"
             ],
             "PlantSimEngine" => [
                 "PlantSimEngine package" => "VPLVerse/PlantSimEngine/index.md"
