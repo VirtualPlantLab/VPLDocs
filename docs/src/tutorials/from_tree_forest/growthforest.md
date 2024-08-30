@@ -8,10 +8,10 @@ Centre for Crop Systems Analysis - Wageningen University
 > Now we want to implement a more extended functionality of our [Forest]()!
 > - Growth rules, based on information stored in organs (dimensions, carbon assimilation)
 > - Update dimensions in function of assimilation
-> - Compute sink strength 
+> - Compute sink strength
 > - Merge Scenes
 > - Generate forest on grid and retrieve canopy-level data (e.g., LAI)
-> 
+>
 
 In this example we extend the binary forest example to have more complex, time-
 dependent development and growth based on carbon allocation. For simplicity, the
@@ -111,7 +111,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
     # Rotate turtle around the head to implement elliptical phyllotaxis
     rh!(turtle, vars.phyllotaxis)
     HollowCylinder!(turtle, length = i.length, height = i.width, width = i.width,
-                move = true, color = RGB(0.5,0.4,0.0))
+                move = true, colors = RGB(0.5,0.4,0.0))
     return nothing
 end
 
@@ -121,7 +121,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
     ra!(turtle, -vars.leaf_angle)
     # Generate the leaf
     Ellipse!(turtle, length = l.length, width = l.width, move = false,
-             color = RGB(0.2,0.6,0.2))
+             colors = RGB(0.2,0.6,0.2))
     # Rotate turtle back to original direction
     ra!(turtle, vars.leaf_angle)
     return nothing
@@ -400,7 +400,7 @@ Base.@kwdef struct Soil <: VirtualPlantLab.Node
     width::Float64
 end
 function VirtualPlantLab.feed!(turtle::Turtle, s::Soil, vars)
-    Rectangle!(turtle, length = s.length, width = s.width, color = RGB(255/255, 236/255, 179/255))
+    Rectangle!(turtle, length = s.length, width = s.width, colors = RGB(255/255, 236/255, 179/255))
 end
 soil_graph = RA(-90.0) + T(Vec(0.0, 10.0, 0.0)) + # Moves into position
              Soil(length = 20.0, width = 20.0) # Draws the soil tile
@@ -459,4 +459,3 @@ get_LAI(forest)
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

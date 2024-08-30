@@ -5,7 +5,7 @@ Alejandro Morales and Ana Ernst
 Centre for Crop Systems Analysis - Wageningen University
 
 > ## TL;DR
-> Similar in functionality to [Tree](https://virtualplantlab.com/dev/tutorials/from_tree_forest/tree/) tutorial with separate graphs for each tree 
+> Similar in functionality to [Tree](https://virtualplantlab.com/dev/tutorials/from_tree_forest/tree/) tutorial with separate graphs for each tree
 > - Modify tree parameters for each tree
 > - Multithreaded simulation (grow trees in parallel)
 > - Scene customization (e.g., add soil)
@@ -61,7 +61,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
     # Rotate turtle around the head to implement elliptical phyllotaxis
     rh!(turtle, data.phyllotaxis)
     HollowCylinder!(turtle, length = i.length, height = i.length/15, width = i.length/15,
-                move = true, color = RGB(0.5,0.4,0.0))
+                move = true, colors = RGB(0.5,0.4,0.0))
     return nothing
 end
 ````
@@ -74,7 +74,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
     ra!(turtle, -data.leaf_angle)
     # Generate the leaf
     Ellipse!(turtle, length = l.length, width = l.width, move = false,
-             color = RGB(0.2,0.6,0.2))
+             colors = RGB(0.2,0.6,0.2))
     # Rotate turtle back to original direction
     ra!(turtle, data.leaf_angle)
     return nothing
@@ -293,7 +293,7 @@ VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0))
 We can now add the `soil` to the `scene` object with the `add!` function.
 
 ````julia
-VirtualPlantLab.add!(scene, mesh = soil, color = RGB(1,1,0))
+VirtualPlantLab.add!(scene, mesh = soil, colors = RGB(1,1,0))
 ````
 
 We can now render the scene that combines the random forest of binary trees and a yellow soil. Notice that
@@ -321,4 +321,3 @@ export_scene(scene = output, filename = "nice_trees.png")
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

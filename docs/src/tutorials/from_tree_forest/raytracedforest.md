@@ -10,8 +10,8 @@ Centre for Crop Systems Analysis - Wageningen University
 > - Create sky for specific conditions and locations using [SkyDomes](https://virtualplantlab.com/dev/VPLVerse/SkyDomes/)
 > - Layer different types of radiation in sky domes (e.g., direct and diffuse)
 > - Combine graph and sky with a ray-tracer
-> - Compute growth and biomass production according to PAR interception and RUE 
-> 
+> - Compute growth and biomass production according to PAR interception and RUE
+>
 
 In this example we extend the [Growth Forest](https://virtualplantlab.com/dev/tutorials/from_tree_forest/growthforest/) model to include PAR interception and radiation use efficiency to compute the daily growth rate.
 
@@ -107,7 +107,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, data)
     # Rotate turtle around the head to implement elliptical phyllotaxis
     rh!(turtle, data.phyllotaxis)
     HollowCylinder!(turtle, length = i.length, height = i.width, width = i.width,
-                move = true, color = RGB(0.5,0.4,0.0), material = i.material)
+                move = true, colors = RGB(0.5,0.4,0.0), materials = i.material)
     return nothing
 end
 
@@ -117,7 +117,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, data)
     ra!(turtle, -data.leaf_angle)
     # Generate the leaf
     Ellipse!(turtle, length = l.length, width = l.width, move = false,
-             color = RGB(0.2,0.6,0.2), material = l.material)
+             colors = RGB(0.2,0.6,0.2), materials = l.material)
     # Rotate turtle back to original direction
     ra!(turtle, data.leaf_angle)
     return nothing
@@ -227,7 +227,7 @@ function create_scene(forest)
     # Add a soil surface
     soil = create_soil()
     soil_material = Lambertian(τ = 0.0, ρ = 0.21)
-    add!(scene, mesh = soil, material = soil_material)
+    add!(scene, mesh = soil, materials = soil_material)
     # Return the scene
     return scene
 end
@@ -558,7 +558,7 @@ Base.@kwdef struct Soil <: VirtualPlantLab.Node
     width::Float64
 end
 function VirtualPlantLab.feed!(turtle::Turtle, s::Soil, data)
-    Rectangle!(turtle, length = s.length, width = s.width, color = RGB(255/255, 236/255, 179/255))
+    Rectangle!(turtle, length = s.length, width = s.width, colors = RGB(255/255, 236/255, 179/255))
 end
 soil_graph = RA(-90.0) + T(Vec(0.0, 10.0, 0.0)) + ## Moves into position
              Soil(length = 20.0, width = 20.0) ## Draws the soil tile
@@ -598,4 +598,3 @@ end
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

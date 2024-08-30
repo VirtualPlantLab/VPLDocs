@@ -7,7 +7,7 @@ Centre for Crop Systems Analysis - Wageningen University
 > ### TL;DR
 > - Define parameter for graph nodes
 > - Define methods for VirtualPlantLab.feed! functions
-> - Create [Scenes](https://virtualplantlab.com/dev/manual/Geometry/Turtle/#Scenes) 
+> - Create [Scenes](https://virtualplantlab.com/dev/manual/Geometry/Turtle/#Scenes)
 > - [Visualization](https://virtualplantlab.com/dev/manual/Visualization/) of 'Graph' with render()
 >
 
@@ -118,7 +118,7 @@ to generate random colors.
 function VirtualPlantLab.feed!(turtle::Turtle, e::sn.E, vars)
     HollowCylinder!(turtle, length = e.length, width = e.length/10,
                     height = e.length/10, move = true,
-                    color = RGB(rand(), rand(), rand()))
+                    colors = RGB(rand(), rand(), rand()))
     return nothing
 end
 ````
@@ -215,4 +215,3 @@ render(Scene(Cesaro), axes = false)
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-
