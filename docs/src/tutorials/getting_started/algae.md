@@ -1,6 +1,8 @@
+
+
 # Algae growth
 
-Alejandro Morales
+Alejandro Morales & Ana Ernst
 
 Centre for Crop Systems Analysis - Wageningen University
 
@@ -20,7 +22,7 @@ Lindermayer as one of the first L-systems.
 First, we need to load the VPL metapackage, which will automatically load all
 the packages in the VPL ecosystem.
 
-````julia
+````@example Algae
 using VirtualPlantLab
 ````
 
@@ -38,7 +40,7 @@ include type definitions in a module to avoid having to restart the Julia
 session whenever we want to redefine them. Because each module is an independent
 namespace, we need to import `Node` from the VPL package inside the module:
 
-````julia
+````@example Algae
 module algae
     import VirtualPlantLab: Node
     struct A <: Node end
@@ -52,7 +54,7 @@ the nodes, so types `A` and `B` do not require fields.
 
 The axiom is simply defined as an instance of type of `A`:
 
-````julia
+````@example Algae
 axiom = algae.A()
 ````
 
@@ -79,7 +81,7 @@ relationship between two nodes and `[]` indicates branching.
 
 The implementation of the two rules of algae growth model in VPL is as follows:
 
-````julia
+````@example Algae
 rule1 = Rule(algae.A, rhs = x -> algae.A() + algae.B())
 rule2 = Rule(algae.B, rhs = x -> algae.A())
 ````
@@ -89,7 +91,7 @@ Note that in each case, the argument `rhs` is being assigned an anonymous (aka
 in the assignment to the argument. That is, the Julia expression `x -> A() + B()`
 is equivalent to the following function definition:
 
-````julia
+````@example Algae
 function rule_1(x)
     algae.A() + algae.B()
 end
@@ -105,7 +107,7 @@ With the axiom and rules we can now create a `Graph` object that represents the
 algae organism. The first argument is the axiom and the second is a tuple with
 all the rewriting rules:
 
-````julia
+````@example Algae
 organism = Graph(axiom = axiom, rules = (rule1, rule2))
 ````
 
@@ -113,7 +115,7 @@ If we apply the rewriting rules iteratively, the graph will grow, in this case
 representing the growth of the algae organism. The rewriting rules are applied
 on the graph with the function `rewrite!()`:
 
-````julia
+````@example Algae
 rewrite!(organism)
 ````
 
@@ -127,10 +129,13 @@ interactive version of the graph will be drawn and one can zoom and pan with the
 mouse (in this online document a static version is shown, see
 [Backends](../../manual/Visualization.md) for details):
 
-````julia
+````@example Algae
 import GLMakie
-draw(organism)
+pl = draw(organism)
+GLMakie.save("algae_growth1.png", pl) ## hide
 ````
+
+![](algae_growth1.png)
 
 Notice that each node in the network representation is labelled with the type of
 node (`A` or `B` in this case) and a number in parentheses. This number is a
@@ -139,7 +144,7 @@ purposes (this will be explained in more advanced examples).
 
 Applying multiple iterations of rewriting can be achieved with a simple loop:
 
-````julia
+````@example Algae
 for i in 1:4
     rewrite!(organism)
 end
@@ -147,9 +152,12 @@ end
 
 And we can verify that the graph grew as expected:
 
-````julia
-draw(organism)
+````@example Algae
+pl = draw(organism)
+GLMakie.save("algae_growth2.png", pl) ## hide
 ````
+
+![](algae_growth2.png)
 
 The network is rather boring as the system is growing linearly (no branching)
 but it already illustrates how graphs can grow rapidly in just a few iterations.
@@ -159,3 +167,4 @@ handy when graphs become large.
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
+

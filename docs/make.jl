@@ -43,7 +43,8 @@ makedocs(;
         ],
         "How-to guides" => [
             "Setting up a grid cloner" => "howto/GridCloner.md",
-            "Messages in scenes" => "howto/Message.md"
+            "Messages in scenes" => "howto/Message.md",
+            "Multiple materials/colors" => "howto/Materials.md"
         ],
         "API" => [
             "Graphs" => "api/graphs.md",
