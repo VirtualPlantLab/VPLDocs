@@ -391,18 +391,10 @@ sink_strength(leaf, vars) = leaf.age > vars.leaf_expansion ? 0.0 :
                             pdf(leaf.sink, leaf.age/vars.leaf_expansion)/100.0
 plot(0:1:50, x -> sink_strength(TreeTypes.Leaf(age = x), TreeTypes.treeparams()),
      xlabel = "Age", ylabel = "Sink strength", label = "Leaf")
-savefig("leaf_sink_strength.png") ## hide
-```
 
-![](leaf_sink_strength.png)
-
-```julia
 sink_strength(int) = pdf(int.sink, int.age)
 plot!(0:1:50, x -> sink_strength(TreeTypes.Leaf(age = x)), label = "Internode")
-savefig("internode_sink_strength.png") ## hide
 ```
-
-![](internode_sink_strength.png)
 
 Now we need a function that updates the biomass of the tree, allocates it to the
 different organs and updates the dimensions of said organs. For simplicity,
@@ -514,12 +506,10 @@ orientation and RUE:
 ```julia
 RUEs = rand(Normal(1.5,0.2), 10, 10)
 histogram(vec(RUEs))
-savefig("RUEs.png") ## hide
-#![](RUEs.png)
+
 orientations = [rand()*360.0 for i = 1:2.0:20.0, j = 1:2.0:20.0]
 histogram(vec(orientations))
-savefig("orientations.png") ## hide
-#![](orientations.png)
+
 origins = [Vec(i,j,0) for i = 1:2.0:20.0, j = 1:2.0:20.0];
 nothing #hide
 ```
@@ -568,11 +558,8 @@ end
 soil_graph = RA(-90.0) + T(Vec(0.0, 10.0, 0.0)) + ## Moves into position
              Soil(length = 20.0, width = 20.0) ## Draws the soil tile
 soil = Scene(Graph(axiom = soil_graph));
-pl = render(soil, axes = false)
-GLMakie.save("soil.png", pl) ## hide
+render(soil, axes = false)
 ```
-
-![](soil.png)
 
 And the following function renders the entire scene (notice that we need to
 use `display()` to force the rendering of the scene when called within a loop
@@ -598,16 +585,10 @@ for i in 1:20
     println("Day $i")
     daily_step!(forest, i + start)
     if mod(i, 5) == 0
-        pl = render_forest(forest, soil)
-        GLMakie.save("forest$i.png", pl) ## hide
+        render_forest(forest, soil)
     end
 end
 ```
-
-![](forest5.png)
-![](forest10.png)
-![](forest15.png)
-![](forest20.png)
 
 ---
 

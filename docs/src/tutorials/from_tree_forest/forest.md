@@ -181,20 +181,14 @@ relative growth rate:
 ```julia
 growths = rand(LogNormal(-2, 0.3), 10, 10)
 histogram(vec(growths))
-savefig("growths.png") ## hide
 ```
-
-![](growths.png)
 
 And for the budbreak parameter:
 
 ```julia
 budbreaks = rand(Beta(2.0, 10), 10, 10)
 histogram(vec(budbreaks))
-savefig("budbreaks.png") ## hide
 ```
-
-![](budbreaks.png)
 
 Now we can create our forest by calling the `create_tree` function we defined earlier
 with the correct inputs per tree:
@@ -226,22 +220,16 @@ And we can render the forest with the function `render` as in the binary tree
 example but passing the whole forest at once
 
 ```julia
-pl = render(Scene(newforest))
-GLMakie.save("newforest1.png", pl) ## hide
+render(Scene(newforest))
 ```
-
-![](newforest1.png)
 
 If we iterate 4 more iterations we will start seeing the different individuals
 diverging in size due to the differences in growth rates
 
 ```julia
 newforest = [simulate(tree, getInternode, 15) for tree in newforest];
-pl = render(Scene(newforest))
-GLMakie.save("newforest2.png", pl) ## hide
+render(Scene(newforest))
 ```
-
-![](newforest2.png)
 
 ## Multithreaded simulation
 
@@ -258,11 +246,8 @@ newforest = deepcopy(forest)
 @threads for i in 1:length(forest)
     newforest[i] = simulate(forest[i], getInternode, 6)
 end
-pl = render(Scene(newforest, parallel = true))
-GLMakie.save("newforest3.png", pl) ## hide
+render(Scene(newforest, parallel = true))
 ```
-
-![](newforest3.png)
 
 An alternative way to perform the simulation is to have an outer loop for each timestep and an internal loop over the different trees. Although this approach is not required for this simple model, most FSP models will probably need such a scheme as growth of each individual plant will depend on competition for resources with neighbouring plants. In this case, this approach would look as follows:
 
@@ -273,11 +258,8 @@ for step in 1:15
         newforest[i] = simulate(newforest[i], getInternode, 1)
     end
 end
-pl = render(Scene(newforest, parallel = true))
-GLMakie.save("newforest4.png", pl) ## hide
+render(Scene(newforest, parallel = true))
 ```
-
-![](newforest4.png)
 
 # Customizing the scene
 
@@ -318,11 +300,8 @@ Howver, it may be distracting for the visualization. It turns out that we can tu
 `axes = false`:
 
 ```julia
-pl = render(scene, axes = false)
-GLMakie.save("newforest5.png", pl) ## hide
+render(scene, axes = false)
 ```
-
-![](newforest5.png)
 
 We may also want to save a screenshot of the scene. For this, we need to store the output of the `render` function.
 We can then resize the window rendering the scene, move around, zoom, etc. When we have a perspective that we like,

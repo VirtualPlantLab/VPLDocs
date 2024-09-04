@@ -189,19 +189,16 @@ newtree = simulate(tree, getInternode, 2)
 The binary tree after two iterations has two branches, as expected:
 
 ```julia
-pl = render(Scene(newtree))
-GLMakie.save("tree1.png", pl) ## hide
+render(Scene(newtree))
 ```
 
-![](tree1.png)
-Notice how the lengths of the prisms representing internodes decreases as the branching order increases, as the internodes are younger (i.e. were generated fewer generations ago). Further steps will generate a structure that is more tree-like.
+Notice how the lengths of the prisms representing internodes decreases as the branching
+order increases, as the internodes are younger (i.e. were generated fewer generations ago).
+Further steps will generate a structure that is more tree-like.
 
 ```julia
 newtree = simulate(newtree, getInternode, 15)
-pl = render(Scene(newtree))
-GLMakie.save("tree2.png", pl) ## hide
-
-#![](tree2.png)
+render(Scene(newtree))
 ```
 
 ---

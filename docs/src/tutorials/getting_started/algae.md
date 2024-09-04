@@ -131,11 +131,8 @@ mouse (in this online document a static version is shown, see
 
 ```julia
 import GLMakie
-pl = draw(organism)
-GLMakie.save("algae_growth1.png", pl) ## hide
+draw(organism)
 ```
-
-![](algae_growth1.png)
 
 Notice that each node in the network representation is labelled with the type of
 node (`A` or `B` in this case) and a number in parentheses. This number is a
@@ -153,11 +150,8 @@ end
 And we can verify that the graph grew as expected:
 
 ```julia
-pl = draw(organism)
-GLMakie.save("algae_growth2.png", pl) ## hide
+draw(organism)
 ```
-
-![](algae_growth2.png)
 
 The network is rather boring as the system is growing linearly (no branching)
 but it already illustrates how graphs can grow rapidly in just a few iterations.

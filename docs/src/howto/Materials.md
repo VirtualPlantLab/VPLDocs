@@ -89,10 +89,7 @@ should scale with the absorptance of the tile.
 α = 1.0 .- τ .- ρ
 pl = scatter(α, irradiance, ylabel = "Irradiance", xlabel = "Absorptance", legend = false)
 Plots.abline!(pl, 1.0, 0.0)
-savefig(pl, "absorptance_vs_irradiance.png") ## hide
 ```
-
-![](absorptance_vs_irradiance.png)
 
 Finally, let's scale the colors of each triangle by the irradiance absorbed by each triangle
 assuming different shades of green and let's visualize them by turning of the shader in the
@@ -101,10 +98,7 @@ renderer to get the exact colors we specify.
 ```julia
 tile.colors = RGB.(0.0, α, 0.0)
 sc = Scene(g)
-pl = render(sc, wireframe = true, shading = GLMakie.NoShading)
-GLMakie.save("tile.png", pl) ## hide
-
-#![](tile.png)
+render(sc, wireframe = true, shading = GLMakie.NoShading)
 ```
 
 ---
