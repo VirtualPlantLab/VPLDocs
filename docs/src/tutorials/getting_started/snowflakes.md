@@ -1,9 +1,8 @@
 
 
-````@example Snowflakes
-#= The Koch snowflake
+# The Koch snowflake
 
-Alejandro Morales
+Alejandro Morales & Ana Ernst
 
 Centre for Crop Systems Analysis - Wageningen University
 
@@ -54,7 +53,7 @@ Note that VPL already provides several classes for common turtle movements and
 rotations, so our implementation of the Koch snowflake only needs to define a
 class to implement the edges of the snowflake. This can be achieved as follows:
 
-=#
+```julia
 using VirtualPlantLab
 import GLMakie # Import rather than "using" to avoid masking Scene
 using ColorTypes # To define colors for the rendering
@@ -65,15 +64,15 @@ module sn
     end
 end
 import .sn
-````
+```
 
 Note that nodes of type E need to keep track of the length as illustrated in the
 above. The axiom is straightforward:
 
-````@example Snowflakes
+```julia
 const L = 1.0
 axiom = sn.E(L) + VirtualPlantLab.RU(120.0) + sn.E(L) + VirtualPlantLab.RU(120.0) + sn.E(L)
-````
+```
 
 The rule is also straightforward to implement as all the nodes of type E will be
 replaced in each iteration. However, we need to ensure that the length of the
@@ -83,19 +82,19 @@ function data. In this case, the replacement function is defined and then added
 to the rule. This can make the code more readable but helps debugging and
 testing the replacement function.
 
-````@example Snowflakes
+```julia
 function Kochsnowflake(x)
     L = data(x).length
     sn.E(L/3) + RU(-60.0) + sn.E(L/3) + RU(120.0) + sn.E(L/3) + RU(-60.0) + sn.E(L/3)
 end
 rule = Rule(sn.E, rhs = Kochsnowflake)
-````
+```
 
 The model is then created by constructing the graph
 
-````@example Snowflakes
+```julia
 Koch = Graph(axiom = axiom, rules = Tuple(rule))
-````
+```
 
 In order to be able to generate a 3D structure we need to define a method for
 the function `VirtualPlantLab.feed!` (notice the need to prefix it with `VirtualPlantLab.` as we are
@@ -117,14 +116,14 @@ color support by the package ColorTypes.jl). In this case, we just feed a basic
 figures more appealing, we can assign random values to each channel of the color
 to generate random colors.
 
-````@example Snowflakes
+```julia
 function VirtualPlantLab.feed!(turtle::Turtle, e::sn.E, vars)
     HollowCylinder!(turtle, length = e.length, width = e.length/10,
                     height = e.length/10, move = true,
                     colors = RGB(rand(), rand(), rand()))
     return nothing
 end
-````
+```
 
 Note that the argument `move = true` indicates that the turtle should move
 forward as the cylinder is generated a distance equal to the length of the
@@ -135,28 +134,28 @@ be accessed by any node). In this case, we are not using this argument.
 After defining the method, we can now call the function render on the graph to
 generate a 3D interactive image of the Koch snowflake in the current state
 
-````@example Snowflakes
+```julia
 sc = Scene(Koch)
 render(sc, axes = false)
-````
+```
 
 This renders the initial triangle of the construction procedure of the Koch
 snowflake. Let's execute the rules once to verify that we get the 2nd iteration
 (check the figure at the beginning of this document):
 
-````@example Snowflakes
+```julia
 rewrite!(Koch)
 render(Scene(Koch), axes = false)
-````
+```
 
 And two more times
 
-````@example Snowflakes
+```julia
 for i in 1:3
     rewrite!(Koch)
 end
 render(Scene(Koch), axes = false)
-````
+```
 
 # Other snowflake fractals
 
@@ -164,38 +163,38 @@ To demonstrate the power of this approach, let's create an alternative
 snowflake. We will simply invert the rotations of the turtle in the rewriting
 rule
 
-````@example Snowflakes
+```julia
 function Kochsnowflake2(x)
    L = data(x).length
    sn.E(L/3) + RU(60.0) + sn.E(L/3) + RU(-120.0) + sn.E(L/3) + RU(60.0) + sn.E(L/3)
 end
 rule2 = Rule(sn.E, rhs = Kochsnowflake2)
 Koch2 = Graph(axiom = axiom, rules = Tuple(rule2))
-````
+```
 
 The axiom is the same, but now the edges added by the rule will generate the
 edges towards the inside of the initial triangle. Let's execute the first three
 iterations and render the results
 First iteration
 
-````@example Snowflakes
+```julia
 rewrite!(Koch2)
 render(Scene(Koch2), axes = false)
-````
+```
 
 Second iteration
 
-````@example Snowflakes
+```julia
 rewrite!(Koch2)
 render(Scene(Koch2), axes = false)
-````
+```
 
 Third iteration
 
-````@example Snowflakes
+```julia
 rewrite!(Koch2)
 render(Scene(Koch2), axes = false)
-````
+```
 
 This is know as [Koch
 antisnowflake](https://mathworld.wolfram.com/KochAntisnowflake.html). We could
@@ -203,33 +202,33 @@ also easily generate a [Cesàro
 fractal](https://mathworld.wolfram.com/CesaroFractal.html) by also changing the
 axiom:
 
-````@example Snowflakes
+```julia
 axiomCesaro = sn.E(L) + RU(90.0) + sn.E(L) + RU(90.0) + sn.E(L) + RU(90.0) + sn.E(L)
 Cesaro = Graph(axiom = axiomCesaro, rules = (rule2,))
 render(Scene(Cesaro), axes = false)
-````
+```
 
 And, as before, let's go through the first three iterations
 First iteration
 
-````@example Snowflakes
+```julia
 rewrite!(Cesaro)
 render(Scene(Cesaro), axes = false)
-````
+```
 
 Second iteration
 
-````@example Snowflakes
+```julia
 rewrite!(Cesaro)
 render(Scene(Cesaro), axes = false)
-````
+```
 
 Third iteration
 
-````@example Snowflakes
+```julia
 rewrite!(Cesaro)
 render(Scene(Cesaro), axes = false)
-````
+```
 
 ---
 
