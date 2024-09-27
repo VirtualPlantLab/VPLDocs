@@ -46,7 +46,8 @@ makedocs(;
             "Messages in scenes" => "howto/Message.md",
             "Multiple materials/colors" => "howto/Materials.md",
             "Advanced traversal" => "howto/Traversal.md",
-            "Absolute coordinates" => "howto/Coordinates.md"
+            "Absolute coordinates" => "howto/Coordinates.md",
+            "Creating light sources" => "howto/LightSources.md"
         ],
         "API" => [
             "Graphs" => "api/graphs.md",
