@@ -17,7 +17,7 @@ Let's illustrate how to use messages with a simple example. We will modify the T
 to allow for visualizing. Below is all the code for the tree model excluding the `feed!`
 methods
 
-````julia
+```julia
 using VirtualPlantLab
 using ColorTypes
 import GLMakie
@@ -102,7 +102,7 @@ function simulate(tree, query, nsteps)
     end
     return new_tree
 end
-````
+```
 
 There are three types of nodes that require geometry: `Leaf`, `Internode`, and `BudNode`,
 though the latter only adds the insertion angle for the branches. In the example below we
@@ -112,7 +112,7 @@ more meaningful we make the leaves bigger than in the original example). Note ho
 when we don't generate internodes we still need to modify the state of the turtle to ensure
 the correct positioning of the leaves.
 
-````julia
+```julia
 # Insertion angle for the bud nodes
 function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, vars)
     # Rotate turtle around the arm for insertion angle
@@ -128,7 +128,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
         f!(turtle, i.length)
     else
         HollowCylinder!(turtle, length = i.length, height = i.length/15, width = i.length/15,
-                    move = true, color = RGB(0.5,0.4,0.0))
+                    move = true, colors = RGB(0.5,0.4,0.0))
     end
     return nothing
 end
@@ -141,26 +141,26 @@ function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
     ra!(turtle, -vars.leaf_angle)
     # Generate the leaf
     Ellipse!(turtle, length = l.length, width = l.width, move = false,
-             color = RGB(0.2,0.6,0.2))
+             colors = RGB(0.2,0.6,0.2))
     # Rotate turtle back to original direction
     ra!(turtle, vars.leaf_angle)
     return nothing
 end
-````
+```
 
 We can now generate a simulation:
 
-````julia
+```julia
 newtree = simulate(tree, getInternode, 15)
-````
+```
 
 For a visualization of both leaves and internodes we can actually leave the message empty
 given how the code above is structured:
 
-````julia
+```julia
 scene = Scene(newtree);
 render(scene, axes = false)
-````
+```
 
 For only leaves:
 

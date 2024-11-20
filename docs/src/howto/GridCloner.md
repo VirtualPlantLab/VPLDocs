@@ -62,11 +62,11 @@ We create a simple plant placeholder defined by a stem and a single long leaf:
 ```julia
 struct Plant <: Node end
 function VirtualPlantLab.feed!(turtle::Turtle, plant::Plant, data)
-    HollowCylinder!(turtle, move = true, color = RGB(0.63, 0.63, 0.63), length = 2.0,
+    HollowCylinder!(turtle, move = true, colors = RGB(0.63, 0.63, 0.63), length = 2.0,
                     width = 0.25, height = 0.25)
     rh!(turtle, rand()*360.0)
     ra!(turtle, rand()*90.0)
-    Rectangle!(turtle, color = RGB(0.0, 1.0, 0.0), length = 3.0, width = 0.2)
+    Rectangle!(turtle, colors = RGB(0.0, 1.0, 0.0), length = 3.0, width = 0.2)
     return nothing
 end
 axiom(origin) = T(origin) + Plant()
@@ -96,7 +96,7 @@ tile to help identify them in the visualization:
 plant_scene = Scene(vec(plants));
 soil_scene = Scene()
 for tile in tiles
-    add!(soil_scene, mesh = tile, color = RGB(rand(), rand(), rand()))
+    add!(soil_scene, mesh = tile, colors = RGB(rand(), rand(), rand()))
 end
 scene = Scene([plant_scene, soil_scene]);
 render(scene)
