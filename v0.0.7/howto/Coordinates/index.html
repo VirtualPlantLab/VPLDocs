@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Absolute coordinates · Virtual Plant Laboratory</title><meta name="title" content="Absolute coordinates · Virtual Plant Laboratory"/><meta property="og:title" content="Absolute coordinates · Virtual Plant Laboratory"/><meta property="twitter:title" content="Absolute coordinates · Virtual Plant Laboratory"/><meta name="description" content="Documentation for Virtual Plant Laboratory."/><meta property="og:description" content="Documentation for Virtual Plant Laboratory."/><meta property="twitter:description" content="Documentation for Virtual Plant Laboratory."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Virtual Plant Laboratory</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Virtual Plant Laboratory</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox"/><label class="tocitem" for="menuitem-2"><span class="docs-label">Manual</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../manual/Julia/">Julia basic concepts</a></li><li><a class="tocitem" href="../../manual/Graphs/">Dynamic graph creation and manipulation</a></li><li><a class="tocitem" href="../../manual/Geometry/Primitives/">Geometry primitives</a></li><li><a class="tocitem" href="../../manual/Geometry/Turtle/">Turtle geometry and scenes</a></li><li><a class="tocitem" href="../../manual/Raytracer/">Ray tracing</a></li><li><a class="tocitem" href="../../manual/Visualization/">3D visualization</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox"/><label class="tocitem" for="menuitem-3"><span class="docs-label">Tutorials</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../tutorials/intro_tut/">Intro</a></li><li><input class="collapse-toggle" id="menuitem-3-2" type="checkbox"/><label class="tocitem" for="menuitem-3-2"><span class="docs-label">Getting started with VPL</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../tutorials/getting_started/algae/">Algae growth</a></li><li><a class="tocitem" href="../../tutorials/getting_started/snowflakes/">The Koch snowflake</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3-3" type="checkbox"/><label class="tocitem" for="menuitem-3-3"><span class="docs-label">From tree to forest</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../tutorials/from_tree_forest/tree/">Tree</a></li><li><a class="tocitem" href="../../tutorials/from_tree_forest/forest/">Forest</a></li><li><a class="tocitem" href="../../tutorials/from_tree_forest/growthforest/">Growth forest</a></li><li><a class="tocitem" href="../../tutorials/from_tree_forest/raytracedforest/">Ray-traced forest</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3-4" type="checkbox"/><label class="tocitem" for="menuitem-3-4"><span class="docs-label">More on rules and queries</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../tutorials/more_rules_queries/context/">Context sensitive rules</a></li><li><a class="tocitem" href="../../tutorials/more_rules_queries/relationalqueries/">Relational queries</a></li></ul></li></ul></li><li><input class="collapse-toggle" id="menuitem-4" type="checkbox" checked/><label class="tocitem" for="menuitem-4"><span class="docs-label">How-to guides</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../GridCloner/">Setting up a grid cloner</a></li><li><a class="tocitem" href="../Message/">Messages in scenes</a></li><li><a class="tocitem" href="../Materials/">Multiple materials/colors</a></li><li><a class="tocitem" href="../Traversal/">Advanced traversal</a></li><li class="is-active"><a class="tocitem" href>Absolute coordinates</a><ul class="internal"><li><a class="tocitem" href="#Extracting-state-of-the-turtle"><span>Extracting state of the turtle</span></a></li><li><a class="tocitem" href="#Extracting-triangles"><span>Extracting triangles</span></a></li></ul></li><li><a class="tocitem" href="../LightSources/">Creating light sources</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-5" type="checkbox"/><label class="tocitem" for="menuitem-5"><span class="docs-label">API</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../api/graphs/">Graphs</a></li><li><a class="tocitem" href="../../api/geometry/">Scenes and 3D meshes</a></li><li><a class="tocitem" href="../../api/turtle/">Turtle geometry</a></li><li><a class="tocitem" href="../../api/raytracer/">Ray tracing</a></li><li><a class="tocitem" href="../../api/viz/">3D visualization</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6" type="checkbox"/><label class="tocitem" for="menuitem-6"><span class="docs-label">VPLVerse</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><input class="collapse-toggle" id="menuitem-6-1" type="checkbox"/><label class="tocitem" for="menuitem-6-1"><span class="docs-label">SkyDomes</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../VPLVerse/SkyDomes/">SkyDomes package</a></li><li><a class="tocitem" href="../../VPLVerse/SkyDomes/API/">SkyDomes API</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6-2" type="checkbox"/><label class="tocitem" for="menuitem-6-2"><span class="docs-label">Ecophys</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../VPLVerse/Ecophys/">Ecophys package</a></li><li><a class="tocitem" href="../../VPLVerse/Ecophys/photosynthesis/">Photosynthesis API</a></li><li><a class="tocitem" href="../../VPLVerse/Ecophys/growth/">Growth API</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6-3" type="checkbox"/><label class="tocitem" for="menuitem-6-3"><span class="docs-label">PlantSimEngine</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../VPLVerse/PlantSimEngine/">PlantSimEngine package</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6-4" type="checkbox"/><label class="tocitem" for="menuitem-6-4"><span class="docs-label">PlantBioPhysics</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../VPLVerse/PlantBioPhysics/">PlantBioPhysics package</a></li></ul></li></ul></li><li><input class="collapse-toggle" id="menuitem-7" type="checkbox"/><label class="tocitem" for="menuitem-7"><span class="docs-label">Developers</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../developers/organization/">Internal organization</a></li><li><a class="tocitem" href="../../developers/use&amp;dev_packages/">Package and Environment Management for VPL</a></li><li><a class="tocitem" href="../../developers/style/">Styling protocol</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">How-to guides</a></li><li class="is-active"><a href>Absolute coordinates</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Absolute coordinates</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/VirtualPlantLab/VPLDocs/blob/master/docs/src/howto/Coordinates.md#" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Retrieving-absolute-coordinates"><a class="docs-heading-anchor" href="#Retrieving-absolute-coordinates">Retrieving absolute coordinates</a><a id="Retrieving-absolute-coordinates-1"></a><a class="docs-heading-anchor-permalink" href="#Retrieving-absolute-coordinates" title="Permalink"></a></h1><p>Alejandro Morales</p><p>Centre for Crop Systems Analysis - Wageningen University</p><p>In VPL, a turtle graphics approach is used to generate 3D geometry from graphs. In this approach, geometry is generated locally relative to the current position and orientation of the so-called turtle (inside <code>feed!()</code> methods specialized for each type of node by the user). However, sometimes it is required to obtain the absolute coordinates and orientation of a mesh in the scene. For example, the user may want to assign nitrogen levels to a leaf based on its absolute position inside the canopy by assuming a particular canopy nitrogen profile. Or we may want to know the angle of a branch with respect to the horizontal plane (e.g., when studying gravitropism).</p><p>In this little guide we will show how to extract this information from the turtle inside the <code>feed!()</code> method so that users can make use of this information. We will also show how to retrieve the absolute coordinates of the triangles both from the turtle, a mesh or a scene.</p><h2 id="Extracting-state-of-the-turtle"><a class="docs-heading-anchor" href="#Extracting-state-of-the-turtle">Extracting state of the turtle</a><a id="Extracting-state-of-the-turtle-1"></a><a class="docs-heading-anchor-permalink" href="#Extracting-state-of-the-turtle" title="Permalink"></a></h2><p>The turtle is defined by its position and three axes: <code>arm</code>, <code>up</code> and <code>head</code>. The directions defined by these vectors correspond to the <code>width</code>, <code>height</code> (if present) and <code>length</code> of geometry primitives. These geometry primitives are generated in front of the turtle, starting at its current position. If a geometry primitive is added to the turtle using the argument <code>move = true</code>, the turtle will move a distance <code>length</code> along the <code>head</code> axis. From this information one can retrieve several properties of the generated geometry (e.g., its center, orientation, etc.).</p><p>To retrieve the state of the turtle we use the methods <code>pos</code>, <code>arm</code>, <code>up</code> and <code>head</code>. Let&#39;s illustrate this with a modified version of the <a href="https://virtualplantlab.com/dev/tutorials/from_tree_forest/tree/">Tree tutorial</a> where we will calculate the location and inclination angle (with respect to the horizontal plane) of each leaf.</p><p>Let&#39;s start with the definition of the types required to build a tree:</p><pre><code class="language-julia hljs">using VirtualPlantLab
+using ColorTypes: RGB
+import GLMakie
+using Plots
+import Random: seed!
+import Statistics: mean
+using StatsPlots
+
+module TreeTypes
+    import VirtualPlantLab as VPL
+    # Meristem
+    struct Meristem &lt;: VPL.Node end
+    # Bud
+    struct Bud &lt;: VPL.Node end
+    # Node
+    struct Node &lt;: VPL.Node end
+    # BudNode
+    struct BudNode &lt;: VPL.Node end
+    # Internode (needs to be mutable to allow for changes over time)
+    Base.@kwdef mutable struct Internode &lt;: VPL.Node
+        length::Float64 = 0.10 # Internodes start at 10 cm
+    end
+    # Leaf
+    Base.@kwdef mutable struct Leaf &lt;: VPL.Node
+        length::Float64 = 0.20 # Leaves are 20 cm long
+        width::Float64  = 0.1  # Leaves are 10 cm wide
+        height::Float64 = 0.0  # Height of the center of the leaf
+        angle::Float64  = 0.0  # Angle of the leaf with respect to the horizontal plane
+    end
+    # Graph-level variables
+    Base.@kwdef struct treeparams
+        growth::Float64 = 0.1
+        phyllotaxis::Float64 = 140.0
+        leaf_angle::Float64 = 30.0
+        branch_angle::Float64 = 45.0
+    end
+end
+import .TreeTypes</code></pre><p>We now define the <code>feed!()</code> methods for each type of node. Inside these methods we will calculate the absolute height and inclination angle of each leaf and store it inside the corresponding leaf node</p><pre><code class="language-julia hljs">function VirtualPlantLab.feed!(turtle::Turtle, i::TreeTypes.Internode, vars)
+    # Rotate turtle around the head to implement elliptical phyllotaxis
+    rh!(turtle, vars.phyllotaxis)
+    HollowCylinder!(turtle, length = i.length, height = i.length/15, width = i.length/15,
+                move = true, colors = RGB(0.5,0.4,0.0))
+    return nothing
+end
+
+# Create geometry + color for the leaves
+function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
+    # Rotate turtle around the arm for insertion angle
+    ra!(turtle, -vars.leaf_angle)
+    # Extract the position of the turtle and the head vector
+    t_pos = pos(turtle)
+    t_head = head(turtle)
+    # The center of the leaf is length/2 in front of the turtle
+    center = t_pos .+ 0.5*l.length*t_head
+    l.height = center[3] # Height is the z-coordinate of the center
+    # The inclination angle of the leaf is the same as the zenith angle of the up vector
+    # This is given by the arc-cosine of the vertical component
+    l.angle = acos(up(turtle)[3])*180/π # Convert to degrees
+    l.angle = l.angle &gt; 90 ? 180.0 - l.angle : l.angle  # Correct for the angle being &gt; 90
+    # Now we generate the leaf
+    Ellipse!(turtle, length = l.length, width = l.width, move = false,
+             colors = RGB(0.2,0.6,0.2))
+    # Rotate turtle back to original direction
+    ra!(turtle, vars.leaf_angle)
+    return nothing
+end
+
+# Insertion angle for the bud nodes
+function VirtualPlantLab.feed!(turtle::Turtle, b::TreeTypes.BudNode, vars)
+    # Rotate turtle around the arm for insertion angle
+    ra!(turtle, -vars.branch_angle)
+end</code></pre><p>We can see that the location and inclination of the leaf is calculated from the turtle&#39;s state inside the <code>feed!()</code> method and store in the leaf node as a side effect. This is important as we will not have updated information about the leaves until the scene is generated. Let&#39;s now add the rules for the tree growth (we ignore the more complex bud break rule that was used in the original tutorial and just break each bud with a probability of 25% assuming an uniform distribution):</p><pre><code class="language-julia hljs">meristem_rule = Rule(TreeTypes.Meristem,
+                     rhs = mer -&gt; TreeTypes.Node() +
+                                    (TreeTypes.Bud(), TreeTypes.Leaf()) +
+                                     TreeTypes.Internode() + TreeTypes.Meristem())
+branch_rule = Rule(TreeTypes.Bud,
+            lhs = bud -&gt; rand() &lt;= 0.25,
+            rhs = bud -&gt; TreeTypes.BudNode() + TreeTypes.Internode() + TreeTypes.Meristem())
+axiom = TreeTypes.Internode() + TreeTypes.Meristem()</code></pre><p>We add a function to grow the internodes over time:</p><pre><code class="language-julia hljs">function elongate!(tree)
+    query = Query(TreeTypes.Internode)
+    for x in apply(tree, query)
+        x.length = x.length*(1.0 + data(tree).growth)
+    end
+end</code></pre><p>And a query to extract the position and inclination of the leaves:</p><pre><code class="language-julia hljs">function leaf_info(tree)
+    query = Query(TreeTypes.Leaf)
+    heights = Float64[]
+    angles = Float64[]
+    for l in apply(tree, query)
+        push!(heights, l.height)
+        push!(angles, l.angle)
+    end
+    return heights, angles
+end</code></pre><p>We can now grow the tree:</p><pre><code class="language-julia hljs">function growth!(tree)
+    elongate!(tree)
+    rewrite!(tree)
+end</code></pre><p>And a simulation for <code>n</code> steps is achieved with a simple loop that returns the final tree and the heights and angles of the leaves throughout the simulation:</p><pre><code class="language-julia hljs">function simulate(n)
+    # Initialize the tree
+    tree = Graph(axiom = axiom, rules = (meristem_rule, branch_rule),
+             data = TreeTypes.treeparams())
+    # Run simulation
+    for i in 1:n
+        growth!(tree)
+    end
+    Mesh(tree) # Generate the mesh to trigger feed!() methods
+    heights, angles = leaf_info(tree)
+    return tree, heights, angles
+end</code></pre><p>We can now run the simulation:</p><pre><code class="language-julia hljs">seed!(123456789);
+tree, heights, angles = simulate(25);</code></pre><p>We can check how the final tree looks like:</p><pre><code class="language-julia hljs">render(Mesh(tree))</code></pre><p>And we can plot the distribtuion of leaf heights and angles:</p><pre><code class="language-julia hljs">length(heights)
+density(heights, bandwidth = 1, trim = true)
+density(angles, bandwidth = 5, trim = true)</code></pre><p>We can see that the distribution of leaves over height is not uniform but rather there is a higher density of leaves towards the middle of the tree. This is an emergent pattern of the developmental rules and growth parameters defined in the model. Similarly, the angle distribution is not uniform bur rather skewed towards more vertical leaves. This is a result of the insertion angles of leaves and branches defined in the model.</p><p>Note that in this example we are calculating the center and inclination angle of the leaf explicitly from the turtle&#39;s state. This is possible because the shape of the leaf is relatively simple. A more general approach is to extract the mesh from the scene and calculate the center and orientation of the leaf from the triangles. We will show how to do this in the next section.</p><h2 id="Extracting-triangles"><a class="docs-heading-anchor" href="#Extracting-triangles">Extracting triangles</a><a id="Extracting-triangles-1"></a><a class="docs-heading-anchor-permalink" href="#Extracting-triangles" title="Permalink"></a></h2><p>In VPL, all geometry is represented by triangular meshes. A mesh may be created by an user by calling any of the primitive constructors within VPL (e.g., <code>Rectangle!()</code>) or by any alternative code that generates a mesh and added using the <code>Mesh!()</code> method. This means that the turtle will internally store a single triangular mesh that combines all the geometry generated so far. This will be passed on to the scene and (when relevant) merged with other meshes.</p><p>One possible approach is to generate the mesh inside the <code>feed!()</code> method without adding it to the turtle, extracting all the information needed and then adding the mesh to the turtle. In order to implement this we just need to modify the <code>feed!()</code> method for the leaves as follows:</p><pre><code class="language-julia hljs"># Create geometry + color for the leaves
+function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
+    # Rotate turtle around the arm for insertion angle
+    ra!(turtle, -vars.leaf_angle)
+    # We generate the leaf without adding it to the turtle -&gt; just remove the &quot;!&quot;
+    # And don&#39;t include colors or materials
+    e = Ellipse(turtle, length = l.length, width = l.width, move = false)
+    # Compute the center of the leaf
+    verts = vertices(e) # Extract all vertices (vector of vertices)
+    zs    = getindex.(verts, 3) # Extract z-coordinate of each vertex
+    l.height = mean(zs) # Average height of the leaf
+    # Compute the inclination angle of the leaf (zenith of normal = inclination of plane)
+    n = normals(e)[1] # All triangles will have the same normal so one suffices
+    l.angle = acos(n[3])*180/π
+    l.angle = l.angle &gt; 90 ? 180.0 - l.angle : l.angle  # Correct for the angle being &gt; 90
+    # Add the leaf to the turtle (important to do transform = false, deepcopy = false)
+    Mesh!(turtle, e, colors = RGB(0.2,0.6,0.2), transform = false, deepcopy = false)
+    # Rotate turtle back to original direction
+    ra!(turtle, vars.leaf_angle)
+    return nothing
+end</code></pre><p>We can now run the simulation:</p><pre><code class="language-julia hljs">seed!(123456789);
+tree, heights2, angles2 = simulate(25);</code></pre><p>And confirm that we get the same tree:</p><pre><code class="language-julia hljs">render(Mesh(tree))
+length(angles) == length(angles2)</code></pre><p>The heights are the same:.</p><pre><code class="language-julia hljs">density(heights2, bandwidth = 1, trim = true, label=&quot;Triangles&quot;)
+density!(heights, bandwidth = 1, trim = true, label = &quot;Turtle&quot;)</code></pre><p>The angles are also the same (makes sense since the normals of the triangles are the same as the up vector of the turtle):</p><pre><code class="language-julia hljs">density(angles2, bandwidth = 5, trim = true, label=&quot;Triangles&quot;)
+density!(angles, bandwidth = 5, trim = true, label = &quot;Turtle&quot;)</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Traversal/">« Advanced traversal</a><a class="docs-footer-nextpage" href="../LightSources/">Creating light sources »</a><div class="flexbox-break"></div></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Tuesday 17 December 2024 11:23">Tuesday 17 December 2024</span>. Using Julia version 1.11.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
