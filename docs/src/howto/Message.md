@@ -158,20 +158,20 @@ For a visualization of both leaves and internodes we can actually leave the mess
 given how the code above is structured:
 
 ```julia
-scene = Scene(newtree);
-render(scene, axes = false)
+mesh = Mesh(newtree);
+render(mesh, axes = false)
 ```
 
 For only leaves:
 
 ````julia
-scene = Scene(newtree, message = "leaves");
-render(scene, axes = false)
+mesh = Mesh(newtree, message = "leaves");
+render(mesh, axes = false)
 ````
 
 And for only internodes:
 
 ````julia
-scene = Scene(newtree, message = "internodes");
-render(scene, axes = false)
+mesh = Mesh(newtree, message = "internodes");
+render(mesh, axes = false)
 ````

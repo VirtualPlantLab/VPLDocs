@@ -408,7 +408,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, s::Soil, vars)
 end
 soil_graph = RA(-90.0) + T(Vec(0.0, 10.0, 0.0)) + ## Moves into position
              Soil(length = 20.0, width = 20.0) ## Draws the soil tile
-soil = Scene(Graph(axiom = soil_graph));
+soil = Mesh(Graph(axiom = soil_graph));
 render(soil, axes = false)
 ```
 
@@ -418,9 +418,9 @@ or a function):
 
 ```julia
 function render_forest(forest, soil)
-    scene = Scene(vec(forest)) ## create scene from forest
-    scene = Scene([scene, soil]) ## merges the two scenes
-    render(scene)
+    mesh = Mesh(vec(forest)) ## create mesh from forest
+    mesh = Mesh([mesh, soil]) ## merges the two scenes
+    render(mesh)
 end
 ```
 

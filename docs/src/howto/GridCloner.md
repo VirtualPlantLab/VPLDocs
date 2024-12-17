@@ -89,32 +89,32 @@ end
 tiles = vec([create_tile(origin, dx, dy) for origin in origins]);
 ```
 
-Now we can combine the plants and tiles into a single scene. We randomize the color of each
+Now we can combine the plants and tiles into a single mesh. We randomize the color of each
 tile to help identify them in the visualization:
 
 ```julia
-plant_scene = Scene(vec(plants));
-soil_scene = Scene()
+plant_mesh = Mesh(vec(plants));
+soil_mesh = Mesh()
 for tile in tiles
-    add!(soil_scene, mesh = tile, colors = RGB(rand(), rand(), rand()))
+    add!(soil_mesh, tile, colors = RGB(rand(), rand(), rand()))
 end
-scene = Scene([plant_scene, soil_scene]);
-render(scene)
+mesh = Mesh([plant_mesh, soil_mesh]);
+render(mesh)
 ```
 
-We can also visualize the bounding boxes of a scene (and any clone). If we just want the
-box for the original scene, we can create a grid with no clones. The build the acceleration
+We can also visualize the bounding boxes of a mesh (and any clone). If we just want the
+box for the original mesh, we can create a grid with no clones. The build the acceleration
 object (which includes the grid cloner) and add it to the 3D rendering:
 
 ```julia
 rt_settings = RTSettings(nx = 0, ny = 0)
-acc_one = accelerate(scene, settings = rt_settings);
-render(scene)
+acc_one = accelerate(mesh, settings = rt_settings);
+render(mesh)
 render!(acc_one.grid)
 ```
 
 We can see that bounding box extends to the tips of the leaves, as they grow beyond the soil
-area allocated to the plant. If we now create multiple clones of this scene, we should
+area allocated to the plant. If we now create multiple clones of this mesh, we should
 displace them by a distance of `10dx` along the x-axis and `10dy` along the y-axis. This
 will ensure that the soil tiles of clones do not overlap but the plants will. In other words,
 we emulate additional rows and plants within rows while respecting the same spacing between
@@ -122,32 +122,32 @@ them:
 
 ```julia
 rt_settings = RTSettings(nx = 1, ny = 1, dx = 10dx, dy = 10dy)
-acc = accelerate(scene, settings = rt_settings);
+acc = accelerate(mesh, settings = rt_settings);
 ```
 
-We can now add all the bounding boxes of the clones to the scene:
+We can now add all the bounding boxes of the clones to the mesh:
 
 ```julia
-render(scene)
+render(mesh)
 render!(acc.grid)
 ```
 
 We can see that the bounding boxes of the clones overlap, as expected. Currently there is no
 way in VPL to visualize the actual clones (since that additional geometry is never actually
 generated, see details about *instancing* above). We can do this manually by manually changing
-the meshes of the scene using the method `VirtualPlantLab.translate!`. We add the bounding
-box of the original scene too:
+the meshes of the mesh using the method `VirtualPlantLab.translate!`. We add the bounding
+box of the original mesh too:
 
 ```julia
-scenes = Scene[]
+meshes = Mesh[]
 for i in -10:10
     for j in -10:10
-        new_scene = deepcopy(scene)
-        VirtualPlantLab.translate!(new_scene.mesh, Vec(i*10dx, j*10dy, 0.0))
-        push!(scenes, new_scene)
+        new_mesh = deepcopy(mesh)
+        VirtualPlantLab.translate!(new_mesh, Vec(i*10dx, j*10dy, 0.0))
+        push!(meshes, new_mesh)
     end
 end
-render(Scene(scenes), axes = false)
+render(Mesh(meshes), axes = false)
 render!(acc_one.grid, alpha = 0.8)
 ```
 

@@ -189,7 +189,7 @@ newtree = simulate(tree, getInternode, 2)
 The binary tree after two iterations has two branches, as expected:
 
 ```julia
-render(Scene(newtree))
+render(Mesh(newtree))
 ```
 
 Notice how the lengths of the prisms representing internodes decreases as the branching
@@ -198,10 +198,9 @@ Further steps will generate a structure that is more tree-like.
 
 ```julia
 newtree = simulate(newtree, getInternode, 15)
-render(Scene(newtree))
+render(Mesh(newtree))
 ```
 
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

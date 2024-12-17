@@ -65,7 +65,7 @@ the calculations of absorbed irradiance.
 
 ```julia
 g = Graph(axiom = RA(90.0) +  Tile(1.0, 1.0, 40));
-sc = Scene(g);
+sc = Mesh(g);
 source = DirectionalSource(sc, θ = π/4, Φ = π/2, radiosity = 1.0, nrays = 5_000_000);
 nothing #hide
 ```
@@ -97,11 +97,10 @@ renderer to get the exact colors we specify.
 
 ```julia
 tile.colors = RGB.(0.0, α, 0.0)
-sc = Scene(g)
+sc = Mesh(g)
 render(sc, wireframe = true, shading = GLMakie.NoShading)
 ```
 
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

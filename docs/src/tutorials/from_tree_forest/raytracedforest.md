@@ -225,13 +225,13 @@ function create_soil()
 end
 function create_scene(forest)
     # These are the trees
-    scene = Scene(vec(forest))
+    mesh = Mesh(vec(forest))
     # Add a soil surface
     soil = create_soil()
     soil_material = Lambertian(τ = 0.0, ρ = 0.21)
-    add!(scene, mesh = soil, materials = soil_material)
-    # Return the scene
-    return scene
+    add!(mesh, soil, materials = soil_material)
+    # Return the mesh
+    return mesh
 end
 ```
 
@@ -299,9 +299,9 @@ for details). The acceleration structure allows speeding up the ray tracing
 by avoiding testing all rays against all objects in the scene.
 
 ```julia
-function create_raytracer(scene, sources)
+function create_raytracer(mesh, sources)
     settings = RTSettings(pkill = 0.9, maxiter = 4, nx = 5, ny = 5, parallel = true)
-    RayTracer(scene, sources, settings = settings, acceleration = BVH,
+    RayTracer(mesh, sources, settings = settings, acceleration = BVH,
                      rule = SAH{3}(5, 10));
 end
 ```
@@ -313,9 +313,9 @@ the `Material` objects (see `feed!()` above):
 
 ```julia
 function run_raytracer!(forest; DOY = 182)
-    scene   = create_scene(forest)
-    sources = create_sky(scene = scene, DOY = DOY)
-    rtobj   = create_raytracer(scene, sources)
+    mesh   = create_scene(forest)
+    sources = create_sky(mesh = mesh, DOY = DOY)
+    rtobj   = create_raytracer(mesh, sources)
     trace!(rtobj)
     return nothing
 end
@@ -553,11 +553,12 @@ Base.@kwdef struct Soil <: VirtualPlantLab.Node
     width::Float64
 end
 function VirtualPlantLab.feed!(turtle::Turtle, s::Soil, data)
-    Rectangle!(turtle, length = s.length, width = s.width, colors = RGB(255/255, 236/255, 179/255))
+    Rectangle!(turtle, length = s.length, width = s.width, colors = RGB(255/255, 236/255, 179/255),
+               materials = Lambertian(τ = 0.0, ρ = 0.21))
 end
 soil_graph = RA(-90.0) + T(Vec(0.0, 10.0, 0.0)) + ## Moves into position
              Soil(length = 20.0, width = 20.0) ## Draws the soil tile
-soil = Scene(Graph(axiom = soil_graph));
+soil = Mesh(Graph(axiom = soil_graph));
 render(soil, axes = false)
 ```
 
@@ -567,9 +568,9 @@ or a function):
 
 ```julia
 function render_forest(forest, soil)
-    scene = Scene(vec(forest)) ## create scene from forest
-    scene = Scene([scene, soil]) ## merges the two scenes
-    render(scene)
+    mesh = Mesh(vec(forest)) ## create mesh from forest
+    mesh = Mesh([mesh, soil]) ## merges the two scenes
+    render(mesh)
 end
 ```
 
@@ -593,4 +594,3 @@ end
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

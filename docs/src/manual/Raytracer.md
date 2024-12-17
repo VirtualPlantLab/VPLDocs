@@ -8,14 +8,14 @@ Centre for Crop Systems Analysis - Wageningen University
 ## Overview
 
 VPL offers a built-in ray tracer that can be used to simulate the distribution
-of irradiance within a 3D scene. It is a Monte Carloy ray tracer written 100%
+of irradiance within a 3D mesh. It is a Monte Carloy ray tracer written 100%
 in Julia with the following features:
 
  - Multiple wavelengths.
  - Most common types of materials and radiation sources are provided, but additional ones can be added by the user.
  - Support for multi-threaded execution.
  - An Bounding Volume Hierarchy to speed up the computation.
- - A grid cloner that duplicates (implicitly) the scene in a grid to approximate large canopies.
+ - A grid cloner that duplicates (implicitly) the mesh in a grid to approximate large canopies.
  - A Russian roulette mechanism to reduce the number of iterations per ray needed while avoiding introducing biases in the computations.
 
 ## How ray tracing works
@@ -24,9 +24,9 @@ Rays are generated from the radiation soures. A ray is defined by an origin, a
 direction and a ray *payload* that contains the radiant power per wavelength
 (this would usually be W or umol/s, but the ray tracer is agnostic with respect
 to units). Ray tracing is a recursive process in which a ray is traced through
-the scene (by testing whether the ray intersects different parts of the scenes
+the mesh (by testing whether the ray intersects different parts of the meshes
 and triangles in it) until it either hits a triangle in a mesh or leaves the
-scene through its boundaries.
+mesh through its boundaries.
 
 When a ray hits a triangle inside a mesh, the ray is
 modified according to the `Material` object associated to that triangle (see
@@ -36,7 +36,7 @@ most cases, a fraction of the radiant power carried by the ray will be transferr
 to the `Material` object.
 
 The recursive nature of the ray tracer allows simulating scattering within the
-scene and, if multiple wavelengths are used and optical properties vary per
+mesh and, if multiple wavelengths are used and optical properties vary per
 wavelength, also changes in the spectral composition of the radiation (e.g.,
 red/far red). As the rays are scattered, their radiant power decreases such that
 at some point it is not worth tracing them any further. The user can control the
@@ -50,27 +50,27 @@ component).
 
 Once `maxiter` is reached though, the ray is not guaranteed to be terminated.
 The reason is that terminating all rays will introduce a bias in the results
-(i.e., total radiation in the scene will be underestimated), especially when a
+(i.e., total radiation in the mesh will be underestimated), especially when a
 large number of raus is simulated. To avoid this, VPL implements a Russian roulette
 mechanism that will terminate a ray with a probability (`pkill`) and increase the
 payload of the rays that survive. This introduces variance
 
 The ray tracer supports the construction of a bounding volume hierarchy (BVH)
 that can be used to speed up the computations (by minimizing the number of ray
-triangle intersections), especially for scenes with a  large number of triangles.
+triangle intersections), especially for meshes with a  large number of triangles.
 The BVH is constructed automatically (see below) but the user can specific some
 settings to control its construction. It is also possible to turn off this
 structure altogether, in which case all rays will be tested against all triangles.
 
 In order to simulate large canopies, VPL implements a grid cloner that will
-duplicated (with minimum memory and computational overhead) the scene in a grid
+duplicated (with minimum memory and computational overhead) the mesh in a grid
 along the different axes. This is particularly useful for reducing edge effects
 without having to simulate a large number of plants (see below for details).
 
 ## Usage
 
-To use ray tracing the user will need to define a `Scene` object
-(see [`PlantGeomPrimitives.Scene`](@ref)) and the radiation sources (see below) which
+To use ray tracing the user will need to define a `Mesh` object
+(see [`PlantGeomPrimitives.Mesh`](@ref)) and the radiation sources (see below) which
 are then combined with `RayTracer()`. This results in a `Raytracer` object
 that contains all the necessary information to perform the ray tracing. To
 actually execute the ray tracing the user will need to call `trace!()` on this
@@ -78,7 +78,7 @@ object.
 
 Executing the ray tracer will return the total number of rays that were tracer
 (including secondary rays) but the most important change is that radiant power
-stored in the `Material` objects in the scene will be updated automatically.
+stored in the `Material` objects in the mesh will be updated automatically.
 This means that the user will need to store the `Material` objects in a data
 structure that is accesible (e.g., within a node in a graph).
 
@@ -110,10 +110,10 @@ This means that the irradiance is the same when viewed from any angle.
 
 A special type of radiation source is the `DirectionalSource` which is used to
 simulate solar radiation. Rays from this source are generated from the upper face
-of the scene bounding box and their direction is defined in polar coordinates
+of the mesh bounding box and their direction is defined in polar coordinates
 (i.e., by a zenith and azimuth angle). Because of the way directional sources
 are implemented it is recommended that a grid cloner is used (this is the
-default) as otherwise there will parts of the scene that will recieve no rays.
+default) as otherwise there will parts of the mesh that will recieve no rays.
 See documentation on [`PlantRayTracer.DirectionalSource`](@ref)
 for more details.
 
@@ -129,7 +129,7 @@ can have access to (e.g., within a node in a graph) as the raytracer will simply
 modify in-place (without creating a copy) the material object when a ray is absorbed.
 The radiant power in a material can be retrieved by applying `power()` to the object.
 
-Materials are added to the scene at ther same time as the geometry either via
+Materials are added to the mesh at ther same time as the geometry either via
 `feed()` or `add!()`. It is possible to add one material per mesh (in which case
 all triangles within that mesh will share the same material object) or one material
 per triangle. In either case, VPL will take care of creating the corresponding
@@ -162,7 +162,7 @@ wavelength.
 
 ## Acceleration of ray tracing
 
-In order to accelerate the tracing of rays within the 3D scene, a [bounding
+In order to accelerate the tracing of rays within the 3D mesh, a [bounding
 volume hierarchy](https://en.wikipedia.org/wiki/Bounding_interval_hierarchy) may be used by setting `acceleration = BVH` in the call to
 `RayTracer()`. This will create a series of nested [axis-aligned bounding boxes](https://en.wikipedia.org/wiki/Bounding_volume)
 organized as a binary tree. The purpose of this structure is to reduce the
@@ -192,43 +192,43 @@ until the number of triangles in a node is lessor equal than `N` or the total
 number of recursive splits reaches `L` or the cost of splitting a node exceeds
 the cost of not splitting it.
 
-For debugging purposes (or for very small scenes), the user may also specify
+For debugging purposes (or for very small meshes), the user may also specify
 `acceleration = Naive` which will basically not implement any acceleration
 structured and all rays will be tested against all triangles.
 
-The acceleration structure is created from a `Scene` object via the `accelerate()`
+The acceleration structure is created from a `Mesh` object via the `accelerate()`
 function, and allows specifying the `acceleration` and `rule` arguments. This will
 also be responsible of translating the triangular mesh into the data structure
 used by the ray tracer (triangles in [barycentric coordinates](https://en.wikipedia.org/wiki/Barycentric_coordinate_system)) as well as fitting
-a grid cloner to the scene (see below).
+a grid cloner to the mesh (see below).
 
 ## Grid cloner for edge effects
 
 The grid cloner is used to minimize border effects when tracing rays from the
-sources towards the scene. The grid cloner is a form of [geometric *instancing*](https://en.wikipedia.org/wiki/Geometry_instancing)
-where the same scene is repeated multiple times along the X, Y or Z direction. In
-practice, to avoid excessive memory usage, the scene is not actually replicated
+sources towards the mesh. The grid cloner is a form of [geometric *instancing*](https://en.wikipedia.org/wiki/Geometry_instancing)
+where the same mesh is repeated multiple times along the X, Y or Z direction. In
+practice, to avoid excessive memory usage, the mesh is not actually replicated
 but rather the rays positions are modified to emulate the effect of
-the scene being repeated.
+the mesh being repeated.
 
-In order a grid cloner structure on top of a scene, the user needs to specify
+In order a grid cloner structure on top of a mesh, the user needs to specify
 the number of duplications to perform in each direction (`nx`, `ny` and `nz`) as well as the
 offsets between the different copies (`dx`, `dy` and `dz`). The
-grid cloner is created from a `Scene` object via the `accelerate()` function, but
+grid cloner is created from a `Mesh` object via the `accelerate()` function, but
 the settings to control the grid cloner must be set when creating the
 `RTSettings` object.
 
 By default, the grid cloner is enabled in the X and Y directions
-by replicating the scene three times in each direction (this means creating a grid of
-7 x 7 = 49 copies of the scene including the original). The offsets between
+by replicating the mesh three times in each direction (this means creating a grid of
+7 x 7 = 49 copies of the mesh including the original). The offsets between
 the copies are set by default
-to width of the scene in the X and Y directions such that there is no overlapping.
+to width of the mesh in the X and Y directions such that there is no overlapping.
 The grid cloner is disabled in the Z direction by default.
 
 Note that whereas a grid cloner will not increase significantly the memory used
 by the ray tracer, it will increase ray tracing times as fewer rays will be able
-to leave the scene. On the other hand, a small (or no) grid cloner will create
-an edge effect such that only plants in the center of the scene will be able to
+to leave the mesh. On the other hand, a small (or no) grid cloner will create
+an edge effect such that only plants in the center of the mesh will be able to
 capture the behaviour within a large canopy.
 
 The actual number of copies to use
@@ -237,5 +237,5 @@ not possible. Regarding the offsets, these would be related to the sowing/planti
 pattern in the case of plant production systems on a regular grid and in many case
 this would mean that the copies overlap (and this would be correct) so the defaults
 should be overriden in most cases. Using a grid cloner should not be substitute
-for using a sufficient number of plants in the scene in order to capture the
+for using a sufficient number of plants in the mesh in order to capture the
 plant-to-plant variability, but simply to avoid edge effects.

@@ -55,8 +55,8 @@ class to implement the edges of the snowflake. This can be achieved as follows:
 
 ```julia
 using VirtualPlantLab
-import GLMakie # Import rather than "using" to avoid masking Scene
-using ColorTypes # To define colors for the rendering
+import GLMakie ## Import rather than "using" to avoid masking Mesh
+using ColorTypes ## To define colors for the rendering
 module sn
     import VirtualPlantLab
     struct E <: VirtualPlantLab.Node
@@ -135,7 +135,7 @@ After defining the method, we can now call the function render on the graph to
 generate a 3D interactive image of the Koch snowflake in the current state
 
 ```julia
-sc = Scene(Koch)
+sc = Mesh(Koch)
 render(sc, axes = false)
 ```
 
@@ -145,7 +145,7 @@ snowflake. Let's execute the rules once to verify that we get the 2nd iteration
 
 ```julia
 rewrite!(Koch)
-render(Scene(Koch), axes = false)
+render(Mesh(Koch), axes = false)
 ```
 
 And two more times
@@ -154,7 +154,7 @@ And two more times
 for i in 1:3
     rewrite!(Koch)
 end
-render(Scene(Koch), axes = false)
+render(Mesh(Koch), axes = false)
 ```
 
 # Other snowflake fractals
@@ -179,21 +179,21 @@ First iteration
 
 ```julia
 rewrite!(Koch2)
-render(Scene(Koch2), axes = false)
+render(Mesh(Koch2), axes = false)
 ```
 
 Second iteration
 
 ```julia
 rewrite!(Koch2)
-render(Scene(Koch2), axes = false)
+render(Mesh(Koch2), axes = false)
 ```
 
 Third iteration
 
 ```julia
 rewrite!(Koch2)
-render(Scene(Koch2), axes = false)
+render(Mesh(Koch2), axes = false)
 ```
 
 This is know as [Koch
@@ -205,7 +205,7 @@ axiom:
 ```julia
 axiomCesaro = sn.E(L) + RU(90.0) + sn.E(L) + RU(90.0) + sn.E(L) + RU(90.0) + sn.E(L)
 Cesaro = Graph(axiom = axiomCesaro, rules = (rule2,))
-render(Scene(Cesaro), axes = false)
+render(Mesh(Cesaro), axes = false)
 ```
 
 And, as before, let's go through the first three iterations
@@ -213,24 +213,23 @@ First iteration
 
 ```julia
 rewrite!(Cesaro)
-render(Scene(Cesaro), axes = false)
+render(Mesh(Cesaro), axes = false)
 ```
 
 Second iteration
 
 ```julia
 rewrite!(Cesaro)
-render(Scene(Cesaro), axes = false)
+render(Mesh(Cesaro), axes = false)
 ```
 
 Third iteration
 
 ```julia
 rewrite!(Cesaro)
-render(Scene(Cesaro), axes = false)
+render(Mesh(Cesaro), axes = false)
 ```
 
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

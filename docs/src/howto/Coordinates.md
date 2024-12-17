@@ -183,7 +183,7 @@ function simulate(n)
     for i in 1:n
         growth!(tree)
     end
-    Scene(tree) # Generate the scene to trigger feed!() methods
+    Mesh(tree) # Generate the mesh to trigger feed!() methods
     heights, angles = leaf_info(tree)
     return tree, heights, angles
 end
@@ -199,7 +199,7 @@ tree, heights, angles = simulate(25);
 We can check how the final tree looks like:
 
 ```julia
-render(Scene(tree))
+render(Mesh(tree))
 ```
 
 And we can plot the distribtuion of leaf heights and angles:
@@ -270,7 +270,7 @@ tree, heights2, angles2 = simulate(25);
 And confirm that we get the same tree:
 
 ```julia
-render(Scene(tree))
+render(Mesh(tree))
 length(angles) == length(angles2)
 ```
 

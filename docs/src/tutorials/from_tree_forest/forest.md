@@ -220,7 +220,7 @@ And we can render the forest with the function `render` as in the binary tree
 example but passing the whole forest at once
 
 ```julia
-render(Scene(newforest))
+render(Mesh(newforest))
 ```
 
 If we iterate 4 more iterations we will start seeing the different individuals
@@ -228,7 +228,7 @@ diverging in size due to the differences in growth rates
 
 ```julia
 newforest = [simulate(tree, getInternode, 15) for tree in newforest];
-render(Scene(newforest))
+render(Mesh(newforest))
 ```
 
 ## Multithreaded simulation
@@ -246,7 +246,7 @@ newforest = deepcopy(forest)
 @threads for i in 1:length(forest)
     newforest[i] = simulate(forest[i], getInternode, 6)
 end
-render(Scene(newforest, parallel = true))
+render(Mesh(newforest, parallel = true))
 ```
 
 An alternative way to perform the simulation is to have an outer loop for each timestep and an internal loop over the different trees. Although this approach is not required for this simple model, most FSP models will probably need such a scheme as growth of each individual plant will depend on competition for resources with neighbouring plants. In this case, this approach would look as follows:
@@ -258,7 +258,7 @@ for step in 1:15
         newforest[i] = simulate(newforest[i], getInternode, 1)
     end
 end
-render(Scene(newforest, parallel = true))
+render(Mesh(newforest, parallel = true))
 ```
 
 # Customizing the scene
@@ -269,7 +269,7 @@ geometric element it is best to combine all these geometries in a `GLScene` obje
 with the `newforest` generated in the above:
 
 ```julia
-scene = Scene(newforest);
+mesh = Mesh(newforest);
 nothing #hide
 ```
 
@@ -290,7 +290,7 @@ VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0))
 We can now add the `soil` to the `scene` object with the `add!` function.
 
 ```julia
-VirtualPlantLab.add!(scene, mesh = soil, colors = RGB(1,1,0))
+VirtualPlantLab.add!(mesh, soil, colors = RGB(1,1,0))
 ```
 
 We can now render the scene that combines the random forest of binary trees and a yellow soil. Notice that
@@ -300,7 +300,7 @@ Howver, it may be distracting for the visualization. It turns out that we can tu
 `axes = false`:
 
 ```julia
-render(scene, axes = false)
+render(mesh, axes = false)
 ```
 
 We may also want to save a screenshot of the scene. For this, we need to store the output of the `render` function.
@@ -311,11 +311,10 @@ compute the resolution from a physical width and height in cm and a dpi (e.g., u
 
 ```julia
 res = calculate_resolution(width = 16.0, height = 16.0, dpi = 1_000)
-output = render(scene, axes = false, size = res)
+output = render(mesh, axes = false, size = res)
 export_scene(scene = output, filename = "nice_trees.png")
 ```
 
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

@@ -132,7 +132,7 @@ creating multiple sensors below the light source and measuring the light intensi
 sensor.
 
 ```julia
-scene = Scene()
+mesh = Mesh()
 sensors = [Sensor(1) for _ in 1:400]
 c = 1
 for i in 1:20
@@ -140,7 +140,7 @@ for i in 1:20
         r = Rectangle(length = 0.05, width = 0.05)
         rotatey!(r, π/2) ## To put it in the XY plane
         VirtualPlantLab.translate!(r, Vec((i - 1)*0.05, (j - 1)*0.05 + 0.025, 0.0))
-        add!(scene, mesh = r, materials = sensors[c], colors = rand(RGB))
+        add!(mesh, r, materials = sensors[c], colors = rand(RGB))
         c += 1
     end
 end
@@ -148,7 +148,7 @@ end
 
 ```julia
 import GLMakie
-render(scene)
+render(mesh)
 ```
 
 We can now create a ray tracing object without a grid cloner (note that since all the
@@ -156,7 +156,7 @@ surfaces are sensors we can just set `maxiter = 1`):
 
 ```julia
 settings = RTSettings(pkill = 0.9, maxiter = 1, parallel = true)
-rtobj = RayTracer(scene, source, settings = settings);
+rtobj = RayTracer(mesh, source, settings = settings);
 trace!(rtobj)
 ```
 
@@ -185,7 +185,7 @@ Let's test this by creating a new light source and tracing the rays again.
 ```julia
 source = Source(PointSource(Vec(0.5, 0.5, 1.0)), GaussianSource(X(), Y(), -Z(), 1.0), 1.0, 1_000_000)
 settings = RTSettings(pkill = 0.9, maxiter = 1, parallel = true)
-rtobj = RayTracer(scene, source, settings = settings);
+rtobj = RayTracer(mesh, source, settings = settings);
 trace!(rtobj)
 ```
 
