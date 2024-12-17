@@ -142,13 +142,13 @@ end</code></pre><h3 id="Light-interception"><a class="docs-heading-anchor" href=
 end
 function create_scene(forest)
     # These are the trees
-    scene = Scene(vec(forest))
+    mesh = Mesh(vec(forest))
     # Add a soil surface
     soil = create_soil()
     soil_material = Lambertian(τ = 0.0, ρ = 0.21)
-    add!(scene, mesh = soil, materials = soil_material)
-    # Return the scene
-    return scene
+    add!(mesh, soil, materials = soil_material)
+    # Return the mesh
+    return mesh
 end</code></pre><p>Given the scene, we can create the light sources that can approximate the solar irradiance on a given day, location and time of the day using the functions from the  package (see package documentation for details). Given the latitude, day of year and fraction of the day (<code>f = 0</code> being sunrise and <code>f = 1</code> being sunset), the function <code>clear_sky()</code> computes the direct and diffuse solar radiation assuming a clear sky. These values may be converted to different wavebands and units using <code>waveband_conversion()</code>. Finally, the collection of light sources approximating the solar irradiance distribution over the sky hemisphere is constructed with the function <code>sky()</code> (this last step requires the 3D scene as input in order to place the light sources adequately).</p><pre><code class="language-julia hljs">function create_sky(;scene, lat = 52.0*π/180.0, DOY = 182)
     # Fraction of the day and day length
     fs = collect(0.1:0.1:0.9)
@@ -179,14 +179,14 @@ end</code></pre><p>Given the scene, we can create the light sources that can app
         push!(dome, sky(scene, Idir = I/10*DL, nrays_dir = 100_000, Idif = 0.0)[1])
     end
     return dome
-end</code></pre><p>The 3D scene and the light sources are then combined into a <code>RayTracer</code> object, together with general settings for the ray tracing simulation chosen via <code>RTSettings()</code>. The most important settings refer to the Russian roulette system and the grid cloner (see section on Ray Tracing for details). The settings for the Russian roulette system include the number of times a ray will be traced deterministically (<code>maxiter</code>) and the probability that a ray that exceeds <code>maxiter</code> is terminated (<code>pkill</code>). The grid cloner is used to approximate an infinite canopy by replicating the scene in the different directions (<code>nx</code> and <code>ny</code> being the number of replicates in each direction along the x and y axes, respectively). It is also possible to turn on parallelization of the ray tracing simulation by setting <code>parallel = true</code> (currently this uses Julia&#39;s builtin multithreading capabilities).</p><p>In addition <code>RTSettings()</code>, an acceleration structure and a splitting rule can be defined when creating the <code>RayTracer</code> object (see ray tracing documentation for details). The acceleration structure allows speeding up the ray tracing by avoiding testing all rays against all objects in the scene.</p><pre><code class="language-julia hljs">function create_raytracer(scene, sources)
+end</code></pre><p>The 3D scene and the light sources are then combined into a <code>RayTracer</code> object, together with general settings for the ray tracing simulation chosen via <code>RTSettings()</code>. The most important settings refer to the Russian roulette system and the grid cloner (see section on Ray Tracing for details). The settings for the Russian roulette system include the number of times a ray will be traced deterministically (<code>maxiter</code>) and the probability that a ray that exceeds <code>maxiter</code> is terminated (<code>pkill</code>). The grid cloner is used to approximate an infinite canopy by replicating the scene in the different directions (<code>nx</code> and <code>ny</code> being the number of replicates in each direction along the x and y axes, respectively). It is also possible to turn on parallelization of the ray tracing simulation by setting <code>parallel = true</code> (currently this uses Julia&#39;s builtin multithreading capabilities).</p><p>In addition <code>RTSettings()</code>, an acceleration structure and a splitting rule can be defined when creating the <code>RayTracer</code> object (see ray tracing documentation for details). The acceleration structure allows speeding up the ray tracing by avoiding testing all rays against all objects in the scene.</p><pre><code class="language-julia hljs">function create_raytracer(mesh, sources)
     settings = RTSettings(pkill = 0.9, maxiter = 4, nx = 5, ny = 5, parallel = true)
-    RayTracer(scene, sources, settings = settings, acceleration = BVH,
+    RayTracer(mesh, sources, settings = settings, acceleration = BVH,
                      rule = SAH{3}(5, 10));
 end</code></pre><p>The actual ray tracing simulation is performed by calling the <code>trace!()</code> method on the ray tracing object. This will trace all rays from all light sources and update the radiant power absorbed by the different surfaces in the scene inside the <code>Material</code> objects (see <code>feed!()</code> above):</p><pre><code class="language-julia hljs">function run_raytracer!(forest; DOY = 182)
-    scene   = create_scene(forest)
-    sources = create_sky(scene = scene, DOY = DOY)
-    rtobj   = create_raytracer(scene, sources)
+    mesh   = create_scene(forest)
+    sources = create_sky(mesh = mesh, DOY = DOY)
+    rtobj   = create_raytracer(mesh, sources)
     trace!(rtobj)
     return nothing
 end</code></pre><p>The total PAR absorbed for each tree is calculated from the material objects of the different internodes (using <code>power()</code> on the <code>Material</code> object). Note that the <code>power()</code> function returns three different values, one for each waveband, but they are added together as RUE is defined for total PAR.</p><pre><code class="language-julia hljs"># Run the ray tracer, calculate PAR absorbed per tree and add it to the daily
@@ -327,15 +327,16 @@ end</code></pre><h2 id="Visualization"><a class="docs-heading-anchor" href="#Vis
     width::Float64
 end
 function VirtualPlantLab.feed!(turtle::Turtle, s::Soil, data)
-    Rectangle!(turtle, length = s.length, width = s.width, colors = RGB(255/255, 236/255, 179/255))
+    Rectangle!(turtle, length = s.length, width = s.width, colors = RGB(255/255, 236/255, 179/255),
+               materials = Lambertian(τ = 0.0, ρ = 0.21))
 end
 soil_graph = RA(-90.0) + T(Vec(0.0, 10.0, 0.0)) + ## Moves into position
              Soil(length = 20.0, width = 20.0) ## Draws the soil tile
-soil = Scene(Graph(axiom = soil_graph));
+soil = Mesh(Graph(axiom = soil_graph));
 render(soil, axes = false)</code></pre><p>And the following function renders the entire scene (notice that we need to use <code>display()</code> to force the rendering of the scene when called within a loop or a function):</p><pre><code class="language-julia hljs">function render_forest(forest, soil)
-    scene = Scene(vec(forest)) ## create scene from forest
-    scene = Scene([scene, soil]) ## merges the two scenes
-    render(scene)
+    mesh = Mesh(vec(forest)) ## create mesh from forest
+    mesh = Mesh([mesh, soil]) ## merges the two scenes
+    render(mesh)
 end</code></pre><h2 id="Simulation"><a class="docs-heading-anchor" href="#Simulation">Simulation</a><a id="Simulation-1"></a><a class="docs-heading-anchor-permalink" href="#Simulation" title="Permalink"></a></h2><p>We can now create a forest of trees on a regular grid:</p><pre><code class="language-julia hljs">forest = create_tree.(origins, orientations, RUEs);
 render_forest(forest, soil)
 start = 180
@@ -345,4 +346,4 @@ for i in 1:20
     if mod(i, 5) == 0
         render_forest(forest, soil)
     end
-end</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../growthforest/">« Growth forest</a><a class="docs-footer-nextpage" href="../../more_rules_queries/context/">Context sensitive rules »</a><div class="flexbox-break"></div></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Wednesday 20 November 2024 16:28">Wednesday 20 November 2024</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+end</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../growthforest/">« Growth forest</a><a class="docs-footer-nextpage" href="../../more_rules_queries/context/">Context sensitive rules »</a><div class="flexbox-break"></div></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Tuesday 17 December 2024 11:21">Tuesday 17 December 2024</span>. Using Julia version 1.11.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

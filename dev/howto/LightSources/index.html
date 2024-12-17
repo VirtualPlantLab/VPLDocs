@@ -19,7 +19,7 @@ end</code></pre><p>We also need to define the geometry of the light source. Let&
 dist = Truncated(Normal(0, 0.1), -π/2, π/2)
 θ = rand(dist, 1_000_000)
 histogram(θ, label = &quot;&quot;, xlabel = &quot;Zenith angle&quot;, ylabel = &quot;Prob. density&quot;, normalize=:pdf)
-vline!([-π/2, π/2], label = &quot;&quot;)</code></pre><p>The light source is now ready to be used in a ray tracer. We will test this light source by creating multiple sensors below the light source and measuring the light intensity at each sensor.</p><pre><code class="language-julia hljs">scene = Scene()
+vline!([-π/2, π/2], label = &quot;&quot;)</code></pre><p>The light source is now ready to be used in a ray tracer. We will test this light source by creating multiple sensors below the light source and measuring the light intensity at each sensor.</p><pre><code class="language-julia hljs">mesh = Mesh()
 sensors = [Sensor(1) for _ in 1:400]
 c = 1
 for i in 1:20
@@ -27,12 +27,12 @@ for i in 1:20
         r = Rectangle(length = 0.05, width = 0.05)
         rotatey!(r, π/2) ## To put it in the XY plane
         VirtualPlantLab.translate!(r, Vec((i - 1)*0.05, (j - 1)*0.05 + 0.025, 0.0))
-        add!(scene, mesh = r, materials = sensors[c], colors = rand(RGB))
+        add!(mesh, r, materials = sensors[c], colors = rand(RGB))
         c += 1
     end
 end</code></pre><pre><code class="language-julia hljs">import GLMakie
-render(scene)</code></pre><p>We can now create a ray tracing object without a grid cloner (note that since all the surfaces are sensors we can just set <code>maxiter = 1</code>):</p><pre><code class="language-julia hljs">settings = RTSettings(pkill = 0.9, maxiter = 1, parallel = true)
-rtobj = RayTracer(scene, source, settings = settings);
+render(mesh)</code></pre><p>We can now create a ray tracing object without a grid cloner (note that since all the surfaces are sensors we can just set <code>maxiter = 1</code>):</p><pre><code class="language-julia hljs">settings = RTSettings(pkill = 0.9, maxiter = 1, parallel = true)
+rtobj = RayTracer(mesh, source, settings = settings);
 trace!(rtobj)</code></pre><p>We can now visualize the results by plotting the light intensity at each sensor:</p><pre><code class="language-julia hljs">p_narrow = [power(s)[1]/1_000_000 for s in sensors]
 coords = collect(0.025:0.05:0.975)
 heatmap(coords, coords, reshape(p_narrow,20,20))</code></pre><p>We can see a straight line meaning that the light intensity is practical constant at each sensor since the light source is so narrow. Let&#39;s now test a wider light source by setting the standard deviation to 1.5. Let&#39;s first look at the histogram</p><pre><code class="language-julia hljs">dist = Truncated(Normal(0, 1.0), -π/2, π/2)
@@ -40,6 +40,6 @@ heatmap(coords, coords, reshape(p_narrow,20,20))</code></pre><p>We can see a str
 histogram(θ, label = &quot;&quot;, xlabel = &quot;Zenith angle&quot;, ylabel = &quot;Prob. density&quot;, normalize=:pdf)
 vline!([-π/2, π/2], label = &quot;&quot;)</code></pre><p>Now we expect a lot of rays to escaped from the sides of the scene and not hit the sensors. Let&#39;s test this by creating a new light source and tracing the rays again.</p><pre><code class="language-julia hljs">source = Source(PointSource(Vec(0.5, 0.5, 1.0)), GaussianSource(X(), Y(), -Z(), 1.0), 1.0, 1_000_000)
 settings = RTSettings(pkill = 0.9, maxiter = 1, parallel = true)
-rtobj = RayTracer(scene, source, settings = settings);
+rtobj = RayTracer(mesh, source, settings = settings);
 trace!(rtobj)</code></pre><p>If we plot the light intensity at each sensor we will see that the sensors receive less light than before but also the gradient of light intensity towards the shaded regions is less pronounced.</p><pre><code class="language-julia hljs">p_wide = [power(s)[1]/1_000_000 for s in sensors]
-heatmap(coords, coords, reshape(p_wide,20,20))</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Coordinates/">« Absolute coordinates</a><a class="docs-footer-nextpage" href="../../api/graphs/">Graphs »</a><div class="flexbox-break"></div></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Wednesday 20 November 2024 16:28">Wednesday 20 November 2024</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+heatmap(coords, coords, reshape(p_wide,20,20))</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Coordinates/">« Absolute coordinates</a><a class="docs-footer-nextpage" href="../../api/graphs/">Graphs »</a><div class="flexbox-break"></div></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Tuesday 17 December 2024 11:21">Tuesday 17 December 2024</span>. Using Julia version 1.11.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
