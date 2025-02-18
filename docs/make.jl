@@ -47,7 +47,8 @@ makedocs(;
             "Multiple materials/colors" => "howto/Materials.md",
             "Advanced traversal" => "howto/Traversal.md",
             "Absolute coordinates" => "howto/Coordinates.md",
-            "Creating light sources" => "howto/LightSources.md"
+            "Creating light sources" => "howto/LightSources.md",
+            "Using the slicer" => "howto/Slicer.md"
         ],
         "API" => [
             "Graphs" => "api/graphs.md",
