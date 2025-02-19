@@ -120,7 +120,7 @@ to generate random colors.
 function VirtualPlantLab.feed!(turtle::Turtle, e::sn.E, vars)
     HollowCylinder!(turtle, length = e.length, width = e.length/10,
                     height = e.length/10, move = true,
-                    colors = RGB(rand(), rand(), rand()))
+                    colors = rand(RGB))
     return nothing
 end
 ```
@@ -229,7 +229,3 @@ Third iteration
 rewrite!(Cesaro)
 render(Mesh(Cesaro), axes = false)
 ```
-
----
-
-*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*

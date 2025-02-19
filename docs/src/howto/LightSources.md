@@ -62,11 +62,6 @@ Given the azimuth and zenith angles and the local coordinate system, the directi
 ray can be computed using the `polar_to_cartesian` function provided by the package
 PlantRayTracer within VPL.
 
-```julia
-import PlantRayTracer as PRT
-dir = PRT.polar_to_cartesian((e1 = X, e2 = Y, n = Z), θ, Φ)
-```
-
 The function `polar_to_cartesian` will perform the necessary conversions and ensure that the
 resulting direction vector meets the expectations of the ray tracer within VPL. The user
 thus only needs to specify distributions for the azimuth and zenith angles and generate the

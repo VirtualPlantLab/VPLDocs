@@ -1,6 +1,8 @@
-
-
 # Traversing a graph
+
+Alejandro Morales
+
+Centre for Crop Systems Analysis - Wageningen University
 
 In this guide we will see how to address one possible situation where there is need to
 traverse a graph to accumulate information in a relational manner. The key idea in this
@@ -164,8 +166,3 @@ draw(g)
 ## Ad-hoc traversal
 
 *Work in progress*
-
----
-
-*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

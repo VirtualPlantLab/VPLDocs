@@ -157,8 +157,3 @@ The network is rather boring as the system is growing linearly (no branching)
 but it already illustrates how graphs can grow rapidly in just a few iterations.
 Remember that the interactive visualization allows adjusting the zoom, which is
 handy when graphs become large.
-
----
-
-*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

@@ -112,8 +112,3 @@ states = Int64[]
 traverse_dfs(pop, fun = node -> push!(states, node.state))
 states
 ```
-
----
-
-*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

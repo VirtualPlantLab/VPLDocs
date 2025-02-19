@@ -100,7 +100,3 @@ tile.colors = RGB.(0.0, α, 0.0)
 sc = Mesh(g)
 render(sc, wireframe = true, shading = GLMakie.NoShading)
 ```
-
----
-
-*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
