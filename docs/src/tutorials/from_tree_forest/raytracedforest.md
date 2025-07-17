@@ -247,7 +247,7 @@ function `sky()` (this last step requires the 3D scene as input in order to plac
 the light sources adequately).
 
 ```julia
-function create_sky(;scene, lat = 52.0*π/180.0, DOY = 182)
+function create_sky(;mesh, lat = 52.0*π/180.0, DOY = 182)
     # Fraction of the day and day length
     fs = collect(0.1:0.1:0.9)
     dec = declination(DOY)
@@ -264,7 +264,7 @@ function create_sky(;scene, lat = 52.0*π/180.0, DOY = 182)
     Idir_PAR = f_dir.*Idir
     Idif_PAR = f_dif.*Idif
     # Create the dome of diffuse light
-    dome = sky(scene,
+    dome = sky(mesh,
                   Idir = 0.0, ## No direct solar radiation
                   Idif = sum(Idir_PAR)/10*DL, ## Daily Diffuse solar radiation
                   nrays_dif = 1_000_000, ## Total number of rays for diffuse solar radiation
@@ -274,7 +274,7 @@ function create_sky(;scene, lat = 52.0*π/180.0, DOY = 182)
                   nphi = 12) ## Number of discretization steps in the azimuth angle
     # Add direct sources for different times of the day
     for I in Idir_PAR
-        push!(dome, sky(scene, Idir = I/10*DL, nrays_dir = 100_000, Idif = 0.0)[1])
+        push!(dome, sky(mesh, Idir = I/10*DL, nrays_dir = 100_000, Idif = 0.0)[1])
     end
     return dome
 end
@@ -299,10 +299,9 @@ for details). The acceleration structure allows speeding up the ray tracing
 by avoiding testing all rays against all objects in the scene.
 
 ```julia
-function create_raytracer(mesh, sources)
+function create_raytracer(acc_mesh, sources)
     settings = RTSettings(pkill = 0.9, maxiter = 4, nx = 5, ny = 5, parallel = true)
-    RayTracer(mesh, sources, settings = settings, acceleration = BVH,
-                     rule = SAH{3}(5, 10));
+    RayTracer(acc_mesh, sources, settings = settings);
 end
 ```
 
@@ -314,8 +313,9 @@ the `Material` objects (see `feed!()` above):
 ```julia
 function run_raytracer!(forest; DOY = 182)
     mesh   = create_scene(forest)
-    sources = create_sky(mesh = mesh, DOY = DOY)
-    rtobj   = create_raytracer(mesh, sources)
+    acc_mesh = accelerate(mesh, acceleration = BVH, rule = SAH{3}(5, 10))
+    sources = create_sky(mesh = acc_mesh, DOY = DOY)
+    rtobj   = create_raytracer(acc_mesh, sources)
     trace!(rtobj)
     return nothing
 end
@@ -393,7 +393,7 @@ plot(0:1:50, x -> sink_strength(TreeTypes.Leaf(age = x), TreeTypes.treeparams())
      xlabel = "Age", ylabel = "Sink strength", label = "Leaf")
 
 sink_strength(int) = pdf(int.sink, int.age)
-plot!(0:1:50, x -> sink_strength(TreeTypes.Leaf(age = x)), label = "Internode")
+plot!(0:1:50, x -> sink_strength(TreeTypes.Internode(age = x)), label = "Internode")
 ```
 
 Now we need a function that updates the biomass of the tree, allocates it to the
