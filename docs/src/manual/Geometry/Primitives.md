@@ -6,7 +6,7 @@ Centre for Crop Systems Analysis - Wageningen University
 
 
 ```julia
-using VIrtualPlantLab
+using VirtualPlantLab
 import ColorTypes: RGBA # for the color of each mesh
 import GLMakie # For 3D rendering (native OpenGL backend)
 ```
@@ -39,32 +39,38 @@ to ensure that the transparency is enabled when rendering the mesh.
 
 ## Triangle
 ```julia
-p = Triangle(length = 1.0, width = 1.0)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = Triangle!(turtle; length = 1.0, width = 1.0, colors = rand(RGBA))    
+render(Mesh(turtle), wireframe = true)
 ```
 
 ## Rectangle
 ```julia
-p = Rectangle(length = 1.0, width = 1.0)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = Rectangle!(turtle; length = 1.0, width = 1.0, colors = rand(RGBA)) 
+render(Mesh(turtle), wireframe = true)
 ```
 
 ## Trapezoid
 ```julia
-p = Trapezoid(length = 1.0, width = 1.0, ratio = 0.5)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = Trapezoid!(turtle; length = 1.0, width = 1.0, ratio = 0.5, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
 
 ## Ellipse
 ```julia
-p = Ellipse(length = 1.0, width = 1.0, n = 30)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = Ellipse!(turtle; length = 1.0, width = 1.0, n = 30, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
 
 ## Axis-aligned bounding box
 ```julia
+turtle = Turtle()
 p = BBox(Vec(0.0, 0.0, 0.0), Vec(1.0, 1.0, 1.0))
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+Mesh!(turtle, p, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
 
 ## Cube
@@ -72,31 +78,42 @@ render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparenc
 Solid version
 
 ```julia
-p = SolidCube(length = 1.0, width = 1.0, height = 1.0)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = SolidCube!(turtle; length = 1.0, width = 1.0, height = 1.0, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
 
 Hollow version
 
 ```julia
-p = HollowCube(length = 1.0, width = 1.0, height = 1.0)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = HollowCube!(turtle; length = 1.0, width = 1.0, height = 1.0, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
+
+## Primitives with (semi-)circular bases
+
+The following primitive types share a parameter n, which is the number of triangles to discretize the cylinder into.
+The lower is number n, cicle base shape will be more rough (e.g., n = 20, base shape is a pentagon).
+The higher is number n, cicle base shape will be more smooth (e.g., n = 80, base shape is a circle).
+The same analogy also apply to ellipse; see above, in this case n = 5 the shape is a pentagon, and n = 30 the shape is elipsoidal.
 
 ## Cylinder
 
 Solid version
 
 ```julia
-p = SolidCylinder(length = 1.0, width = 1.0, height = 1.0, n = 80)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = SolidCylinder!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 80, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
 
 Hollow version
 
 ```julia
-p = HollowCylinder(length = 1.0, width = 1.0, height = 1.0, n = 40)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = HollowCylinder!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 80, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
 
 ## Frustum
@@ -104,15 +121,17 @@ render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparenc
 Solid version
 
 ```julia
-p = SolidFrustum(length = 1.0, width = 1.0, height = 1.0, ratio = 0.5, n = 80)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = SolidFrustum!(turtle; length = 1.0, width = 1.0, height = 1.0, ratio = 0.5, n = 80, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
 
 Hollow version
 
 ```julia
-p = HollowFrustum(length = 1.0, width = 1.0, height = 1.0, ratio = 0.5, n = 40)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = HollowFrustum!(turtle; length = 1.0, width = 1.0, height = 1.0, ratio = 0.5, n = 80, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
 
 ## Cone
@@ -120,13 +139,15 @@ render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparenc
 Solid version
 
 ```julia
-p = SolidCone(length = 1.0, width = 1.0, height = 1.0, n = 40)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = SolidCone!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 80, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
 
 Hollow version
 
 ```julia
-p = HollowCone(length = 1.0, width = 1.0, height = 1.0, n = 20)
-render(p, wireframe = true, normals = true, color = RGBA(0,1,0,0.5), transparency = true)
+turtle = Turtle()
+p = HollowCone!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 80, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
 ```
