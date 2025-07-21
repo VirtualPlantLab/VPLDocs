@@ -21,7 +21,9 @@ makedocs(;
     pages=[
         "Virtual Plant Laboratory" => "index.md",
         "Manual" => [
-            "Julia basic concepts" => "manual/Julia.md",
+            "Julia" => ["Julia basic concepts" => "manual/Julia/Julia.md",
+                        "Multiple dispatch and composition" => "manual/Julia/Objects.md"
+                        ],
             "Dynamic graph creation and manipulation" => "manual/Graphs.md",
             "Geometry primitives" => "manual/Geometry/Primitives.md",
             "Turtle geometry and scenes" => "manual/Geometry/Turtle.md",
