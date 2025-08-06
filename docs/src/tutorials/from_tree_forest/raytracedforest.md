@@ -257,6 +257,8 @@ function create_sky(;mesh, lat = 52.0*π/180.0, DOY = 182)
     Ig   = getindex.(temp, 1)
     Idir = getindex.(temp, 2)
     Idif = getindex.(temp, 3)
+    theta = getindex.(temp, 4)
+    phi  = getindex.(temp, 5)
     # Conversion factors to PAR for direct and diffuse irradiance
     f_dir = waveband_conversion(Itype = :direct,  waveband = :PAR, mode = :power)
     f_dif = waveband_conversion(Itype = :diffuse, waveband = :PAR, mode = :power)
@@ -266,19 +268,19 @@ function create_sky(;mesh, lat = 52.0*π/180.0, DOY = 182)
     # Create the dome of diffuse light
     dome = sky(mesh,
                   Idir = 0.0, ## No direct solar radiation
-                  Idif = sum(Idir_PAR)/10*DL, ## Daily Diffuse solar radiation
+                  Idif = sum(Idif_PAR)/10*DL, ## Daily Diffuse solar radiation
                   nrays_dif = 1_000_000, ## Total number of rays for diffuse solar radiation
                   sky_model = StandardSky, ## Angular distribution of solar radiation
                   dome_method = equal_solid_angles, # Discretization of the sky dome
                   ntheta = 9, ## Number of discretization steps in the zenith angle
                   nphi = 12) ## Number of discretization steps in the azimuth angle
     # Add direct sources for different times of the day
-    for I in Idir_PAR
-        push!(dome, sky(mesh, Idir = I/10*DL, nrays_dir = 100_000, Idif = 0.0)[1])
+    for i in eachindex(Idir_PAR)
+        push!(dome, sky(mesh, Idir = Idir_PAR[i]/10*DL, nrays_dir = 100_000, Idif = 0.0,
+                        theta_dir = theta[i], phi_dir = phi[i])[1])
     end
     return dome
 end
-```
 
 The 3D scene and the light sources are then combined into a `RayTracer` object,
 together with general settings for the ray tracing simulation chosen via `RTSettings()`.
