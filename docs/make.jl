@@ -39,7 +39,8 @@ makedocs(;
             ["Tree" => "tutorials/from_tree_forest/tree.md",
             "Forest" => "tutorials/from_tree_forest/forest.md",
             "Growth forest" => "tutorials/from_tree_forest/growthforest.md",
-            "Ray-traced forest" => "tutorials/from_tree_forest/raytracedforest.md"],
+            "Ray-traced forest" => "tutorials/from_tree_forest/raytracedforest.md",
+            "Canopy photosynthesis" => "tutorials/from_tree_forest/photosynthesis.md"],
             "More on rules and queries" =>
             ["Context sensitive rules" => "tutorials/more_rules_queries/context.md",
             "Relational queries" => "tutorials/more_rules_queries/relationalqueries.md"]
