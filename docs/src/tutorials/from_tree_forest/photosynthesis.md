@@ -244,8 +244,8 @@ function calculate_photosynthesis!(;acc_scene, forest, lat = 52.0*π/180.0, DOY 
         ph = data(tree).photos
         for leaf in get_leaves(tree)
             leaf.PARdir = power(leaf.mat)[1]/(π*leaf.length*leaf.width/4)
-            leaf.PARdif = leaf.PARdif*PARdif
-            PAR = leaf.PARdir + leaf.PARdif
+            leaf_PARdif = leaf.PARdif*PARdif
+            PAR = leaf.PARdir + leaf_PARdif
             leaf.Ag += (photosynthesis(ph, PAR = PAR).A + ph.Rd25)*w*DL
         end
     end
