@@ -1,5 +1,3 @@
-
-
 # Forest
 
 Alejandro Morales & Ana Ernst
@@ -314,7 +312,3 @@ res = calculate_resolution(width = 16.0, height = 16.0, dpi = 1_000)
 output = render(mesh, axes = false, size = res)
 export_scene(scene = output, filename = "nice_trees.png")
 ```
-
----
-
-*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*

@@ -281,6 +281,7 @@ function create_sky(;mesh, lat = 52.0*π/180.0, DOY = 182)
     end
     return dome
 end
+```
 
 The 3D scene and the light sources are then combined into a `RayTracer` object,
 together with general settings for the ray tracing simulation chosen via `RTSettings()`.
@@ -592,7 +593,3 @@ for i in 1:20
     end
 end
 ```
-
----
-
-*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*

@@ -165,7 +165,6 @@ rotatey!(soil, pi/2)
 VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0))
 VirtualPlantLab.add!(scene, soil, colors = RGB(1,1,0),
                 materials = Lambertian(τ = 0.0, ρ = 0.21))
-#render(scene, backend = "web", resolution = (800, 600))
 ```
 
 Unlike in the previous example, we can no longer run a single raytracer to

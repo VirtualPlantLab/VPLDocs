@@ -1,5 +1,3 @@
-
-
 # Tree
 
 Alejandro Morales & Ana Ernst
@@ -200,7 +198,3 @@ Further steps will generate a structure that is more tree-like.
 newtree = simulate(newtree, getInternode, 15)
 render(Mesh(newtree))
 ```
-
----
-
-*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
