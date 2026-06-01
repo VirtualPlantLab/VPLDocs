@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="270" viewBox="0 0 320 270">
+  <title>Scenario A: flat surface, sun at (theta=pi/4, Phi=pi)</title>
+  <defs>
+    <marker id="arr-or" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#ca6f1e"/>
+</marker>
+    <marker id="arr-bl" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#2471a3"/>
+</marker>
+    <marker id="arr-gy" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7f8c8d"/>
+</marker>
+    <marker id="arr-gr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#1e8449"/>
+</marker>
+    <marker id="arr-pu" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7d3c98"/>
+</marker>
+    <marker id="arr-bk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#222222"/>
+</marker>
+    <marker id="arr-rd" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#c0392b"/>
+</marker>
+  </defs>
+  <polygon points="201.7,165.7 210.8,209.8 3.1,212.3 -6.0,168.2" fill="#27ae60" fill-opacity="0.15" stroke="#27ae60" stroke-width="0.8" stroke-opacity="0.5"/>
+  <line x1="219.3" y1="187.6" x2="-14.5" y2="190.4" stroke="#7f8c8d" stroke-width="0.9" stroke-dasharray="4,3" />
+  <line x1="102.4" y1="189.0" x2="7.5" y2="190.1" stroke="#1e8449" stroke-width="1.8" marker-end="url(#arr-gr)"/>
+  <text x="2.5" y="200.3" font-size="13" font-family="serif" font-style="italic" fill="#1e8449">X (South)</text>
+  <line x1="102.4" y1="189.0" x2="102.4" y2="97.1" stroke="#1e8449" stroke-width="1.8" marker-end="url(#arr-gr)"/>
+  <text x="106.4" y="80.1" font-size="13" font-family="serif" font-style="italic" fill="#1e8449">Z (up)</text>
+  <line x1="102.4" y1="189.0" x2="30.9" y2="120.4" stroke="#ca6f1e" stroke-width="1.8" marker-end="url(#arr-or)"/>
+  <text x="28.4" y="106.1" font-size="13" font-family="serif" font-style="italic" fill="#ca6f1e">sun</text>
+  <line x1="19.8" y1="109.7" x2="100.5" y2="187.2" stroke="#c0392b" stroke-width="1.8" marker-end="url(#arr-rd)"/>
+  <text x="113.0" y="193.4" font-size="13" font-family="serif" font-style="italic" fill="#c0392b">z_ray</text>
+  <polyline points="102.4,141.1 101.4,141.1 100.5,141.1 99.5,141.2 98.5,141.3 97.6,141.4 96.6,141.5 95.6,141.6 94.7,141.8 93.7,141.9 92.8,142.1 91.8,142.3 90.9,142.5 89.9,142.8 89.0,143.0 88.1,143.3 87.2,143.6 86.2,143.9 85.3,144.2 84.4,144.6 83.5,144.9 82.6,145.3 81.7,145.7 80.9,146.1 80.0,146.6 79.1,147.0 78.3,147.5 77.5,148.0 76.6,148.4 75.8,149.0 75.0,149.5 74.2,150.0 73.4,150.6 72.6,151.1 71.9,151.7 71.1,152.3 70.4,152.9 69.6,153.6 68.9,154.2 68.2,154.9 67.5,155.5" fill="none" stroke="#ca6f1e" stroke-width="1.4"/>
+  <text x="89.5" y="142.9" font-size="12" font-family="serif" font-style="italic" fill="#ca6f1e">&#x3B8;=&#x3C0;/4</text>
+  <circle cx="102.4" cy="189.0" r="3.0" fill="#222222"/>
+  <text x="8.0" y="248.0" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">Flat surface (&#x3B1;_soil=0), &#x3B1;=&#x3C0;</text>
+  <text x="8.0" y="262.0" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">&#x3B8;=&#x3C0;/4 (45&#xB0; elev.), &#x3A6;=&#x3C0; (from South)</text>
+</svg>
