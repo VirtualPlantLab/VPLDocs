@@ -1,12 +1,12 @@
 using VPLDocs
 using Documenter
-import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys, PlantSimEngine
+import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys
 import Ecophys.Photosynthesis, Ecophys.Growth
 
 makedocs(;
     doctest = false,
     modules = [VPLDocs, PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer,
-               PlantViz, SkyDomes, Ecophys.Photosynthesis, Ecophys.Growth, PlantSimEngine],
+               PlantViz, SkyDomes, Ecophys.Photosynthesis, Ecophys.Growth],
     authors="Alejandro Morales <alejandro.moralessierra@wur.nl> and contributors",
     repo="https://github.com/VirtualPlantLab/VPLDocs/blob/{commit}{path}#{line}",
     sitename="Virtual Plant Laboratory",
@@ -70,20 +70,21 @@ makedocs(;
                 "Ecophys package" => "VPLVerse/Ecophys/index.md",
                 "Photosynthesis API" => "VPLVerse/Ecophys/photosynthesis.md",
                 "Growth API" => "VPLVerse/Ecophys/growth.md"
-            ],
-            "PlantSimEngine" => [
-                "PlantSimEngine package" => "VPLVerse/PlantSimEngine/index.md"
-            ],
-            "PlantBioPhysics" => [
-                "PlantBioPhysics package" => "VPLVerse/PlantBioPhysics/index.md"
             ]
         ],
         "Developers" => [
-            "Internal organization" => "developers/organization.md"
-            "Package and Environment Management for VPL" => "developers/use&dev_packages.md"
-            "Styling protocol" => "developers/style.md"
+            "Internal organization" => "developers/organization.md",
+            "Coding guidelines" => [
+                "Package and Environment Management for VPL" => "developers/coding/use&dev_packages.md",
+                "Styling protocol" => "developers/coding/style.md"
+            ],
+            "Technical Notes" => [
+                "3D Geometry" => [
+                    "Solar geometry" => "developers/technical_notes/geometry/solar_ray_direction/index.md"
+                ]
+            ] 
         ]
-    ],
+    ]
 )
 
 deploydocs(;
