@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="260" viewBox="0 0 320 260">
+  <title>Geocentric Coordinate System</title>
+  <defs>
+    <marker id="arr-or" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#ca6f1e"/>
+</marker>
+    <marker id="arr-bl" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#2471a3"/>
+</marker>
+    <marker id="arr-gy" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7f8c8d"/>
+</marker>
+    <marker id="arr-gr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#1e8449"/>
+</marker>
+    <marker id="arr-pu" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7d3c98"/>
+</marker>
+    <marker id="arr-bk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#222222"/>
+</marker>
+    <marker id="arr-rd" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#c0392b"/>
+</marker>
+  </defs>
+  <polygon points="150.0,86.6 278.7,150.0 150.0,213.4 21.3,150.0" fill="#aaaaaa" fill-opacity="0.12" stroke="#27ae60" stroke-width="0.8" stroke-opacity="0.5"/>
+  <line x1="150.0" y1="150.0" x2="75.3" y2="186.8" stroke="#2471a3" stroke-width="1.8" marker-end="url(#arr-bl)"/>
+  <text x="74.3" y="194.7" font-size="13" font-family="serif" font-style="italic" fill="#2471a3">X</text>
+  <line x1="150.0" y1="150.0" x2="224.7" y2="186.8" stroke="#2471a3" stroke-width="1.8" marker-end="url(#arr-bl)"/>
+  <text x="236.7" y="186.7" font-size="13" font-family="serif" font-style="italic" fill="#2471a3">Y</text>
+  <line x1="150.0" y1="150.0" x2="150.0" y2="57.2" stroke="#2471a3" stroke-width="1.8" marker-end="url(#arr-bl)"/>
+  <text x="154.0" y="40.2" font-size="13" font-family="serif" font-style="italic" fill="#2471a3">Z</text>
+  <text x="69.3" y="204.7" font-size="11" font-family="serif" text-anchor="start" fill="#2471a3">South (+X)</text>
+  <text x="234.7" y="188.7" font-size="11" font-family="serif" text-anchor="start" fill="#2471a3">East (+Y)</text>
+  <line x1="150.0" y1="150.0" x2="214.3" y2="118.3" stroke="#7f8c8d" stroke-width="0.9" stroke-dasharray="4,3" />
+  <line x1="150.0" y1="150.0" x2="85.7" y2="118.3" stroke="#7f8c8d" stroke-width="0.9" stroke-dasharray="4,3" />
+  <text x="172.3" y="122.3" font-size="11" font-family="serif" text-anchor="start" fill="#7f8c8d">North (−X)</text>
+  <text x="47.7" y="122.3" font-size="11" font-family="serif" text-anchor="start" fill="#7f8c8d">West (−Y)</text>
+  <text x="154.0" y="44.2" font-size="11" font-family="serif" text-anchor="start" fill="#2471a3">Zenith (+Z)</text>
+  <circle cx="150.0" cy="150.0" r="3.0" fill="#222222"/>
+  <text x="8.0" y="252.0" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">GCS: fixed geocentric reference frame</text>
+</svg>

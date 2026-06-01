@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <title>Slope orientation beta_soil</title>
+  <defs>
+    <marker id="arr-or" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#ca6f1e"/>
+</marker>
+    <marker id="arr-bl" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#2471a3"/>
+</marker>
+    <marker id="arr-gy" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7f8c8d"/>
+</marker>
+    <marker id="arr-gr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#1e8449"/>
+</marker>
+    <marker id="arr-pu" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7d3c98"/>
+</marker>
+    <marker id="arr-bk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#222222"/>
+</marker>
+    <marker id="arr-rd" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#c0392b"/>
+</marker>
+  </defs>
+  <polygon points="150.0,-2.9 306.3,150.0 150.0,302.9 -6.3,150.0" fill="#aaaaaa" fill-opacity="0.1" stroke="#27ae60" stroke-width="0.8" stroke-opacity="0.5"/>
+  <line x1="150.0" y1="150.0" x2="217.1" y2="84.4" stroke="#7f8c8d" stroke-width="0.9" marker-end="url(#arr-gy)"/>
+  <text x="217.5" y="70.1" font-size="13" font-family="serif" font-style="italic" fill="#7f8c8d">N</text>
+  <line x1="150.0" y1="150.0" x2="82.9" y2="215.6" stroke="#7f8c8d" stroke-width="0.9" marker-end="url(#arr-gy)"/>
+  <text x="80.5" y="233.9" font-size="13" font-family="serif" font-style="italic" fill="#7f8c8d">S</text>
+  <line x1="150.0" y1="150.0" x2="217.1" y2="215.6" stroke="#7f8c8d" stroke-width="0.9" marker-end="url(#arr-gy)"/>
+  <text x="229.5" y="225.9" font-size="13" font-family="serif" font-style="italic" fill="#7f8c8d">E</text>
+  <line x1="150.0" y1="150.0" x2="82.9" y2="84.4" stroke="#7f8c8d" stroke-width="0.9" marker-end="url(#arr-gy)"/>
+  <text x="62.5" y="82.1" font-size="13" font-family="serif" font-style="italic" fill="#7f8c8d">W</text>
+  <line x1="150.0" y1="150.0" x2="96.7" y2="202.2" stroke="#7d3c98" stroke-width="1.8" marker-end="url(#arr-pu)"/>
+  <text x="94.2" y="220.4" font-size="13" font-family="serif" font-style="italic" fill="#7d3c98">&#x3B2;=&#x3C0; (S-facing)</text>
+  <line x1="150.0" y1="150.0" x2="203.3" y2="202.2" stroke="#2471a3" stroke-width="1.8" marker-end="url(#arr-bl)"/>
+  <text x="213.8" y="200.4" font-size="13" font-family="serif" font-style="italic" fill="#2471a3">&#x3B2;=&#x3C0;/2 (E-facing)</text>
+  <polyline points="117.8,181.5 119.1,182.7 120.5,183.8 121.8,185.0 123.3,186.0 124.7,187.0 126.2,188.0 127.8,188.8 129.3,189.7 131.0,190.4 132.6,191.1 134.3,191.8 135.9,192.3 137.6,192.8 139.4,193.3 141.1,193.7 142.9,194.0 144.7,194.2 146.4,194.4 148.2,194.5 150.0,194.5 151.8,194.5 153.6,194.4 155.3,194.2 157.1,194.0 158.9,193.7 160.6,193.3 162.4,192.8 164.1,192.3 165.7,191.8 167.4,191.1 169.0,190.4 170.7,189.7 172.2,188.8 173.8,188.0 175.3,187.0 176.7,186.0 178.2,185.0 179.5,183.8 180.9,182.7 182.2,181.5" fill="none" stroke="#ca6f1e" stroke-width="1.4"/>
+  <text x="156.0" y="190.5" font-size="12" font-family="serif" font-style="italic" fill="#ca6f1e">&#x394;&#x3B2;</text>
+  <circle cx="150.0" cy="150.0" r="3.0" fill="#222222"/>
+  <text x="8.0" y="278.0" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">beta_soil = azimuth of slope outward normal</text>
+  <text x="8.0" y="292.0" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">&#x3B2;=&#x3C0;: S-facing (most sun, N hemisphere)</text>
+</svg>
