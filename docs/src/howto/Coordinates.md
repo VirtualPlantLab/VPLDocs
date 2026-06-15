@@ -101,7 +101,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
     l.height = center[3] # Height is the z-coordinate of the center
     # The inclination angle of the leaf is the same as the zenith angle of the up vector
     # This is given by the arc-cosine of the vertical component
-    l.angle = acos(up(turtle)[3])*180/π # Convert to degrees
+    l.angle = acosd(up(turtle)[3])
     l.angle = l.angle > 90 ? 180.0 - l.angle : l.angle  # Correct for the angle being > 90
     # Now we generate the leaf
     Ellipse!(turtle, length = l.length, width = l.width, move = false,
@@ -250,7 +250,7 @@ function VirtualPlantLab.feed!(turtle::Turtle, l::TreeTypes.Leaf, vars)
     l.height = mean(zs) # Average height of the leaf
     # Compute the inclination angle of the leaf (zenith of normal = inclination of plane)
     n = normals(e)[1] # All triangles will have the same normal so one suffices
-    l.angle = acos(n[3])*180/π
+    l.angle = acosd(n[3])
     l.angle = l.angle > 90 ? 180.0 - l.angle : l.angle  # Correct for the angle being > 90
     # Add the leaf to the turtle (important to do transform = false, deepcopy = false)
     Mesh!(turtle, e, colors = RGB(0.2,0.6,0.2), transform = false, deepcopy = false)

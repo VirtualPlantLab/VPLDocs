@@ -82,7 +82,7 @@ plant!):
 ```julia
 function create_tile(p, dx, dy)
     tile = Rectangle(length = dx, width = dy)
-    rotatey!(tile, pi/2)
+    rotatey!(tile, 90.0)
     VirtualPlantLab.translate!(tile, p .+ Vec(-dx/2, 0.0, 0.0))
     return tile
 end

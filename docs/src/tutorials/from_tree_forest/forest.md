@@ -281,7 +281,7 @@ corner and each side being 11 units long:
 
 ```julia
 soil = Rectangle(length = 21.0, width = 21.0)
-rotatey!(soil, pi/2)
+rotatey!(soil, 90.0)
 VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0))
 ```
 

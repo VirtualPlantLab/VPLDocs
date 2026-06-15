@@ -71,7 +71,7 @@ samples accordingly. Let's illustrate this with a Gaussian light source.
 
 A Gaussian light source is a light source where the azimuth angle follows an uniform
 distribution (from 0 to 2π radians) and the zenith angle follows a Gaussian distribution
-constrained within the interval [-π/2, π/2] radians centered at 0. This Gaussian distribution
+constrained within the interval [-90.0, 90.0] radians centered at 0. This Gaussian distribution
 will be parameterized by a standard deviation $\sigma$. First we define the type for the
 Gaussian light source to store the axes of the local coordinate system and the standard
 deviation of the zenith angle.
@@ -94,9 +94,9 @@ defining a method to the function `generate_direction`:
 using Distributions
 import ColorTypes: RGB
 function PRT.generate_direction(source::GaussianSource, rng)
-    dist = Truncated(Normal(0, source.σ), -π/2, π/2)
+    dist = Truncated(Normal(0, source.σ), -90.0, 90.0)
     θ    = rand(rng, dist)
-    Φ    = 2π*rand(rng)
+    Φ    = 180.0*rand(rng)
     dir  = PRT.polar_to_cartesian((e1 = source.x, e2 = source.y, n = source.z), θ, Φ)
     return dir
 end
@@ -116,10 +116,10 @@ distribution of zenith angles as follows:
 
 ```julia
 using Plots
-dist = Truncated(Normal(0, 0.1), -π/2, π/2)
+dist = Truncated(Normal(0, 0.1), -90.0, 90.0)
 θ = rand(dist, 1_000_000)
 histogram(θ, label = "", xlabel = "Zenith angle", ylabel = "Prob. density", normalize=:pdf)
-vline!([-π/2, π/2], label = "")
+vline!([-90.0, 90.0], label = "")
 ```
 
 The light source is now ready to be used in a ray tracer. We will test this light source by
@@ -133,7 +133,7 @@ c = 1
 for i in 1:20
     for j in 1:20
         r = Rectangle(length = 0.05, width = 0.05)
-        rotatey!(r, π/2) ## To put it in the XY plane
+        rotatey!(r, 90.0) ## To put it in the XY plane
         VirtualPlantLab.translate!(r, Vec((i - 1)*0.05, (j - 1)*0.05 + 0.025, 0.0))
         add!(mesh, r, materials = sensors[c], colors = rand(RGB))
         c += 1
@@ -168,10 +168,10 @@ sensor since the light source is so narrow. Let's now test a wider light source 
 the standard deviation to 1.5. Let's first look at the histogram
 
 ```julia
-dist = Truncated(Normal(0, 1.0), -π/2, π/2)
+dist = Truncated(Normal(0, 1.0), -90.0, 90.0)
 θ = rand(dist, 1_000_000)
 histogram(θ, label = "", xlabel = "Zenith angle", ylabel = "Prob. density", normalize=:pdf)
-vline!([-π/2, π/2], label = "")
+vline!([-90.0, 90.0], label = "")
 ```
 
 Now we expect a lot of rays to escaped from the sides of the scene and not hit the sensors.

@@ -163,6 +163,3 @@ end
 draw(g)
 ```
 
-## Ad-hoc traversal
-
-*Work in progress*

@@ -39,7 +39,7 @@ example:
 
 ```julia
 using Sky
-lat = 52.0*π/180.0 # latitude in radians
+lat = 52.0 # latitude in degrees
 DOY = 182
 f = 0.5 # solar noon
 Ig, Idir, Idif = clear_sky(lat = lat, DOY = DOY, f = f) # W/m2

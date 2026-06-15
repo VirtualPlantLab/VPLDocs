@@ -66,7 +66,7 @@ the calculations of absorbed irradiance.
 ```julia
 g = Graph(axiom = RA(90.0) +  Tile(1.0, 1.0, 40));
 sc = Mesh(g);
-source = DirectionalSource(sc, θ = π/4, Φ = π/2, radiosity = 1.0, nrays = 5_000_000);
+source = DirectionalSource(sc, θ = 45.0, Φ = 90.0, radiosity = 1.0, nrays = 5_000_000);
 nothing #hide
 ```
 

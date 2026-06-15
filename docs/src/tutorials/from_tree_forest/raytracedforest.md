@@ -219,7 +219,7 @@ for the light simulation.
 ```julia
 function create_soil()
     soil = Rectangle(length = 21.0, width = 21.0)
-    rotatey!(soil, π/2) ## To put it in the XY plane
+    rotatey!(soil, 90.0) ## To put it in the XY plane
     VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0)) ## Corner at (0,0,0)
     return soil
 end
@@ -247,7 +247,7 @@ function `sky()` (this last step requires the 3D scene as input in order to plac
 the light sources adequately).
 
 ```julia
-function create_sky(;mesh, lat = 52.0*π/180.0, DOY = 182)
+function create_sky(;mesh, lat = 52.0, DOY = 182)
     # Fraction of the day and day length
     fs = collect(0.1:0.1:0.9)
     dec = declination(DOY)

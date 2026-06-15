@@ -1,12 +1,12 @@
 using VPLDocs
 using Documenter
-import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys, PlantSimEngine
+import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys, PlantSimEngine, PlantBiophysics
 import Ecophys.Photosynthesis, Ecophys.Growth
 
 makedocs(;
     doctest = false,
     modules = [VPLDocs, PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer,
-               PlantViz, SkyDomes, Ecophys.Photosynthesis, Ecophys.Growth, PlantSimEngine],
+               PlantViz, SkyDomes, Ecophys.Photosynthesis, Ecophys.Growth, PlantSimEngine, PlantBiophysics],
     authors="Alejandro Morales <alejandro.moralessierra@wur.nl> and contributors",
     repo="https://github.com/VirtualPlantLab/VPLDocs/blob/{commit}{path}#{line}",
     sitename="Virtual Plant Laboratory",
@@ -20,6 +20,7 @@ makedocs(;
     ),
     pages=[
         "Virtual Plant Laboratory" => "index.md",
+        "Changelog" => "NEWS.md",
         "Manual" => [
             "Julia" => ["Julia basic concepts" => "manual/Julia/Julia.md",
                         "Multiple dispatch and composition" => "manual/Julia/Objects.md",
@@ -47,6 +48,7 @@ makedocs(;
         ],
         "How-to guides" => [
             "Setting up a grid cloner" => "howto/GridCloner.md",
+            "Row orientation and slope" => "howto/SlopesOrientation.md",
             "Messages in scenes" => "howto/Message.md",
             "Multiple materials/colors" => "howto/Materials.md",
             "Advanced traversal" => "howto/Traversal.md",
@@ -71,19 +73,29 @@ makedocs(;
                 "Photosynthesis API" => "VPLVerse/Ecophys/photosynthesis.md",
                 "Growth API" => "VPLVerse/Ecophys/growth.md"
             ],
-            "PlantSimEngine" => [
-                "PlantSimEngine package" => "VPLVerse/PlantSimEngine/index.md"
+            "PlantBiophysics" => [
+                "PlantBioPhysics package" => "VPLVerse/PlantBioPhysics/index.md",
+                "PlantBioPhysics API" => "VPLVerse/PlantBioPhysics/API.md"
             ],
-            "PlantBioPhysics" => [
-                "PlantBioPhysics package" => "VPLVerse/PlantBioPhysics/index.md"
-            ]
+            "PlantSimEngine" => [
+                "PlantSimEngine package" => "VPLVerse/PlantSimEngine/index.md",
+                "PlantSimEngine API" => "VPLVerse/PlantSimEngine/API.md"
+            ],
         ],
         "Developers" => [
-            "Internal organization" => "developers/organization.md"
-            "Package and Environment Management for VPL" => "developers/use&dev_packages.md"
-            "Styling protocol" => "developers/style.md"
-        ]
-    ],
+            "Internal organization" => "developers/organization.md",
+            "Coding guidelines" => [
+                "Package and Environment Management for VPL" => "developers/coding/use&dev_packages.md",
+                "Styling protocol" => "developers/coding/style.md"
+            ],
+            "Technical Notes" => [
+                "3D Geometry" => [
+                    "Solar geometry" => "developers/technical_notes/geometry/solar_ray_direction/index.md"
+                ]
+            ] 
+        ],
+        "Publications" => "Publications.md"
+    ]
 )
 
 deploydocs(;

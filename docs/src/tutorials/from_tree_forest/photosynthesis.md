@@ -161,7 +161,7 @@ We run the simulation for a few steps to create a forest and add the soil:
 newforest = [simulate(tree, getInternode, 15) for tree in forest];
 scene = Mesh(newforest);
 soil = Rectangle(length = 21.0, width = 21.0)
-rotatey!(soil, pi/2)
+rotatey!(soil, 90.0)
 VirtualPlantLab.translate!(soil, Vec(0.0, 10.5, 0.0))
 VirtualPlantLab.add!(scene, soil, colors = RGB(1,1,0),
                 materials = Lambertian(τ = 0.0, ρ = 0.21))
@@ -191,7 +191,7 @@ for the whole day):
 ```julia
 get_leaves(tree) = apply(tree, Query(TreeTypes.Leaf))
 
-function calculate_diffuse!(;acc_scene, forest, lat = 52.0*π/180.0, DOY = 182)
+function calculate_diffuse!(;acc_scene, forest, lat = 52.0, DOY = 182)
     # Create the dome of diffuse light
     dome = sky(acc_scene,
                   Idir = 0.0, # No direct solar radiation
@@ -224,7 +224,7 @@ opposed to W/m2 (using `:flux` rather than `:power` in the `waveband_conversion`
 function):
 
 ```julia
-function calculate_photosynthesis!(;acc_scene, forest, lat = 52.0*π/180.0, DOY = 182,
+function calculate_photosynthesis!(;acc_scene, forest, lat = 52.0, DOY = 182,
                  f = 0.5, w = 0.5, DL = 12*3600)
     # Compute the solar irradiance assuming clear sky conditions
     Ig, Idir, Idif = clear_sky(lat = lat, DOY = DOY, f = f)
@@ -266,7 +266,7 @@ This function may now be run for different time points during the day based on
 a Gaussian quadrature rule:
 
 ```julia
-function daily_photosynthesis(forest; DOY = 182, lat = 52.0*π/180.0)
+function daily_photosynthesis(forest; DOY = 182, lat = 52.0)
     # Compute fraction of diffuse irradiance per leaf
     calculate_diffuse!(acc_scene = acc_scene, forest = forest, DOY = DOY, lat = lat);
     # Gaussian quadrature over the
