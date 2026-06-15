@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="240" viewBox="0 0 480 240">
+  <title>Scenario B: E-W rows (alpha=pi/2), sun on N horizon</title>
+  <defs>
+    <marker id="arr-or" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#ca6f1e"/>
+</marker>
+    <marker id="arr-bl" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#2471a3"/>
+</marker>
+    <marker id="arr-gy" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7f8c8d"/>
+</marker>
+    <marker id="arr-gr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#1e8449"/>
+</marker>
+    <marker id="arr-pu" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7d3c98"/>
+</marker>
+    <marker id="arr-bk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#222222"/>
+</marker>
+    <marker id="arr-rd" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#c0392b"/>
+</marker>
+  </defs>
+  <polygon points="120.0,68.6 248.7,132.0 120.0,195.4 -8.7,132.0" fill="#aaaaaa" fill-opacity="0.12" stroke="#27ae60" stroke-width="0.8" stroke-opacity="0.5"/>
+  <line x1="120.0" y1="132.0" x2="59.1" y2="162.0" stroke="#2471a3" stroke-width="1.8" marker-end="url(#arr-bl)"/>
+  <text x="53.1" y="177.9" font-size="13" font-family="serif" font-style="italic" fill="#2471a3">X_geo (S)</text>
+  <line x1="120.0" y1="132.0" x2="180.9" y2="162.0" stroke="#2471a3" stroke-width="1.8" marker-end="url(#arr-bl)"/>
+  <text x="192.9" y="160.9" font-size="13" font-family="serif" font-style="italic" fill="#2471a3">Y_geo (E)</text>
+  <line x1="120.0" y1="132.0" x2="120.0" y2="67.5" stroke="#2471a3" stroke-width="1.8" marker-end="url(#arr-bl)"/>
+  <text x="123.0" y="51.5" font-size="13" font-family="serif" font-style="italic" fill="#2471a3">Z_geo</text>
+  <line x1="193.5" y1="95.8" x2="118.9" y2="132.6" stroke="#c0392b" stroke-width="1.8" marker-end="url(#arr-rd)"/>
+  <text x="114.8" y="126.5" font-size="13" font-family="serif" font-style="italic" fill="#c0392b">z_ray</text>
+  <circle cx="120.0" cy="132.0" r="3.0" fill="#222222"/>
+  <text x="10.0" y="16.0" font-size="11" font-family="serif" text-anchor="start" fill="#222222">GCS: ray travels South (+X_geo)</text>
+  <line x1="240.0" y1="4" x2="240.0" y2="236" stroke="#7f8c8d" stroke-width="0.6" stroke-dasharray="3,3"/>
+  <polygon points="231.3,132.0 360.0,68.6 488.7,132.0 360.0,195.4" fill="#27ae60" fill-opacity="0.15" stroke="#27ae60" stroke-width="0.8" stroke-opacity="0.5"/>
+  <line x1="360.0" y1="132.0" x2="420.9" y2="162.0" stroke="#1e8449" stroke-width="1.8" marker-end="url(#arr-gr)"/>
+  <text x="430.9" y="177.9" font-size="13" font-family="serif" font-style="italic" fill="#1e8449">X_scene (E)</text>
+  <line x1="360.0" y1="132.0" x2="420.9" y2="102.0" stroke="#1e8449" stroke-width="1.8" marker-end="url(#arr-gr)"/>
+  <text x="353.9" y="93.1" font-size="13" font-family="serif" font-style="italic" fill="#1e8449">Y_scene (N)</text>
+  <line x1="360.0" y1="132.0" x2="360.0" y2="67.5" stroke="#1e8449" stroke-width="1.8" marker-end="url(#arr-gr)"/>
+  <text x="363.0" y="51.5" font-size="13" font-family="serif" font-style="italic" fill="#1e8449">Z_scene</text>
+  <line x1="433.5" y1="168.2" x2="358.9" y2="131.4" stroke="#c0392b" stroke-width="1.8" marker-end="url(#arr-rd)"/>
+  <text x="354.8" y="117.5" font-size="13" font-family="serif" font-style="italic" fill="#c0392b">z_ray</text>
+  <circle cx="360.0" cy="132.0" r="3.0" fill="#222222"/>
+  <text x="250.0" y="16.0" font-size="11" font-family="serif" text-anchor="start" fill="#222222">SCS (&#x3B1;=&#x3C0;/2): same ray = &#x2212;Y_scene</text>
+</svg>

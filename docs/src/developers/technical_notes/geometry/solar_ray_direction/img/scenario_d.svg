@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="270" viewBox="0 0 320 270">
+  <title>Scenario D: north-facing 45-deg slope, sun overhead</title>
+  <defs>
+    <marker id="arr-or" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#ca6f1e"/>
+</marker>
+    <marker id="arr-bl" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#2471a3"/>
+</marker>
+    <marker id="arr-gy" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7f8c8d"/>
+</marker>
+    <marker id="arr-gr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#1e8449"/>
+</marker>
+    <marker id="arr-pu" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7d3c98"/>
+</marker>
+    <marker id="arr-bk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#222222"/>
+</marker>
+    <marker id="arr-rd" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#c0392b"/>
+</marker>
+  </defs>
+  <polygon points="238.5,265.4 232.0,233.9 94.3,101.8 100.8,133.3" fill="#27ae60" fill-opacity="0.2" stroke="#27ae60" stroke-width="0.8" stroke-opacity="0.5"/>
+  <line x1="276.8" y1="182.3" x2="56.0" y2="184.9" stroke="#7f8c8d" stroke-width="0.9" stroke-dasharray="4,3" />
+  <line x1="166.4" y1="183.6" x2="166.4" y2="85.4" stroke="#2471a3" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arr-bl)"/>
+  <text x="169.4" y="68.4" font-size="13" font-family="serif" font-style="italic" fill="#2471a3">Z_geo</text>
+  <line x1="166.4" y1="183.6" x2="224.2" y2="126.7" stroke="#1e8449" stroke-width="1.8" marker-end="url(#arr-gr)"/>
+  <text x="172.7" y="112.4" font-size="13" font-family="serif" font-style="italic" fill="#1e8449">Z_scene</text>
+  <line x1="166.4" y1="183.6" x2="215.0" y2="230.2" stroke="#1e8449" stroke-width="1.8" marker-end="url(#arr-gr)"/>
+  <text x="156.5" y="240.4" font-size="13" font-family="serif" font-style="italic" fill="#1e8449">X_scene</text>
+  <text x="241.8" y="186.4" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">North</text>
+  <text x="71.0" y="188.8" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">South</text>
+  <line x1="166.4" y1="82.7" x2="166.4" y2="180.9" stroke="#c0392b" stroke-width="1.8" marker-end="url(#arr-rd)"/>
+  <text x="172.4" y="189.9" font-size="13" font-family="serif" font-style="italic" fill="#c0392b">z_ray (overhead)</text>
+  <polyline points="166.4,135.7 167.4,135.7 168.3,135.7 169.3,135.7 170.3,135.8 171.2,135.8 172.2,135.9 173.2,136.0 174.1,136.2 175.1,136.3 176.0,136.5 177.0,136.7 177.9,136.9 178.9,137.1 179.8,137.3 180.7,137.6 181.6,137.8 182.6,138.1 183.5,138.4 184.4,138.8 185.3,139.1 186.2,139.4 187.1,139.8 187.9,140.2 188.8,140.6 189.7,141.0 190.5,141.5 191.3,141.9 192.2,142.4 193.0,142.9 193.8,143.4 194.6,143.9 195.4,144.5 196.2,145.0 196.9,145.6 197.7,146.2 198.4,146.8 199.2,147.4 199.9,148.0 200.6,148.6 201.3,149.3" fill="none" stroke="#ca6f1e" stroke-width="1.4"/>
+  <text x="133.3" y="137.1" font-size="12" font-family="serif" font-style="italic" fill="#ca6f1e">&#x3B1;_soil</text>
+  <circle cx="166.4" cy="183.6" r="3.0" fill="#222222"/>
+  <text x="8.0" y="248.0" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">North-facing slope: &#x3B2;_soil=0, &#x3B1;_soil=&#x3C0;/4</text>
+  <text x="8.0" y="262.0" font-size="10" font-family="serif" text-anchor="start" fill="#c0392b">z_ray=(&#x2212;1/&#x221A;2, 0, &#x2212;1/&#x221A;2) in SCS</text>
+</svg>
