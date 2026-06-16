@@ -1,4 +1,3 @@
-using VPLDocs
 using Documenter
 import PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer, PlantViz, SkyDomes, Ecophys, PlantSimEngine, PlantBiophysics
 import Ecophys.Photosynthesis, Ecophys.Growth
