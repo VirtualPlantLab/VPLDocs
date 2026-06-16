@@ -4,7 +4,7 @@ import Ecophys.Photosynthesis, Ecophys.Growth
 
 makedocs(;
     doctest = false,
-    modules = [VPLDocs, PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer,
+    modules = [PlantGraphs, PlantGeomPrimitives, PlantGeomTurtle, PlantRayTracer,
                PlantViz, SkyDomes, Ecophys.Photosynthesis, Ecophys.Growth, PlantSimEngine, PlantBiophysics],
     authors="Alejandro Morales <alejandro.moralessierra@wur.nl> and contributors",
     repo="https://github.com/VirtualPlantLab/VPLDocs/blob/{commit}{path}#{line}",
