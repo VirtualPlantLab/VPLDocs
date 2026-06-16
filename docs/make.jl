@@ -54,6 +54,7 @@ makedocs(;
             "Advanced traversal" => "howto/Traversal.md",
             "Absolute coordinates" => "howto/Coordinates.md",
             "Creating light sources" => "howto/LightSources.md",
+            "Solar radiation with SkyDomes" => "howto/SkyDomes.md",
             "Using the slicer" => "howto/Slicer.md"
         ],
         "API" => [
@@ -74,11 +75,9 @@ makedocs(;
                 "Growth API" => "VPLVerse/Ecophys/growth.md"
             ],
             "PlantBiophysics" => [
-                "PlantBioPhysics package" => "VPLVerse/PlantBioPhysics/index.md",
                 "PlantBioPhysics API" => "VPLVerse/PlantBioPhysics/API.md"
             ],
             "PlantSimEngine" => [
-                "PlantSimEngine package" => "VPLVerse/PlantSimEngine/index.md",
                 "PlantSimEngine API" => "VPLVerse/PlantSimEngine/API.md"
             ],
         ],
