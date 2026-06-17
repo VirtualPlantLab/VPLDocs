@@ -1,0 +1,1 @@
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Q\"abstract types are defined by how they act\" (C.\\E$"}
