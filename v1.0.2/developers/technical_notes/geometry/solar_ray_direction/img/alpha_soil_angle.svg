@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="270" viewBox="0 0 300 270">
+  <title>Slope inclination alpha_soil</title>
+  <defs>
+    <marker id="arr-or" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#ca6f1e"/>
+</marker>
+    <marker id="arr-bl" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#2471a3"/>
+</marker>
+    <marker id="arr-gy" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7f8c8d"/>
+</marker>
+    <marker id="arr-gr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#1e8449"/>
+</marker>
+    <marker id="arr-pu" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#7d3c98"/>
+</marker>
+    <marker id="arr-bk" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#222222"/>
+</marker>
+    <marker id="arr-rd" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+  <polygon points="0 0,8 3,0 6" fill="#c0392b"/>
+</marker>
+  </defs>
+  <line x1="215.4" y1="174.2" x2="-5.4" y2="176.8" stroke="#7f8c8d" stroke-width="0.8" stroke-dasharray="4,3" />
+  <line x1="36.1" y1="243.2" x2="173.9" y2="107.8" stroke="#1e8449" stroke-width="2.0" />
+  <text x="40.1" y="247.2" font-size="10" font-family="serif" text-anchor="start" fill="#1e8449">slope surface</text>
+  <line x1="105.0" y1="175.5" x2="105.0" y2="58.4" stroke="#2471a3" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arr-bl)"/>
+  <text x="109.0" y="41.4" font-size="13" font-family="serif" font-style="italic" fill="#2471a3">Z_geo</text>
+  <line x1="105.0" y1="175.5" x2="33.5" y2="106.9" stroke="#1e8449" stroke-width="1.8" marker-end="url(#arr-gr)"/>
+  <text x="31.0" y="92.6" font-size="13" font-family="serif" font-style="italic" fill="#1e8449">Z_scene</text>
+  <polyline points="105.0,125.0 104.0,125.1 103.0,125.1 101.9,125.2 100.9,125.3 99.9,125.4 98.9,125.5 97.9,125.6 96.9,125.8 95.9,125.9 94.9,126.1 93.9,126.4 92.9,126.6 91.9,126.8 90.9,127.1 89.9,127.4 89.0,127.7 88.0,128.0 87.0,128.4 86.1,128.7 85.1,129.1 84.2,129.5 83.3,129.9 82.3,130.4 81.4,130.8 80.5,131.3 79.6,131.8 78.7,132.3 77.9,132.8 77.0,133.3 76.1,133.9 75.3,134.5 74.5,135.1 73.7,135.7 72.8,136.3 72.1,136.9 71.3,137.5 70.5,138.2 69.7,138.9 69.0,139.6 68.3,140.3" fill="none" stroke="#ca6f1e" stroke-width="1.4"/>
+  <text x="93.1" y="127.1" font-size="12" font-family="serif" font-style="italic" fill="#ca6f1e">&#x3B1;_soil</text>
+  <circle cx="105.0" cy="175.5" r="3.0" fill="#222222"/>
+  <text x="8.0" y="248.0" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">&#x3B1;_soil = 0: flat horizontal surface</text>
+  <text x="8.0" y="262.0" font-size="10" font-family="serif" text-anchor="start" fill="#7f8c8d">&#x3B1;_soil = &#x3C0;/2: vertical wall</text>
+</svg>
