@@ -98,7 +98,7 @@ The lower is number n, cicle base shape will be more rough (e.g., n = 20, base s
 The higher is number n, cicle base shape will be more smooth (e.g., n = 80, base shape is a circle).
 The same analogy also apply to ellipse; see above, in this case n = 5 the shape is a pentagon, and n = 30 the shape is elipsoidal.
 
-## Cylinder
+### Cylinder
 
 Solid version
 
@@ -116,7 +116,7 @@ p = HollowCylinder!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 80, col
 render(Mesh(turtle), wireframe = true)
 ```
 
-## Frustum
+### Frustum
 
 Solid version
 
@@ -134,7 +134,7 @@ p = HollowFrustum!(turtle; length = 1.0, width = 1.0, height = 1.0, ratio = 0.5,
 render(Mesh(turtle), wireframe = true)
 ```
 
-## Cone
+### Cone
 
 Solid version
 
@@ -149,5 +149,20 @@ Hollow version
 ```julia
 turtle = Turtle()
 p = HollowCone!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 80, colors = rand(RGBA))
+render(Mesh(turtle), wireframe = true)
+```
+
+## Ellipsoid
+
+An ellipsoid is the generalization of a sphere where every radius can be different. Thus we can
+create spheres, spheroids and ellipsoids with the same constructor.
+The meshing is done by creating quad tiles (which are then divided into two triangles) defined
+by fixed intervals of latitude and longitude. The user specifies the number of fixed intervals to
+be use (`n`, assumed equal for both types of angles). This means that the total number of triangles
+is given by the formula `2n(n - 1)`.
+
+```julia
+turtle = Turtle()
+p = Ellipsoid!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 20, colors = rand(RGBA))
 render(Mesh(turtle), wireframe = true)
 ```

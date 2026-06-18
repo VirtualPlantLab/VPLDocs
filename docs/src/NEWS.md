@@ -8,6 +8,19 @@ in this website for convenience but do not keep track of updates to those
 packages, so please check their (more detailed) individual documentation
 sites and Github repositories.
 
+# VPL 1.0.2
+
+- VPL now supports creating spheres, spheroids and ellipsoids with the primitive
+constructors `Ellipsoid` and `Ellipsoid!`. Please consult documentation for details.
+
+# Ecophys 0.1.2
+
+Bug fixes and improve test suite (output will change stomatal conductance, gs, when using both C3 and C4 models, no changes to API).
+
+- Switch to solving for Ci and then calculate gs inside the analytical functions of C3 and C4 photosynthesis instead of solving for gs directly (this was causing wrong values of gs).
+
+- Add a bunch of tests to better verify several properties of response curves of CO2 assimilation and stomatal conductance.
+
 # VPL 1.0.1
 
 - All functions across all VPLcore packages and SkyDomes.jl now use angles in 

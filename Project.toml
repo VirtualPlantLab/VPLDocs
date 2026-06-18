@@ -1,6 +1,6 @@
 name = "VPLDocs"
 uuid = "19246b20-85cd-4f94-a989-28bb6828320f"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors"]
 
 [workspace]
@@ -22,12 +22,12 @@ VirtualPlantLab = "b977ecfa-1b9a-418d-909d-4ebe565736ce"
 [compat]
 Ecophys = "0.1.1"
 PlantBiophysics = "0.17.0"
-PlantGeomPrimitives = "1.0.1"
-PlantGeomTurtle = "1.0.0"
+PlantGeomPrimitives = "1.0.3"
+PlantGeomTurtle = "1.0.1"
 PlantGraphs = "1.0.0"
 PlantRayTracer = "1.0.1"
 PlantSimEngine = "0.14.1"
 PlantViz = "1.0.1"
 SkyDomes = "1.0.1"
-VirtualPlantLab = "1.0.1"
+VirtualPlantLab = "1.0.2"
 julia = "1.12"
