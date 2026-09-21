@@ -17,7 +17,7 @@ jobs:
         shell: bash
         working-directory: VPLDocs
     env:
-      VPL_CANDIDATE: c1eb0d442f69631e7fba95936765b845e0a2f3c4
+      VPL_CANDIDATE: 39d8dd628c28d49ac93e7da3a265ecbf8b8541e2
       PB_CANDIDATE: 12b0c1976a0177985437056c5fb01415c3e53e2e
       JULIA_PKG_PRECOMPILE_AUTO: "0"
     steps:
