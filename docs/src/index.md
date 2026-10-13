@@ -41,12 +41,89 @@ software, but that may also make them more transparent and easier to follow.
 
 ## Installation
 
+### Getting started with Julia and VS Code
+
+If you are already familiar with Julia and have a working editor, skip to
+[Installing VPL](@ref installing-vpl). Otherwise, the following steps will take you from
+a computer without Julia to a Julia terminal (called the *REPL*) where you can install VPL.
+VPL works with any code editor, but we recommend [Visual Studio Code](https://code.visualstudio.com/)
+(VS Code) because it is free and has excellent support for Julia.
+
+**1. Install Julia**
+
+*Windows*
+
+1. Open the Start menu, type `PowerShell` and open it.
+2. Run the following command and follow the instructions on screen:
+
+   ```
+   winget install --name Julia --id 9NJNWW8PVKMN -e -s msstore
+   ```
+
+   Alternatively, install *Julia* from the Microsoft Store.
+
+*Mac*
+
+1. Open the *Terminal* app (press `Cmd + Space`, type `Terminal` and press `Enter`).
+2. Run the following command and follow the instructions on screen:
+
+   ```
+   curl -fsSL https://install.julialang.org | sh
+   ```
+
+Both methods install `juliaup`, a small tool that installs Julia and keeps it up to date.
+Close and reopen the terminal afterwards. To check that Julia was installed, type `julia`
+and press `Enter`: you should see a prompt `julia>`. Type `exit()` to leave Julia. More
+details (and other options such as manual downloads) are available at the
+[Julia downloads page](https://julialang.org/downloads/).
+
+**2. Install VS Code**
+
+1. Download the installer for your system from [code.visualstudio.com](https://code.visualstudio.com/)
+   (Windows: *User Installer*; Mac: the `.zip`, which you then drag into the *Applications* folder).
+2. Run the installer and open VS Code.
+
+**3. Install the Julia extension**
+
+1. In VS Code, click the *Extensions* icon in the left sidebar (or press `Ctrl + Shift + X`,
+   `Cmd + Shift + X` on Mac).
+2. Search for `Julia` and install the extension called *Julia* (publisher: *julialang*).
+3. Restart VS Code if requested.
+
+**4. Open a folder and start a Julia terminal**
+
+1. Create a folder for your VPL work (e.g. `VPL_projects`) and open it in VS Code with
+   *File → Open Folder...*.
+2. Open the *Command Palette* with `Ctrl + Shift + P` (`Cmd + Shift + P` on Mac), type
+   `Julia: Start REPL` and press `Enter`.
+3. A terminal panel will open at the bottom of VS Code showing the prompt `julia>`. This is
+   the Julia REPL and it is where you type the commands below.
+
+**5. Optional: use a project environment**
+
+To keep the packages of each project separate, you can activate a local environment in the
+REPL before installing VPL:
+
+```julia
+using Pkg
+Pkg.activate(".")
+```
+
+This creates a `Project.toml` file in the current folder to record the packages you install.
+
+### [Installing VPL](@id installing-vpl)
+
 VPL requires using Julia version 1.9 or higher. The installation of core of VPL is as
-easy as running the following code:
+easy as running the following code in the Julia REPL:
 
 ```julia
 ] add VirtualPlantLab
 ```
+
+Typing `]` at the `julia>` prompt switches the REPL to *package mode* (the prompt changes
+to `pkg>`), so you only need to type `add VirtualPlantLab` and press `Enter`. Press
+`Backspace` to go back to the `julia>` prompt. Equivalently, you can run
+`using Pkg; Pkg.add("VirtualPlantLab")` from the normal prompt.
 
 This will install all the packages that form the core of VPL. Additional packages that are meant to work with VPL (or
 as standalone packages) are available as part of the *VPLverse* (see section on
